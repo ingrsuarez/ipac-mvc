@@ -2,10 +2,35 @@
 		<div class="container_title">
 			<h3><i class="fas fa-tasks"></i>  INGRESAR PEDIDO: </h3>
 		</div>
-		<?php
-			 
+			<table class='pedidos__table'>
+			<thead>
 
-		?>	
+			</thead>
+			<tbody>
+			<?php	
+			$arrayLength = count($pedidos);
+			$i = 0;
+			// var_dump($board);
+			while ($i < $arrayLength) {?>
+				<tr class="pedidos__row">
+					<th scope='row'>
+						<label class='table-label' for=''></label>
+					</th>						
+					<td style = 'font-size: 12px; width: 100px'><?php echo $pedidos[$i]->fecha;?></td>
+					<td> <?php echo $pedidos[$i]->nota."-";?></td>
+					<td style='padding-left: 1em'> <?php echo $pedidos[$i]->usuario;?></td>
+					<td style='padding-left: 1em'>
+						<form action="<?php echo site_url('pages/verify_task'); ?>" method ='POST'>
+							<input type="hidden" name="vid" value="<?= $board[$i]->id?>">
+							<button type='submit' class='btn btn-verify' name='Verificar'>Verificar</button>
+						</form>
+					</td>						
+				</tr><?php
+				$i++;
+				}
+				 ?>	  
+			</tbody>
+			</table>
 		
 		<div class="container_table">
 			<form method="POST">
