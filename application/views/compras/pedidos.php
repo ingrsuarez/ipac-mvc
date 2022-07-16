@@ -2,6 +2,7 @@
 		<div class="container_title">
 			<h3><i class="fas fa-tasks"></i>  INGRESAR PEDIDO: </h3>
 		</div>
+		<div class="container__table">
 			<table class='pedidosT'>
 			<thead>
 				<tr class="pedidosT__encabezado">
@@ -34,8 +35,8 @@
 				 ?>	  
 			</tbody>
 			</table>
-		
-		<div class="container_table">
+		</div>
+		<div class="container__table">
 			<form method="POST">
 					  
 			  <div class="container__table">
