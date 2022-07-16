@@ -182,6 +182,10 @@ body {
 }
 
 
+.dropdown__item--active {
+	background-color: #f1f878;
+	color: #454545; 
+}
 
 .dropdown__item > a {
 	color: #f2f2f2;
@@ -193,10 +197,6 @@ body {
 }
 
 
-.dropdown__item--active {
-	background-color: #f1f878;
-	color: #454545; 
-}
 
 .inside__menu {
 	display: none;
