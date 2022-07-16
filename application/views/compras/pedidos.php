@@ -29,6 +29,7 @@
 					<option value='14'>Aguas</option>
 					<option value='15'>Veterinaria</option>
 					<option value='3'>Mantenimiento</option>
+					<option value='3'>Limpieza</option>
 					<option value='4'>Secretaria</option>
 						
 				  </select>
