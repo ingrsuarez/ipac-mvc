@@ -1,4 +1,4 @@
-
+ 
 const menu1 = document.getElementById("compras");
 const menu2 = document.getElementById("procedimientos");
 const menu3 = document.getElementById("registros");

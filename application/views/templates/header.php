@@ -4,7 +4,7 @@
 		<nav class="menu">
 			<div class="menu__logo" ><img src="<?php echo base_url(); ?>images/logo-color.png"></div>
 			<ul class="menu__item" >
-				<li class="dropdown__item dropdown__item--active" id="home"><a href="<?php echo base_url(); ?>index.php">INICIO</a></li>
+				<li class="dropdown__item dropdown__item--active" id="home"><a href="<?php echo base_url(); ?>index.php">INICIO</a></li> 
 				<li class="dropdown__item" id="compras">
 					<a href="#" >COMPRAS</a>
 					<ul class="inside__menu" id="compras__inside">
