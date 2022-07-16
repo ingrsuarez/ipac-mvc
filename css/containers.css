@@ -10,8 +10,6 @@
 
 
 
-
-
 @media screen and (min-width: 400px) {
 
 
@@ -112,7 +110,7 @@
 }
 
 .btn-insert:hover{
-	background-color: #ffef96;;
+	background-color: #ffef96;
 }
 
 .container_table__insert {
@@ -172,5 +170,33 @@
 	height: 100%;
 	
 }
+
+/****************COMPRAS**************/
+
+.pedidosT {
+
+	padding-left: 10px;
+  	width: 100%;
+    border-collapse: collapse;
+}
+
+.pedidosT tr:nth-child(even){
+	background-color: #f2f2f2;
+}
+
+.pedidosT__encabezado th{
+	background-color: #ffef96;
+	padding-left: 30px;
+	text-align: left;
+
+}
+
+.pedidosT__row td{
+	text-align: left;
+	padding-left: 30px;
+}
+
+
+
 
 }

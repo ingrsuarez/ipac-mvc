@@ -2,29 +2,32 @@
 		<div class="container_title">
 			<h3><i class="fas fa-tasks"></i>  INGRESAR PEDIDO: </h3>
 		</div>
-			<table class='pedidos__table'>
+			<table class='pedidosT'>
 			<thead>
-
+				<tr class="pedidosT__encabezado">
+				  <th scope='col'>Fecha</th>
+				  <th scope='col'>Solicitó</th>
+				  <th scope='col'>Artículo</th>
+				  <th scope='col'>Estado</th>
+				</tr>
 			</thead>
 			<tbody>
 			<?php	
 			$arrayLength = count($pedidos);
 			$i = 0;
-			// var_dump($board);
+			
 			while ($i < $arrayLength) {?>
-				<tr class="pedidos__row">
-					<th scope='row'>
-						<label class='table-label' for=''></label>
-					</th>						
-					<td style = 'font-size: 12px; width: 100px'><?php echo $pedidos[$i]->fecha;?></td>
-					<td> <?php echo $pedidos[$i]->nota."-";?></td>
-					<td style='padding-left: 1em'> <?php echo $pedidos[$i]->usuario;?></td>
-					<td style='padding-left: 1em'>
-						<form action="<?php echo site_url('pages/verify_task'); ?>" method ='POST'>
-							<input type="hidden" name="vid" value="<?= $board[$i]->id?>">
+				<tr class="pedidosT__row">						
+					<td> <?php echo $pedidos[$i]->fecha;?></td>
+					<td> <?php echo $pedidos[$i]->usuario."-";?></td>
+					<td> <?php echo $pedidos[$i]->articulo;?></td>
+					<td> <?php echo $pedidos[$i]->estado;?></td>
+					<!-- <td style='padding-left: 1em'>
+						<form action="" method ='POST'>
+							<input type="hidden" name="vid" value="<?= $pedidos[$i]->id?>">
 							<button type='submit' class='btn btn-verify' name='Verificar'>Verificar</button>
 						</form>
-					</td>						
+					</td> -->						
 				</tr><?php
 				$i++;
 				}

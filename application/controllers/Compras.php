@@ -23,8 +23,9 @@ class Compras extends CI_Controller {
     {
         parent::__construct();
         $this->load->library('session');
-        $this->load->model('empleados_model');
+        $this->load->model('Compras_model');
         $this->load->model('Secure_model');
+        $this->load->model('empleados_model');
         $this->load->helper('url_helper');
 
     }
@@ -33,10 +34,13 @@ class Compras extends CI_Controller {
     {
     	if ($this->session->has_userdata('usuario'))
         {
+
+        	$pedidos = $this->Compras_model->get_pedidos();
+        	$data['pedidos'] = $pedidos;
         	$this->load->view('templates/head');
         	$this->load->view('templates/header_compras');
         	$this->load->view('templates/aside', $this->session->userdata());
-        	$this->load->view('compras/pedidos');
+        	$this->load->view('compras/pedidos',$data);
         	$this->load->view('templates/footer');
         }else
         {
