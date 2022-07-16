@@ -194,7 +194,7 @@ body {
 
 .dropdown__item--active {
 	background-color: #f1f878;
-	color: #454545;
+	color: #454545; 
 }
 
 .inside__menu {
