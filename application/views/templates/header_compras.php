@@ -5,21 +5,24 @@
 			<div class="menu__logo" ><img src="<?php echo base_url(); ?>images/logo-color.png"></div>
 			<ul class="menu__item" >
 				<li class="dropdown__item"><a href="<?php echo base_url(); ?>index.php">INICIO</a></li>
-				<li class="dropdown__item active" id="home">
+				<li class="dropdown__item dropdown__item--active" id="home">
 					<a href="#" >PEDIDOS</a>
 					<ul class="inside__menu" id="home__inside">
 						<li class="inside__item">
 							<a href="<?php echo base_url(); ?>index.php/compras/pedidos/">Pedidos</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Recibir compra</a>
+							<a href="#">Mis pedidos</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Home 3</a>
+							<a href="#">Editar pedido</a>
+						</li>
+						<li class="inside__item">
+							<a href="#">Compra directa</a>
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item dropdown__item--active" id="procedimientos">
+				<li class="dropdown__item" id="compras">
 					<a href="#">COMPRAS</a>
 					<ul class="inside__menu" id="procedimientos__inside">
 						<li class="inside__item">
@@ -33,7 +36,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item" id="servicios">
+				<li class="dropdown__item" id="proveedores">
 					<a href="#" >PROVEEDORES</a>
 					<ul class="inside__menu" id="servicios__inside">
 						<li class="inside__item">
@@ -47,7 +50,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item">
+				<li class="dropdown__item" id="articulos">
 					<a href="#">ARTICULOS</a>
 				</li>
 			</ul>

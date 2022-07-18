@@ -14,6 +14,8 @@
 
 
 .container {
+
+	position: relative;
 	background-color: #fcfefe;
 	margin: 20px;
 	width: 100%;
@@ -110,7 +112,7 @@
 }
 
 .btn-insert:hover{
-	background-color: #ffef96;
+	background-color: #d9d9d9;
 }
 
 .container_table__insert {
@@ -173,28 +175,72 @@
 
 /****************COMPRAS**************/
 
-.pedidosT {
+	.pedidosT {
+		position: relative;
+		top: 0;
+		padding-left: 10px;	
+	    border-collapse: collapse;
+	   	width: 100%;
+	   	margin-bottom: 10px;
+	}
 
-	padding-left: 10px;
-  	width: 100%;
-    border-collapse: collapse;
-}
 
-.pedidosT tr:nth-child(even){
-	background-color: #f2f2f2;
-}
+	.pedidosT tr:nth-child(even){
+		background-color: #f2f2f2;
+	}
 
-.pedidosT__encabezado th{
-	background-color: #ffef96;
-	padding-left: 30px;
-	text-align: left;
+	.pedidosT__encabezado th{
+		background-color: #ffef96;
+		padding-left: 30px;
+		text-align: left;
 
-}
+	}
 
-.pedidosT__row td{
-	text-align: left;
-	padding-left: 30px;
-}
+	.pedidosT__fecha {
+		width: 10%;
+	}
+
+	.pedidosT__usuario {
+		width: 10%;
+	}
+	.pedidosT__row td{
+		text-align: left;
+		padding-left: 30px;
+	}
+
+	.container_insert{
+		position: absolute;
+		bottom: 0;
+		padding: 10px;
+		margin: 10px 100px 10px 10px ;
+		background-color: #ffef96;
+		border-radius: 10px;
+		max-width: 440px;
+		box-shadow: 5px 5px 5px #555;
+
+	}
+
+	.container__form {
+		display: inline-block;
+	}
+
+	.container_insert form {
+		margin: 0px;
+	}
+
+
+	/*INPUTS AND BUTTONS*/
+	.col-md-4 {
+		height: 40px;
+		width: auto;
+		font-size: 20px;
+
+	}
+	.col-md-4 input, select{
+		height: 30px;
+		width: auto;
+		border-radius: 4px;
+	}
 
 .container__table {
 	overflow-x: auto;

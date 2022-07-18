@@ -13,7 +13,7 @@
 <!-- 	<link rel="stylesheet" href="css/styleBarras.css"> -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/header.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/containers.css">
-	
+
 	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url(); ?>/images/favico/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url(); ?>/images/favico/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>/images/favico/favicon-16x16.png">
