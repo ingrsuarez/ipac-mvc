@@ -137,6 +137,7 @@ span > a {
 
 	.menu__horiz {	display: block;  }
 	aside {
+		position: relative;
 		background-color: #194756;
 		display: flex;
 		color: #fefefe;
@@ -149,7 +150,10 @@ span > a {
 		padding-left: 20px;
 		padding-right: 0px;
 		margin-right: 10px;
+/*		margin-bottom: -5000px;
+		padding-bottom: 5000px;*/
 		z-index: 30;
+/*		overflow: hidden;*/
 
 	}
 		/*BARRA HORIZONTAL*/
