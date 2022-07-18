@@ -6,8 +6,8 @@
 			<ul class="menu__item" >
 				<li class="dropdown__item dropdown__item--active" id="home"><a href="<?php echo base_url(); ?>index.php">INICIO</a></li> 
 				<li class="dropdown__item" id="compras">
-					<a href="#" >COMPRAS</a>
-					<ul class="inside__menu" id="compras__inside">
+					<a href="<?php echo base_url(); ?>index.php/compras/pedidos/" >COMPRAS</a>
+					<!-- <ul class="inside__menu" id="compras__inside">
 						<li class="inside__item">
 							<a href="<?php echo base_url(); ?>index.php/compras/pedidos/">Pedidos</a>
 						</li>
@@ -17,7 +17,7 @@
 						<li class="inside__item">
 							<a href="#">Articulos</a>
 						</li>
-					</ul>
+					</ul> -->
 				</li>
 				<li class="dropdown__item" id="procedimientos">
 					<a href="#">PROCEDIMIENTOS</a>
