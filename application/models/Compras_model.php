@@ -18,7 +18,7 @@ class Compras_model extends CI_Model {
 	public function get_pedidos($filter='', $param='')
 	{
 		//Return pedidos table notes
-		$sql = "SELECT * FROM ".self::vpedidos_table." ORDER BY estado DESC, fecha DESC ";
+		$sql = "SELECT * FROM ".self::vpedidos_table." ORDER BY estado DESC, fecha DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;

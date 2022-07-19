@@ -36,8 +36,7 @@
 		</table>
 		
 		<div class="container_insert">
-			<form method="POST" action="<?php echo site_url('compras/insertar_pedido'); ?>">
-					  
+			<form method="POST" action="<?php echo site_url('compras/insertar_pedido'); ?>">	  
 			  	<div class="container__form">
 					<div class="col-md-4">
 					  <label for="iArticulo">Articulo</label>
