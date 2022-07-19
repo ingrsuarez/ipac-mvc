@@ -5,6 +5,7 @@ class Compras_model extends CI_Model {
 
 	public $usrId = "";
 	const vpedidos_table = "vpedidos";
+	const pedidos_table = "pedidos";
 
 	public function __constructor ($id=""){
 
@@ -22,6 +23,23 @@ class Compras_model extends CI_Model {
 		$result = $query->result();
 		return $result;
 
+	}
+
+	public function insert_pedido($array)
+	{
+		
+		$userId = $this->session->userdata('id');
+        $today = date("Y-m-d H:i:s");
+		$row = array('fecha' => $today,
+					 'solicita' => $array['id'], 
+					 'articulo' => $array['articulo'], 
+					 'estado' => 'pendiente', 
+					 'sector' => $array['sector']);
+		
+		$this->db->insert(self::pedidos_table,$row); 
+		// $this->db->where('id', $id);
+		// $this->db->update(self::board_table,$row);
+			
 	}
 
 

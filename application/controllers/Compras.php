@@ -47,8 +47,22 @@ class Compras extends CI_Controller {
         	 redirect('/secure/login', 'refresh');
         }
     }
-
-
+    public function insertar_pedido($id='')
+    {
+    	$data['icheck'] = $this->input->post('iCheck');
+    	$data['sector'] = $this->input->post('sector');
+    	$data['articulo'] = $this->input->post('articulo_pedido');
+    	$data['id'] = $this->session->userdata('id');
+    	$data['username'] = $this->session->userdata('usuario');
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$this->Compras_model->insert_pedido($data);
+        	redirect('/compras/pedidos', 'refresh');
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
+    }
 }
 
 

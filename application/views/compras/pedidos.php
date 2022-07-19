@@ -36,15 +36,15 @@
 		</table>
 		
 		<div class="container_insert">
-			<form method="POST">
+			<form method="POST" action="<?php echo site_url('compras/insertar_pedido'); ?>">
 					  
 			  	<div class="container__form">
 					<div class="col-md-4">
 					  <label for="iArticulo">Articulo</label>
-					  <input type="text" class="form-control" id="iArticulo" name="iArticulo" autofocus>
+					  <input type="text" class="form-control" id="articulo_pedido" name="articulo_pedido" autofocus>
 					
 					  <label for="iSector">Sector</label>
-					  <select class="form-control" id="iSector" name="iSector" >
+					  <select class="form-control" id="iSector" name="sector" >
 						
 						<option value='7' selected>Quimica</option>
 						<option value='8'>Hematologia</option>
@@ -53,7 +53,7 @@
 						<option value='13'>Bacteriologia</option>
 						<option value='14'>Toxicologia</option>
 						<option value='11'>Sala Extraccion</option>
-						<option value='14'>Aguas</option>
+						<option value='16'>Aguas</option>
 						<option value='15'>Veterinaria</option>
 						<option value='3'>Mantenimiento</option>
 						<option value='3'>Limpieza</option>
