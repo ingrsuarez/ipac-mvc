@@ -14,10 +14,12 @@
 
 
 	.container {
-
-		position: relative;
+		display: flex;
+		flex-direction: column;
 		background-color: #fcfefe;
-		margin: 20px;
+		margin-left: 220px;
+		margin-right: 10px;
+		margin-top: 60px;
 		width: 100%;
 		min-width: 300px;
 		border-radius: 15px;
@@ -215,7 +217,8 @@
 	}
 
 	.container_insert{
-		position: absolute;
+		display: flex;
+		position: relative;
 		bottom: 0;
 		padding: 10px;
 		margin: 10px 100px 10px 10px ;
