@@ -42,18 +42,21 @@
 	}
 
 	.board{
-
+		display: flex;
 		background-color: #fcfefe;
-		margin: 20px;
+		margin-left: 220px;
+		margin-right: 10px;
+		margin-top: 60px;
 		padding: 10px 40px 10px 10px;
 		min-width: 300px;
-		width: 100%;
-		height: 90vh;
-	  	overflow-y: auto;
-	  	overflow-x: hidden;
+		width: 80vw;
+		height: 100%;
+/*	  	overflow-y: auto;
+	  	overflow-x: hidden;*/
 		border-radius: 15px;
 		box-shadow: 5px 5px 5px #555;
 		border-width: medium;
+		z-index: 0;
 	}
 
 	.board__table{
@@ -251,8 +254,11 @@
 
 	/***FOOTER*****/
 	.footer {
-		position: relative;
+		position: fixed;
 		bottom: 0px;
+		width: 80vw;
+		left: 15vw;
+		margin-bottom: 0px;
 		background-color: white;
 		z-index: 100;
 	}
