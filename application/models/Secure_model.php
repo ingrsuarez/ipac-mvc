@@ -23,6 +23,18 @@ class Secure_model extends CI_Model {
 
 	}
 
+	public function access($sector="")
+	{
+		if (!empty($sector))
+		{
+			$puesto = $this->session->userdata('puesto');
+			$sql = "SELECT acceso FROM `accesos` WHERE puesto =  '".$puesto."' AND sector = '".$sector."' LIMIT 1";
+			$query = $this->db->query($sql);
+			$result = $query->row_array();
+			return $result;
+		}else
+		{return FALSE;}
 
+	}
 
 }

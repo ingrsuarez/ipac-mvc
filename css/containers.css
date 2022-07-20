@@ -96,6 +96,20 @@
 		background-color: #feb236;
 	}
 
+	.btn-delete {
+		background-color: #ffef96;
+		border-radius: 5px;
+		padding: 3px;
+		margin: 3px;
+		border: 1px solid;
+		border-color: #feb236;
+		box-shadow: 5px 5px 5px #555;
+	}
+
+	.btn-delete:hover{
+		background-color: #feb236;
+	}
+
 	.btn-note{
 		position: absolute;
 		bottom:   100px;
@@ -195,6 +209,11 @@
 
 	.pedidosT tr:nth-child(even){
 		background-color: #f2f2f2;
+	}
+
+	.pedidosT tr:hover {
+		background-color: #18f7f0;
+		cursor: context-menu; 
 	}
 
 	.pedidosT__encabezado th{

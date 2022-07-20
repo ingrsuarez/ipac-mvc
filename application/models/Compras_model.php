@@ -25,6 +25,35 @@ class Compras_model extends CI_Model {
 
 	}
 
+	public function get_mispedidos($user='')
+	{
+		//Return pedidos table notes
+		$sql = "SELECT * FROM ".self::vpedidos_table." WHERE usuario = '".$user."' ORDER BY estado DESC, fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+
+	}
+
+	public function editar_pedidos($user='')
+	{
+		//Return pedidos table notes
+		$sql = "SELECT * FROM ".self::vpedidos_table." WHERE estado = 'pendiente' ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+
+	}
+
+	public function editar_pedido($action='', $id='')
+	{
+		//Delet pedidos row
+		$sql = "UPDATE `pedidos` SET `estado`='".$action."',`fechap`='hoy' WHERE id = ".$id;
+		$query = $this->db->query($sql);		
+
+	}
+
+
 	public function insert_pedido($array)
 	{
 		

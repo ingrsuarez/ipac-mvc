@@ -18,6 +18,7 @@ class Compras extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
+	const sector = "2";
 
 	public function __construct()
     {
@@ -37,6 +38,7 @@ class Compras extends CI_Controller {
 
         	$pedidos = $this->Compras_model->get_pedidos();
         	$data['pedidos'] = $pedidos;
+        	$data['misPedidos'] = "";
         	$this->load->view('templates/head');
         	$this->load->view('templates/header_compras');
         	$this->load->view('templates/aside', $this->session->userdata());
@@ -47,21 +49,95 @@ class Compras extends CI_Controller {
         	 redirect('/secure/login', 'refresh');
         }
     }
-    public function insertar_pedido($id='')
+
+    public function mis_pedidos($value='')
     {
-    	$data['icheck'] = $this->input->post('iCheck');
-    	$data['sector'] = $this->input->post('sector');
-    	$data['articulo'] = $this->input->post('articulo_pedido');
-    	$data['id'] = $this->session->userdata('id');
-    	$data['username'] = $this->session->userdata('usuario');
     	if ($this->session->has_userdata('usuario'))
         {
-        	$this->Compras_model->insert_pedido($data);
-        	redirect('/compras/pedidos', 'refresh');
+        	$user = $this->session->userdata('usuario');
+        	$pedidos = $this->Compras_model->get_mispedidos($user);
+        	$data['pedidos'] = $pedidos;
+        	$data['misPedidos'] = "checked";
+        	$this->load->view('templates/head');
+        	$this->load->view('templates/header_compras');
+        	$this->load->view('templates/aside', $this->session->userdata());
+        	$this->load->view('compras/pedidos',$data);
+        	$this->load->view('templates/footer');
         }else
         {
         	 redirect('/secure/login', 'refresh');
         }
+    }
+
+    public function editar_pedidos()
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$access = $this->session->userdata('puesto');
+        	$delete = $this->input->post('delete');
+        	$user = $this->session->userdata('usuario');
+        	$pedidos = $this->Compras_model->editar_pedidos($user);
+        	$data['pedidos'] = $pedidos;
+        	$data['misPedidos'] = "";
+        	$data['btn_anular'] = "";
+        	$this->load->view('templates/head');
+        	$this->load->view('templates/header_compras');
+        	$this->load->view('templates/aside', $this->session->userdata());
+        	$this->load->view('compras/editar_pedidos',$data);
+        	$this->load->view('templates/footer');
+        	
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
+    }
+
+
+    public function anular_pedido()
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$access = (int) $this->Secure_model->access(self::sector);
+        	$delete = $this->input->post('delete');
+        	if (!empty($access) && $access <= 2){
+        		$this->Compras_model->editar_pedido("anulado",$delete);
+        		redirect('/compras/editar_pedidos', 'refresh');
+        	}
+        	// $user = $this->session->userdata('usuario');
+        	// $pedidos = $this->Compras_model->editar_pedidos();
+        	// $data['pedidos'] = $pedidos;
+        	// $data['misPedidos'] = "";
+        	// $data['btn_anular'] = "";
+        	// $this->load->view('templates/head');
+        	// $this->load->view('templates/header_compras');
+        	// $this->load->view('templates/aside', $this->session->userdata());
+        	// $this->load->view('compras/editar_pedidos',$data);
+        	// $this->load->view('templates/footer');
+        	
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
+    }
+
+    public function insertar_pedido($id='')
+    {
+    	$data['icheck'] = $this->input->post('iCheck');
+    	if ($data['icheck'])
+    	{
+	    	$data['sector'] = $this->input->post('sector');
+	    	$data['articulo'] = $this->input->post('articulo_pedido');
+	    	$data['id'] = $this->session->userdata('id');
+	    	$data['username'] = $this->session->userdata('usuario');
+	    	if ($this->session->has_userdata('usuario'))
+	        {
+	        	$this->Compras_model->insert_pedido($data);
+	        	redirect('/compras/pedidos', 'refresh');
+	        }else
+	        {
+	        	 redirect('/secure/login', 'refresh');
+	        }
+	    }else{redirect('/compras/pedidos', 'refresh');}
     }
 }
 

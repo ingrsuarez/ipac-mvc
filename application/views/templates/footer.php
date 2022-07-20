@@ -4,6 +4,6 @@
                 </div>
                 
         </body>
-    <script type = 'text/javascript' src = "<?php echo base_url();?>js/codigoJava.js"></script>
+
     <script type = 'text/javascript' src = "<?php echo base_url();?>js/asideJava.js"></script>
 </html>

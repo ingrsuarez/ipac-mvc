@@ -9,6 +9,7 @@
 				  <th class="pedidosT__usuario" scope='col'>Solicitó <input class="form-check-input" type="checkbox" id="userCheck" name="userCheck" <?php echo $misPedidos ?>></th>
 				  <th scope='col'>Artículo</th>
 				  <th scope='col'>Estado</th>
+				  <th scope='col'>Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,7 +22,15 @@
 					<td class="pedidosT__fecha"> <?php echo $pedidos[$i]->fecha;?></td>
 					<td> <?php echo $pedidos[$i]->usuario."-";?></td>
 					<td> <?php echo $pedidos[$i]->articulo;?></td>
-					<td> <?php echo $pedidos[$i]->estado;?></td>						
+					<td> <?php echo $pedidos[$i]->estado;?></td>
+					<td style='white-space: nowrap'>
+						<form action="<?php echo site_url('compras/anular_pedido'); ?>" method ='POST'>
+							<input type="hidden" name="avilable" value="<?= $pedidos[$i]->id?>">
+							<button type='submit' style='visibility:<?php echo $btn_editar ?>' class='btn btn-delete' name='edit'>Editar</button>
+							<input type="hidden" name="delete" value="<?= $pedidos[$i]->id?>">
+							<button type='submit' class='btn btn-delete' style='visibility:<?php echo $btn_anular ?>'>Anular</button>
+						</form>
+					</td>						
 				</tr><?php
 				$i++;
 				}
