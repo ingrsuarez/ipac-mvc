@@ -92,33 +92,47 @@ class Compras extends CI_Controller {
         }
     }
 
+    public function editar_pedido()
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$access =  (int)$this->Secure_model->access(self::sector)['acceso'];
+
+        	$edit = $this->input->post('articulo')[0];
+        	$id = $this->input->post('pedido')[0];
+        	//User has access to edit
+        	if (!empty($access) && $access <= 2){
+
+        		$this->Compras_model->editar_pedido($edit,$id);
+        		redirect('/compras/pedidos', 'refresh');
+        	}else{redirect('/compras/pedidos', 'refresh');}
+        	
+        }else
+        {	//No session started
+        	 redirect('/secure/login', 'refresh');
+        }
+    }
 
     public function anular_pedido()
     {
     	if ($this->session->has_userdata('usuario'))
         {
         	$access = (int) $this->Secure_model->access(self::sector);
-        	$delete = $this->input->post('delete');
+        	$edit = $this->input->post('delete');
+        	//User has access to edit
         	if (!empty($access) && $access <= 2){
-        		$this->Compras_model->editar_pedido("anulado",$delete);
+
+        		$this->Compras_model->anular_pedido("anulado",$edit);
         		redirect('/compras/editar_pedidos', 'refresh');
         	}
-        	// $user = $this->session->userdata('usuario');
-        	// $pedidos = $this->Compras_model->editar_pedidos();
-        	// $data['pedidos'] = $pedidos;
-        	// $data['misPedidos'] = "";
-        	// $data['btn_anular'] = "";
-        	// $this->load->view('templates/head');
-        	// $this->load->view('templates/header_compras');
-        	// $this->load->view('templates/aside', $this->session->userdata());
-        	// $this->load->view('compras/editar_pedidos',$data);
-        	// $this->load->view('templates/footer');
         	
         }else
-        {
+        {	//No session started
         	 redirect('/secure/login', 'refresh');
         }
     }
+
+
 
     public function insertar_pedido($id='')
     {

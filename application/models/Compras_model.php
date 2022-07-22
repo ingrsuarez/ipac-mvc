@@ -45,9 +45,17 @@ class Compras_model extends CI_Model {
 
 	}
 
-	public function editar_pedido($action='', $id='')
+	public function editar_pedido($item='', $id='')
 	{
-		//Delet pedidos row
+		//Edit pedidos row
+		$sql = "UPDATE `pedidos` SET `articulo`='".$item."',`fechap`='hoy' WHERE id = ".$id;
+		$query = $this->db->query($sql);		
+
+	}
+
+	public function anular_pedido($action='', $id='')
+	{
+		//Delete pedidos row
 		$sql = "UPDATE `pedidos` SET `estado`='".$action."',`fechap`='hoy' WHERE id = ".$id;
 		$query = $this->db->query($sql);		
 

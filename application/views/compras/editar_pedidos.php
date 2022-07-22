@@ -9,7 +9,7 @@
 				  <th class="pedidosT__usuario" scope='col'>Solicitó <input class="form-check-input" type="checkbox" id="userCheck" name="userCheck" <?php echo $misPedidos ?>></th>
 				  <th scope='col'>Artículo</th>
 				  <th scope='col'>Estado</th>
-				  <th scope='col'>Opciones</th>
+				  <th scope='col' colspan="2">Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,14 +21,18 @@
 				<tr class="pedidosT__row">						
 					<td class="pedidosT__fecha"> <?php echo $pedidos[$i]->fecha;?></td>
 					<td> <?php echo $pedidos[$i]->usuario."-";?></td>
-					<td> <?php echo $pedidos[$i]->articulo;?></td>
+					<td> <input class="form-check-input" form="edit<?php echo$i?>" type="text" name="articulo[]" value="<?php echo $pedidos[$i]->articulo;?>"></td>
 					<td> <?php echo $pedidos[$i]->estado;?></td>
-					<td style='white-space: nowrap'>
-						<form action="<?php echo site_url('compras/anular_pedido'); ?>" method ='POST'>
-							<input type="hidden" name="avilable" value="<?= $pedidos[$i]->id?>">
-							<button type='submit' style='visibility:<?php echo $btn_editar ?>' class='btn btn-delete' name='edit'>Editar</button>
+					<td>
+						<form action="<?php echo site_url('compras/editar_pedido'); ?>" id='edit<?php echo$i?>' method ='POST'>
+							<input type="hidden" name="pedido[]" value="<?= $pedidos[$i]->id?>">
+							<button type='submit' class='btn btn-delete' name='edit'>Editar</button>
+						</form>
+					</td>
+					<td>
+						<form action="<?php echo site_url('compras/anular_pedido'); ?>" method ='POST'>	
 							<input type="hidden" name="delete" value="<?= $pedidos[$i]->id?>">
-							<button type='submit' class='btn btn-delete' style='visibility:<?php echo $btn_anular ?>'>Anular</button>
+							<button type='submit' class='btn btn-delete'>Anular</button>
 						</form>
 					</td>						
 				</tr><?php
