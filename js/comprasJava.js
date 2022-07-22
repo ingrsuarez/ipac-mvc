@@ -11,10 +11,10 @@ userCheck.addEventListener("change", function (evt) {
 	var actualMethod = urlC[5]; //number 5 in production!!!!!!!!!!!!!!!!!!!!!!!!
 
 	if (actualMethod == "mis_pedidos"){
-		window.location.href = base_url+"/ipac-mvc/index.php/compras/pedidos";	
+		window.location.href = base_url+"/index.php/compras/pedidos";	
 
 	}else{
-		window.location.href = base_url+"/ipac-mvc/index.php/compras/mis_pedidos";
+		window.location.href = base_url+"/index.php/compras/mis_pedidos";
 	}
 })
 
