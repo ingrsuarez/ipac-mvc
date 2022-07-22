@@ -9,7 +9,7 @@ userCheck.addEventListener("change", function (evt) {
 	var url = window.location.href;
 	var urlC = url.split("/")
 
-	alert("urlC"+urlC[5]+" url: "+url);
+	alert("urlC: "+urlC[0]+" url: "+url+" rulpath: "+window.location.pathname);
 	// if (window.location.href == "http://[::1]/ipac-mvc/index.php/compras/mis_pedidos"){
 	// 	alert(base_url+"/ipac-mvc/index.php/compras/pedidos")
 	// 	// window.location.href = base_url+"/ipac-mvc/index.php/compras/pedidos";	
