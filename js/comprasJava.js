@@ -16,5 +16,6 @@ userCheck.addEventListener("change", function (evt) {
 	}else{
 		window.location.href = base_url+"/index.php/compras/mis_pedidos";
 	}
+	// CARLOS SUAREZ
 })
 
