@@ -54,6 +54,7 @@ class Compras extends CI_Controller {
     {
     	if ($this->session->has_userdata('usuario'))
         {
+        	$this->session->set_userdata('last_page', 'editar_pedidos');
         	$user = $this->session->userdata('usuario');
         	$pedidos = $this->Compras_model->get_mispedidos($user);
         	$data['pedidos'] = $pedidos;
@@ -73,10 +74,11 @@ class Compras extends CI_Controller {
     {
     	if ($this->session->has_userdata('usuario'))
         {
+        	$this->session->set_userdata('last_page', 'editar_pedidos');
         	$access = $this->session->userdata('puesto');
         	$delete = $this->input->post('delete');
         	$user = $this->session->userdata('usuario');
-        	$pedidos = $this->Compras_model->editar_pedidos($user);
+        	$pedidos = $this->Compras_model->pedidos_pendientes($user);
         	$data['pedidos'] = $pedidos;
         	$data['misPedidos'] = "";
         	$data['btn_anular'] = "";
@@ -95,16 +97,16 @@ class Compras extends CI_Controller {
     public function editar_pedido()
     {
     	if ($this->session->has_userdata('usuario'))
-        {
+        {	
+        	$lastPage = $this->session->userdata('last_page');
         	$access =  (int)$this->Secure_model->access(self::sector)['acceso'];
-
         	$edit = $this->input->post('articulo')[0];
         	$id = $this->input->post('pedido')[0];
         	//User has access to edit
         	if (!empty($access) && $access <= 2){
 
         		$this->Compras_model->editar_pedido($edit,$id);
-        		redirect('/compras/pedidos', 'refresh');
+        		redirect('/compras/'.$lastPage, 'refresh');
         	}else{redirect('/compras/pedidos', 'refresh');}
         	
         }else
@@ -117,13 +119,14 @@ class Compras extends CI_Controller {
     {
     	if ($this->session->has_userdata('usuario'))
         {
+        	$lastPage = $this->session->userdata('last_page');
         	$access = (int) $this->Secure_model->access(self::sector);
         	$edit = $this->input->post('delete');
         	//User has access to edit
         	if (!empty($access) && $access <= 2){
 
         		$this->Compras_model->anular_pedido("anulado",$edit);
-        		redirect('/compras/editar_pedidos', 'refresh');
+        		redirect('/compras/'.$lastPage, 'refresh');
         	}
         	
         }else
@@ -153,6 +156,39 @@ class Compras extends CI_Controller {
 	        }
 	    }else{redirect('/compras/pedidos', 'refresh');}
     }
+
+    public function confeccionarOC()
+    {
+    	if ($this->session->has_userdata('usuario'))
+	        {	
+	        	$this->session->set_userdata('last_page', 'confeccionarOC');
+	        	$access = (int) $this->Secure_model->access(self::sector);
+	        	$data['id'] = $this->session->userdata('id');
+	        	$user = $this->session->userdata('usuario');
+	        	$pedidos = $this->Compras_model->pedidos_equivalentes($user);
+	        	$data['pedidos'] = $pedidos;
+
+	        	$proveedores = $this->Compras_model->list_proveedores();
+	        	$data['proveedores'] = $proveedores;
+	        	$this->load->view('templates/head');
+	        	$this->load->view('templates/header_compras');
+	        	$this->load->view('templates/aside', $this->session->userdata());
+	        	$this->load->view('compras/confeccionar_OC',$data);
+	        	$this->load->view('templates/footer');
+
+			}else
+	        {
+	        	 redirect('/secure/login', 'refresh');
+	        }
+
+    }
+
+
+
+
+
+
+
 }
 
 

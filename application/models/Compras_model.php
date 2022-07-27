@@ -6,6 +6,7 @@ class Compras_model extends CI_Model {
 	public $usrId = "";
 	const vpedidos_table = "vpedidos";
 	const pedidos_table = "pedidos";
+	const proveedores_table = "proveedores";
 
 	public function __constructor ($id=""){
 
@@ -35,12 +36,26 @@ class Compras_model extends CI_Model {
 
 	}
 
-	public function editar_pedidos($user='')
+	public function pedidos_pendientes($user='')
 	{
 		//Return pedidos table notes
 		$sql = "SELECT * FROM ".self::vpedidos_table." WHERE estado = 'pendiente' ORDER BY fecha DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
+		return $result;
+
+	}
+
+	public function pedidos_equivalentes($user='')
+	{
+		//Return pedidos table notes
+		 // "SELECT * FROM ".self::vpedidos_table." WHERE estado = 'pendiente' ORDER BY fecha DESC";
+		 $sql = "SELECT vpedidos.id, vpedidos.fecha, vpedidos.articulo AS pedido, articulos.nombre, articulos.id AS idArt, articulos.marca FROM `articulos` INNER JOIN vpedidos ON articulos.nombre LIKE CONCAT('%',vpedidos.articulo,'%') ORDER BY vpedidos.articulo";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		
+
+
 		return $result;
 
 	}
@@ -74,11 +89,17 @@ class Compras_model extends CI_Model {
 					 'sector' => $array['sector']);
 		
 		$this->db->insert(self::pedidos_table,$row); 
-		// $this->db->where('id', $id);
-		// $this->db->update(self::board_table,$row);
+
 			
 	}
 
+	public function list_proveedores($value='')
+	{
+		$sql = "SELECT * FROM ".self::proveedores_table." ORDER BY peso DESC, nombre ASC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
 
 }
 

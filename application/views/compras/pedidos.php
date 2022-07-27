@@ -35,7 +35,8 @@
 					<div class="col-md-4">
 					  <label for="iArticulo">Articulo</label>
 					  <input type="text" class="form-control" id="articulo_pedido" name="articulo_pedido" autofocus>
-					
+					</div>
+					<div class="col-md-4">
 					  <label for="iSector">Sector</label>
 					  <select class="form-control" id="iSector" name="sector" >
 						
