@@ -149,6 +149,7 @@ em {
 @media screen and (min-width: 800px) {
 
 	.menu__horiz {	display: block;  }
+
 	aside {
 		position: fixed;
 		top: 50px;
@@ -156,6 +157,7 @@ em {
 		color: #fefefe;
 		width: 15vw;
 		min-width: 200px;
+		max-width: 201px;
 		height: 100vh;
 		align-content: center;
 		padding-top: 20px;

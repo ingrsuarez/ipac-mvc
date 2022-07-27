@@ -129,7 +129,7 @@
 	.btn-insert{
 		background-color: #feb236;
 		padding: 10px;
-		margin: 5px;
+		margin-top: 30px;
 
 	}
 
@@ -220,6 +220,16 @@
 		background-color: #ffef96;
 		padding-left: 30px;
 		text-align: left;
+	}
+
+	.pedidosTh__select {
+		width: 30%;
+		max-width: 500px;
+	}
+
+	.pedidosT__row td{
+		text-align: left;
+		padding-left: 30px;
 
 	}
 
@@ -230,9 +240,21 @@
 	.pedidosT__usuario {
 		width: 10%;
 	}
+
+	.pedidosT__select {
+		width: 95%;
+		max-width: 500px;
+	}
+
+	.pedidosT__cantidad {
+		width: 20%;
+		max-width: 300px;
+	}
+
 	.pedidosT__row td{
 		text-align: left;
 		padding-left: 30px;
+
 	}
 
 	.container_insert{
