@@ -50,7 +50,7 @@ class Compras_model extends CI_Model {
 	{
 		//Return pedidos table notes
 		 // "SELECT * FROM ".self::vpedidos_table." WHERE estado = 'pendiente' ORDER BY fecha DESC";
-		 $sql = "SELECT vpedidos.id, vpedidos.fecha, vpedidos.articulo AS pedido, articulos.nombre, articulos.id AS idArt, articulos.marca FROM `articulos` INNER JOIN vpedidos ON articulos.nombre LIKE CONCAT('%',SUBSTRING(vpedidos.articulo,1,5),'%') WHERE vpedidos.estado = 'pendiente' ORDER BY vpedidos.articulo";
+		 $sql = "SELECT vpedidos.id, vpedidos.fecha, vpedidos.articulo AS pedido, articulos.nombre, articulos.id AS idArt, articulos.marca FROM `articulos` INNER JOIN vpedidos ON articulos.nombre LIKE CONCAT('%',SUBSTRING_INDEX(vpedidos.articulo,' ',1),'%') WHERE vpedidos.estado = 'pendiente' ORDER BY vpedidos.articulo";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		
