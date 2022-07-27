@@ -129,7 +129,7 @@
 	.btn-insert{
 		background-color: #feb236;
 		padding: 10px;
-		margin: 15px;
+		margin: 5px;
 
 	}
 
@@ -200,16 +200,13 @@
 	.pedidosT {
 		position: relative;
 		top: 0;
-		display: block;
+		padding-left: 10px;	
 	    border-collapse: collapse;
 	   	width: 100%;
 	   	margin-bottom: 10px;
 	}
 
-	.pedidosT thead {
-		width: max-content;
 
-	}
 	.pedidosT tr:nth-child(even){
 		background-color: #f2f2f2;
 	}
@@ -220,12 +217,9 @@
 	}
 
 	.pedidosT__encabezado th{
-
 		background-color: #ffef96;
-		padding-left: 20px;
+		padding-left: 30px;
 		text-align: left;
-		height: 30px;
-		
 
 	}
 
@@ -236,24 +230,9 @@
 	.pedidosT__usuario {
 		width: 10%;
 	}
-
-	.pedidosT__select {
-		max-height: 40px;
-		margin-top: 20px;
-	}
-
-	.pedidosT__row {
-		height: 40px;
-		max-height: 40px;
-		max-width: 300px;
-	}
-
 	.pedidosT__row td{
 		text-align: left;
-		padding-left: 10px;
-		height: 40px;
-		max-height: 40px;
-		max-width: 300px;
+		padding-left: 30px;
 	}
 
 	.container_insert{
@@ -264,52 +243,35 @@
 		margin: 10px 100px 10px 10px ;
 		background-color: #ffef96;
 		border-radius: 10px;
-		max-width: 500px;
+		max-width: 440px;
 		box-shadow: 5px 5px 5px #555;
 
 	}
 
 	.container__form {
-		display: block;
-		padding-right: 40px;
-		height: 100px;
-
+		display: inline-block;
 	}
 
 	.container_insert form {
 		margin: 0px;
-		width: 500px;
-/*		height: 180px;*/
-		display: inline-block;
-
 	}
 
 
 	/*INPUTS AND BUTTONS*/
 	.col-md-4 {
-		display: block;
-/*		height: 40px;*/
-		width: 80%;
+		height: 40px;
+		width: auto;
 		font-size: 20px;
-
 
 	}
 	.col-md-4 input, select{
-		height: 25px;
+		height: 30px;
 		width: auto;
 		border-radius: 4px;
-		padding-right: 20px;
-		margin-bottom: 0px;
-		max-width: 300px;
 	}
 
 	.container__table {
 		overflow-x: auto;
-	}
-
-	.form__select {
-		width: max-content;
-		max-width: 300px;
 	}
 
 	/***FOOTER*****/
@@ -318,7 +280,6 @@
 		bottom: 0px;
 		width: 80vw;
 		left: 15vw;
-		margin-top: 30px;
 		margin-bottom: 0px;
 		background-color: white;
 		z-index: 100;
