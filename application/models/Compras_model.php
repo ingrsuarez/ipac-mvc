@@ -48,16 +48,12 @@ class Compras_model extends CI_Model {
 
 	public function pedidos_equivalentes($user='')
 	{
-		//Return pedidos table notes
-		 // "SELECT * FROM ".self::vpedidos_table." WHERE estado = 'pendiente' ORDER BY fecha DESC";
-		 $sql = "SELECT vpedidos.id, vpedidos.fecha, vpedidos.articulo AS pedido, articulos.nombre, articulos.id AS idArt, articulos.marca FROM `articulos` INNER JOIN vpedidos ON articulos.nombre LIKE CONCAT('%',SUBSTRING_INDEX(vpedidos.articulo,' ',1),'%') OR articulos.alt LIKE CONCAT('%',SUBSTRING_INDEX(vpedidos.articulo,' ',1),'%') WHERE vpedidos.estado = 'pendiente' ORDER BY vpedidos.articulo";
+		
+		//This query translate the user request to supplier items options
+		$sql = "SELECT vpedidos.id, vpedidos.fecha, vpedidos.articulo AS pedido, articulos.nombre, articulos.id AS idArt, articulos.marca FROM `articulos` INNER JOIN vpedidos ON articulos.nombre LIKE CONCAT('%',SUBSTRING_INDEX(vpedidos.articulo,' ',1),'%') OR articulos.alt LIKE CONCAT('%',SUBSTRING_INDEX(vpedidos.articulo,' ',1),'%') WHERE vpedidos.estado = 'pendiente' ORDER BY vpedidos.articulo";
 		$query = $this->db->query($sql);
 		$result = $query->result();
-		
-
-
 		return $result;
-
 	}
 
 	public function editar_pedido($item='', $id='')
@@ -98,6 +94,14 @@ class Compras_model extends CI_Model {
 		$sql = "SELECT * FROM ".self::proveedores_table." ORDER BY peso DESC, nombre ASC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
+		return $result;
+	}
+
+	public function nombre_articulo($id)
+	{
+		$sql = "SELECT nombre FROM `articulos` WHERE `id` = '".$id."'";
+		$query = $this->db->query($sql);
+		$result = $query->row_array();
 		return $result;
 	}
 

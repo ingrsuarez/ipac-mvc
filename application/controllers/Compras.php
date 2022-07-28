@@ -183,6 +183,52 @@ class Compras extends CI_Controller {
 
     }
 
+    public function generar_OC()
+    {
+    	if ($this->session->has_userdata('usuario'))
+	        {
+	        	$this->session->set_userdata('last_page', 'confeccionarOC');
+	        	$access = (int) $this->Secure_model->access(self::sector);
+	        	$data['articulo'] = $this->input->post('articulo');
+	    		$data['pedido'] = $this->input->post('pedido');
+	    		$data['cantidad'] = $this->input->post('cantidad');
+	    		$data['check'] = $this->input->post('OC_check');
+	    		$proveedor = $this->input->post('proveedor');
+	    		$user_id = $this->session->userdata('id');
+	    		$numero = date("y").date("m").date("d").$user_id.$proveedor;
+	    		$today = date("Y-m-d H:i:s");
+
+	    		echo ($numero."  ".$proveedor);
+	    		if (!empty($data['check']))
+	    		{
+	    			$list = array_intersect($data['pedido'],$data['check']);
+	    			$cantidad = array_intersect_key($data['cantidad'],$list);
+		    		$articulos = array_intersect_key($data['articulo'],$list);
+		    		// var_dump($list);
+		    		// var_dump($articulos);
+		    		// var_dump($cantidad);
+		    		foreach ($articulos as $key => $id )
+		    		{
+		    			$nombre = $this->Compras_model->nombre_articulo($id);
+		    			
+		    			echo ("Articulo: ".$id);
+		    			echo ("  Pedido: ".$list[$key]);
+		    			echo("  Cantidad: ".$cantidad[$key]." <br>");
+		    			echo($nombre['nombre']);
+
+		    
+		    		}
+		    	}else{
+		    		redirect('/compras/pedidos', 'refresh');
+		    	}
+
+	        }
+		else
+	        {
+	        	 redirect('/secure/login', 'refresh');
+	        }
+
+    }
 
 
 
