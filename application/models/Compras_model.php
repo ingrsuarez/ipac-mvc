@@ -105,6 +105,14 @@ class Compras_model extends CI_Model {
 		return $result;
 	}
 
+	public function esta_pedido($idArt='',$proveedor='')
+	{
+		$sql = "SELECT descripcion, COUNT(*) from ordencompra WHERE proveedor = ".$proveedor." AND articulo = ".$idArt." AND (estatus = 'creada' OR estatus = 'enviada') GROUP BY cantidad";
+		$query = $this->db->query($sql);
+		$result = $query->row_array();
+		return $result;		
+	}
+
 }
 
 ?>

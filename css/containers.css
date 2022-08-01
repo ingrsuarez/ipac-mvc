@@ -43,6 +43,12 @@
 
 	}
 
+	.container_table{
+		margin-top: 50px;
+		padding: 10px 40px 10px 10px;
+
+	}
+
 	.board{
 		display: flex;
 		background-color: #fcfefe;

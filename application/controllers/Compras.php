@@ -121,12 +121,13 @@ class Compras extends CI_Controller {
         {
         	$lastPage = $this->session->userdata('last_page');
         	$access = (int) $this->Secure_model->access(self::sector);
-        	$edit = $this->input->post('delete');
+        	$edit = $this->input->post('anular');
+        	var_dump($_POST);
         	//User has access to edit
         	if (!empty($access) && $access <= 2){
-
-        		$this->Compras_model->anular_pedido("anulado",$edit);
-        		redirect('/compras/'.$lastPage, 'refresh');
+        		var_dump($_POST);
+        		// $this->Compras_model->anular_pedido("anulado",$edit);
+        		// redirect('/compras/'.$lastPage, 'refresh');
         	}
         	
         }else
@@ -157,10 +158,14 @@ class Compras extends CI_Controller {
 	    }else{redirect('/compras/pedidos', 'refresh');}
     }
 
-    public function confeccionarOC()
+    public function confeccionarOC($success="")
     {
     	if ($this->session->has_userdata('usuario'))
 	        {	
+	        	if ($success == 1){
+	        		$data['mensaje'] = "Success: ".$success;
+	        		$this->load->view('templates/mensaje',$data);
+	        	}
 	        	$this->session->set_userdata('last_page', 'confeccionarOC');
 	        	$access = (int) $this->Secure_model->access(self::sector);
 	        	$data['id'] = $this->session->userdata('id');
@@ -186,47 +191,63 @@ class Compras extends CI_Controller {
     public function generar_OC()
     {
     	if ($this->session->has_userdata('usuario'))
-	        {
+	        {        	
 	        	$this->session->set_userdata('last_page', 'confeccionarOC');
 	        	$access = (int) $this->Secure_model->access(self::sector);
 	        	$data['articulo'] = $this->input->post('articulo');
 	    		$data['pedido'] = $this->input->post('pedido');
 	    		$data['cantidad'] = $this->input->post('cantidad');
 	    		$data['check'] = $this->input->post('OC_check');
-	    		$proveedor = $this->input->post('proveedor');
+	    		$proveedor = $this->input->post('proveedor');//supplier
 	    		$user_id = $this->session->userdata('id');
-	    		$numero = date("y").date("m").date("d").$user_id.$proveedor;
+	    		$numero = date("y").date("m").date("d").$user_id.$proveedor;//Purchase order number
 	    		$today = date("Y-m-d H:i:s");
+	    		$data['button'] = $this->input->post('boton'); 
 
-	    		echo ($numero."  ".$proveedor);
 	    		if (!empty($data['check']))
 	    		{
 	    			$list = array_intersect($data['pedido'],$data['check']);
 	    			$cantidad = array_intersect_key($data['cantidad'],$list);
 		    		$articulos = array_intersect_key($data['articulo'],$list);
-		    		// var_dump($list);
-		    		// var_dump($articulos);
-		    		// var_dump($cantidad);
-		    		foreach ($articulos as $key => $id )
-		    		{
-		    			$nombre = $this->Compras_model->nombre_articulo($id);
-		    			
-		    			echo ("Articulo: ".$id);
-		    			echo ("  Pedido: ".$list[$key]);
-		    			echo("  Cantidad: ".$cantidad[$key]." <br>");
-		    			echo($nombre['nombre']);
+		    		if ($data['button'] == 'Generar Orden'){
 
-		    
+			    		foreach ($articulos as $key => $id )
+			    		{
+			    			$nombre = $this->Compras_model->nombre_articulo($id);
+			    			$estaPedido = $this->Compras_model->esta_pedido($id,$proveedor);
+			    			//If the item its pending from supplier
+			    			if (empty($estaPedido)){
+			    				$insertOC = array($numero,$today,$data['pedido']);
+			    			}else{//If the item its pending from supplier
+			    				$data['mensaje'] = "Ya hay ".$estaPedido['COUNT(*)']." ".$estaPedido['descripcion']." pedida para este proveedor!";
+				    		$data['location'] = "/compras/confeccionarOC";
+				    		$this->load->view('templates/mensaje',$data);
+
+			    			}
+
+
+			    
+			    		}
+		    		}elseif ($data['button'] == 'Anular') {
+
+		    			foreach ($list as $key => $id) {
+		    				
+			    			$this->Compras_model->anular_pedido("anulado",$list[$key]);
+			    			
+			    		}
+			    		redirect('/compras/confeccionarOC', 'refresh');
 		    		}
 		    	}else{
-		    		redirect('/compras/pedidos', 'refresh');
+		    		$data['mensaje'] = "Debe seleccionar al menos un item para generar la Orden de Compra!";
+		    		$data['location'] = "/compras/confeccionarOC";
+		    		$this->load->view('templates/mensaje',$data);
+		    		
 		    	}
-
-	        }
-		else
+		    }else
 	        {
 	        	 redirect('/secure/login', 'refresh');
 	        }
+		    
 
     }
 
