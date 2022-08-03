@@ -215,18 +215,18 @@ class Compras extends CI_Controller {
 			    		{
 			    			$nombre = $this->Compras_model->nombre_articulo($id);
 			    			$estaPedido = $this->Compras_model->esta_pedido($id,$proveedor);
-			    			//If the item its pending from supplier
-			    			if (empty($estaPedido)){
-			    				$insertOC = array($numero,$today,$data['pedido']);
-			    			}else{//If the item its pending from supplier
-			    				$data['mensaje'] = "Ya hay ".$estaPedido['COUNT(*)']." ".$estaPedido['descripcion']." pedida para este proveedor!";
-				    		$data['location'] = "/compras/confeccionarOC";
-				    		$this->load->view('templates/mensaje',$data);
 
+			    			//If the item its pending from supplier
+			    			if (!empty($estaPedido)){
+			    				//If the item its pending from selected supplier
+			    				$mensaje = "Ya hay ".$estaPedido['cantidad']." ".$estaPedido['descripcion']." pedida para este proveedor!";
+					    		echo ("<script>
+					    		alert('".$mensaje."')</script>");
 			    			}
 
-
-			    
+			    			$insertOC = array('numero'=>$numero,'fecha'=>$today,'articulo'=>$articulos[$key],'pedido'=>$data['pedido'][$key],'cantidad'=>$cantidad[$key],'proveedor'=>$proveedor,'descripcion'=>$nombre['nombre']);
+			    			$this->Compras_model->insert_OC($insertOC);
+			    			 redirect('/compras/confeccionarOC', 'refresh');
 			    		}
 		    		}elseif ($data['button'] == 'Anular') {
 

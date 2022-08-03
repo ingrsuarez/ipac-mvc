@@ -31,7 +31,7 @@
 
 					
 						echo "<tr class='pedidosT__row'>";	
-							echo "<td><input class='form-check-input' type='checkbox' id='OC_check' name='OC_check[]' value='".$pedidos[$i]->id."'></td>";
+							echo "<td><input class='form-check-input' type='checkbox' id='check".$pedidos[$i]->id."' name='OC_check[]' value='".$pedidos[$i]->id."'></td>";
 							echo "<td class='pedidosT__fecha'> ".$pedidos[$i]->fecha."</td>";			
 							echo "<td><input type='hidden' name='pedido[]' value='".$pedidos[$i]->id."'>".$pedidos[$i]->pedido."</td>";
 							echo "<td>

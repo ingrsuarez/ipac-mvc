@@ -89,6 +89,17 @@ class Compras_model extends CI_Model {
 			
 	}
 
+	public function insert_OC($array)
+	{
+		$user = $this->session->userdata('id');
+		$qregistro = "INSERT INTO ordencompra (numero,fecha,articulo,pedido,cantidad,proveedor,codprov,estatus,creador,descripcion)	VALUES ('".$array['numero']."','".$array['fecha']."','".$array['articulo']."','".$array['pedido']."','".$array['cantidad']."','".$array['proveedor']."','','creada','".$user."','".$array['descripcion']."')";
+		$query = $this->db->query($qregistro);	
+		$updatep = "UPDATE `pedidos` SET `estado` = 'pedido', `fechap` = '".$array['fecha']."' WHERE `pedidos`.`id` = '".$array['pedido']."'";
+		
+		$query = $this->db->query($updatep);
+
+	}
+
 	public function list_proveedores($value='')
 	{
 		$sql = "SELECT * FROM ".self::proveedores_table." ORDER BY peso DESC, nombre ASC";
@@ -107,7 +118,7 @@ class Compras_model extends CI_Model {
 
 	public function esta_pedido($idArt='',$proveedor='')
 	{
-		$sql = "SELECT descripcion, COUNT(*) from ordencompra WHERE proveedor = ".$proveedor." AND articulo = ".$idArt." AND (estatus = 'creada' OR estatus = 'enviada') GROUP BY cantidad";
+		$sql = "SELECT SUM(cantidad) as cantidad, descripcion, COUNT(*) from ordencompra WHERE proveedor = ".$proveedor." AND articulo = ".$idArt." AND (estatus = 'creada' OR estatus = 'enviada') GROUP BY descripcion";
 		$query = $this->db->query($sql);
 		$result = $query->row_array();
 		return $result;		
