@@ -1,6 +1,5 @@
 application/config/config.*
-js/comprasJava.js
-
+js/comprasJava*
 
 .DS_Store
 
