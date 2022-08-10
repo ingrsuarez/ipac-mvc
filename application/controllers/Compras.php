@@ -121,13 +121,12 @@ class Compras extends CI_Controller {
         {
         	$lastPage = $this->session->userdata('last_page');
         	$access = (int) $this->Secure_model->access(self::sector);
-        	$edit = $this->input->post('anular');
-        	var_dump($_POST);
+        	$edit = $this->input->post('delete');
+        	
         	//User has access to edit
         	if (!empty($access) && $access <= 2){
-        		var_dump($_POST);
-        		// $this->Compras_model->anular_pedido("anulado",$edit);
-        		// redirect('/compras/'.$lastPage, 'refresh');
+        		$this->Compras_model->anular_pedido("anulado",$edit);
+        		redirect('/compras/'.$lastPage, 'refresh');
         	}
         	
         }else
@@ -215,7 +214,7 @@ class Compras extends CI_Controller {
 			    		{
 			    			$nombre = $this->Compras_model->nombre_articulo($id);
 			    			$estaPedido = $this->Compras_model->esta_pedido($id,$proveedor);
-
+			    			
 			    			//If the item its pending from supplier
 			    			if (!empty($estaPedido)){
 			    				//If the item its pending from selected supplier
@@ -225,9 +224,11 @@ class Compras extends CI_Controller {
 			    			}
 
 			    			$insertOC = array('numero'=>$numero,'fecha'=>$today,'articulo'=>$articulos[$key],'pedido'=>$data['pedido'][$key],'cantidad'=>$cantidad[$key],'proveedor'=>$proveedor,'descripcion'=>$nombre['nombre']);
+			    			
 			    			$this->Compras_model->insert_OC($insertOC);
-			    			 redirect('/compras/confeccionarOC', 'refresh');
+			    			
 			    		}
+			    		redirect('/compras/confeccionarOC', 'refresh');
 		    		}elseif ($data['button'] == 'Anular') {
 
 		    			foreach ($list as $key => $id) {
@@ -247,10 +248,70 @@ class Compras extends CI_Controller {
 	        {
 	        	 redirect('/secure/login', 'refresh');
 	        }
-		    
+    }
+
+    public function imprimirOC($param="")
+    {
+    	if ($this->session->has_userdata('usuario'))
+	        { 
+		        if (empty($param))
+		        {
+		    		
+
+			    	$proveedores = $this->Compras_model->list_proveedores();
+				    $data['proveedores'] = $proveedores;
+			    	$this->load->view('templates/head');
+			    	$this->load->view('templates/header_compras');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('compras/imprimir_OC',$data);
+
+			    	$this->load->view('templates/footer');
+
+			    	
+				}elseif ($param == "ocPendientes")
+			    {
+			    	$idProveedor = $this->input->post('iproveedor');	 
+					// $idProveedor = 1;
+					$array = $this->Compras_model->oc_pendientes($idProveedor);
+					
+			    	echo (json_encode($array[0]));
+			    	
+			    	// $proveedores = $this->Compras_model->list_proveedores();
+				    // $data['proveedores'] = $proveedores;
+			    	// $this->load->view('templates/head');
+			    	// $this->load->view('templates/header_compras');
+			    	// $this->load->view('templates/aside', $this->session->userdata());
+			    	// $this->load->view('compras/imprimir_OC',$data);
+			    	// $this->load->view('templates/footer');
+		    	}
+	    }else
+	        {
+	        	 redirect('/secure/login', 'refresh');
+	        }
+
+
 
     }
 
+    public function ocPendientes()
+    {
+
+  //   	if (!empty($_POST['iproveedor'])){
+		// $idProveedor = $_POST['iproveedor'];
+		// $enlace = new mysqli("127.0.0.1", "u540644031_suarroda", "Ipac2021", "u540644031_GestionIpac", 3306);	 
+		// $query = "SELECT * FROM `ocpendientes` WHERE proveedor = '".$idProveedor."' ORDER BY `numero`";
+		// $resultado = mysqli_query($enlace,$query);			 
+		// $cont = 0; 
+		// $data = array();
+		// while ($row = mysqli_fetch_assoc($resultado)) {
+		// 	$data[$cont] = $row;
+		// 	$cont++;
+		// }
+		$data = array("Peter"=>35, "Ben"=>37, "Joe"=>43);
+		echo $data;
+	
+
+    }
 
 
 

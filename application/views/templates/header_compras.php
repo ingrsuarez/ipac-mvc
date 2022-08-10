@@ -39,7 +39,7 @@
 							<a href="<?php echo base_url(); ?>index.php/compras/confeccionarOC/">Confeccionar OC</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Imprimir OC</a>
+							<a href="<?php echo base_url(); ?>index.php/compras/imprimirOC/">Imprimir OC</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">

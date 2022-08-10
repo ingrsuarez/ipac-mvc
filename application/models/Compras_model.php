@@ -108,6 +108,8 @@ class Compras_model extends CI_Model {
 		return $result;
 	}
 
+
+
 	public function nombre_articulo($id)
 	{
 		$sql = "SELECT nombre FROM `articulos` WHERE `id` = '".$id."'";
@@ -124,6 +126,22 @@ class Compras_model extends CI_Model {
 		return $result;		
 	}
 
+
+
+
+	public function oc_pendientes($idProveedor="1")
+	{
+		if (!empty($idProveedor))
+		{
+			$sql = "SELECT * FROM `ocpendientes` WHERE proveedor = '".$idProveedor."' ORDER BY `numero`";
+			$query = $this->db->query($sql);
+			$result = $query->row_array();
+			
+
+		}
+		return $result; 
+
+	}
 }
 
 ?>
