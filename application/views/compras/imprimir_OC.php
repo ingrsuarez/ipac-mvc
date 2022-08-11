@@ -56,21 +56,21 @@
 							$.post("ocPendientes",{iproveedor: idProveedor},function(result){	
 								// var data = JSON.parse(result);
 								var cont = 0;
-								alert("hay post: "+result);
-
+								
+								var json = JSON.parse(result);
 								
 								
-								// console.log(data);
-								// data.forEach(function(value,label){
-								// 	cont++;
-								// 	$("#tpendientes>tbody").append("<tr><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='ocselect' value='"+data[label].numero+"'></div></th><td>"+ data[label].numero+"</td><td>"+ data[label].articulos+"</td></tr>");
-								// 	$('#select'+cont).change(function() {
-								//         if ($(this).is(':checked')) {
-								//             $('input[type="checkbox"]').prop("checked", false); //uncheck all checkboxes
-  						// 					$(this).prop("checked", true);  //check the clicked one
-								//         };
-					   //  			});
-								// });
+								
+								json.forEach(function(value,label){
+									cont++;
+									$("#tpendientes>tbody").append("<tr><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='ocselect' value='"+json[label].numero+"'></div></th><td>"+ json[label].numero+"</td><td>"+ json[label].articulos+"</td></tr>");
+									$('#select'+cont).change(function() {
+								        if ($(this).is(':checked')) {
+								            $('input[type="checkbox"]').prop("checked", false); //uncheck all checkboxes
+  											$(this).prop("checked", true);  //check the clicked one
+								        };
+					    			});
+								});
 							});
 						});
 

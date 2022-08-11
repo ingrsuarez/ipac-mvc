@@ -135,13 +135,21 @@ class Compras_model extends CI_Model {
 		{
 			$sql = "SELECT * FROM `ocpendientes` WHERE proveedor = '".$idProveedor."' ORDER BY `numero`";
 			$query = $this->db->query($sql);
-			$result = $query->row_array();
+			$result = $query->result();
 			
-
+			return $result;
+		}else
+		{
+			$sql = "SELECT * FROM `ocpendientes` WHERE proveedor = '1' ORDER BY `numero`";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			
+			return $result;
 		}
-		return $result; 
+		 
 
 	}
+		
 }
 
 ?>

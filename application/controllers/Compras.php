@@ -272,10 +272,10 @@ class Compras extends CI_Controller {
 			    {
 			    	$idProveedor = $this->input->post('iproveedor');	 
 					// $idProveedor = 1;
-					$array = $this->Compras_model->oc_pendientes($idProveedor);
+					$array['pendientes'] = $this->Compras_model->oc_pendientes($idProveedor);
 					
-			    	echo (json_encode($array[0]));
-			    	
+			    	print_r(json_encode($array['pendientes']));
+			    	// $this->load->view('compras/test',$array);
 			    	// $proveedores = $this->Compras_model->list_proveedores();
 				    // $data['proveedores'] = $proveedores;
 			    	// $this->load->view('templates/head');
