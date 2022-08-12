@@ -8,6 +8,7 @@
 				<div class="container__form">
 					<div class="col-md-4">
 						<select class="form-control" id="iproveedor" name="iproveedor" >
+							<option value="">Seleccione un proveedor...</option>
 						<?php
 						  	$arrayLength = count($proveedores);
 							$i = 0;
@@ -29,7 +30,7 @@
 			</div>		
 
 				<table class='pedidosT' id="tpendientes">
-					<caption> SELECCIONAR </caption>
+					<caption><h2>SELECCIONAR</h2>  </caption>
 					<thead>
 						<tr>
 							<th scope='col'>#</th>
