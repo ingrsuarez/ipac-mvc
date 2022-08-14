@@ -3,7 +3,7 @@
 		<div class="container_title">
 			<h3><i class="fas fa-tasks"></i>  IMPRIMIR ORDEN DE COMPRA: </h3>
 		</div>
-		<form method="POST" id = "global">
+		<form method="POST" id = "global" action="<?php echo site_url('compras/pdfoc'); ?>">
 			<div class="container_insert">	  
 				<div class="container__form">
 					<div class="col-md-4">
@@ -23,7 +23,7 @@
 				
 					<div class="container__button">
 						<button type="submit" class="btn btn-insert" name="sinprov">Dejar sin proveedor</button>
-						<button type="submit" class="btn btn-insert" name="pdf">Descargar</button>
+						<button type="submit" class="btn btn-insert" name="pdf" form = "global">Descargar</button>
 					</div>
 				</div>				
 			

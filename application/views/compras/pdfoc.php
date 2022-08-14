@@ -27,7 +27,7 @@ public $fecha;
 		// Ancho del borde (1 mm)
 		$this->SetLineWidth(0.8);
 		// Logo
-		$this->Image('logohoriz.png',10,8,33);
+		$this->Image('images/logohoriz.png',10,8,33);
 		
 		// Arial bold 15
 		$this->SetFont('Times','',10);

@@ -313,7 +313,17 @@ class Compras extends CI_Controller {
 
     }
 
+     public function pdfoc()
+    {
 
+    	// var_dump($_POST);
+	    //Proveedor
+		$data['iproveedor'] = $this->input->post('iproveedor');
+		//Listado de articulos a imprimir
+		$data['ocitems'] = $this->input->post('ocselect');
+		$this->load->view('compras/pdfoc',$data);
+
+    }
 
 
 
