@@ -108,7 +108,13 @@ class Compras_model extends CI_Model {
 		return $result;
 	}
 
-
+	public function select_proveedor($value='')
+	{
+		$sql = "SELECT * FROM ".self::proveedores_table." WHERE id = ".$value;
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result[0];
+	}
 
 	public function nombre_articulo($id)
 	{
@@ -149,6 +155,16 @@ class Compras_model extends CI_Model {
 		 
 
 	}
+
+	public function oc_items($number) {
+		// $sql = "SELECT * from ocpendientes WHERE numero = ".$number;
+		$sql = "SELECT * FROM `vocimprimir` WHERE `numero` = '".$number."'";
+		$query = $this->db->query($sql);
+		$result = $query->result_array();
+		return $result;
+	}
+
+
 		
 }
 

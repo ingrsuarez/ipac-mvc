@@ -256,15 +256,12 @@ class Compras extends CI_Controller {
 	        { 
 		        if (empty($param))
 		        {
-		    		
-
 			    	$proveedores = $this->Compras_model->list_proveedores();
 				    $data['proveedores'] = $proveedores;
 			    	$this->load->view('templates/head');
 			    	$this->load->view('templates/header_compras');
 			    	$this->load->view('templates/aside', $this->session->userdata());
 			    	$this->load->view('compras/imprimir_OC',$data);
-
 			    	$this->load->view('templates/footer');
 
 			    	
@@ -316,13 +313,39 @@ class Compras extends CI_Controller {
      public function pdfoc()
     {
 
+
     	// var_dump($_POST);
 	    //Proveedor
-		$data['iproveedor'] = $this->input->post('iproveedor');
-		//Listado de articulos a imprimir
-		$data['ocitems'] = $this->input->post('ocselect');
-		$this->load->view('compras/pdfoc',$data);
+		$data['idprov'] = $this->input->post('iproveedor');
+		
 
+		if (!empty($data['idprov']))
+		{
+			$data['numero'] = $this->input->post('ocselect');
+			$ocNumber = $this->input->post('ocselect');
+			if (!empty($ocNumber))
+			{
+				$data['items'] = $this->Compras_model->oc_items($ocNumber);//Fila
+				//Send selected proveedor
+				$data['filaprov'] = $this->Compras_model->select_proveedor($data['idprov']);
+				// var_dump($data['filaprov']);
+				$this->load->view('compras/pdfoc',$data);
+			}else
+			{
+				//User didn´t select order!	
+				$mensaje = "Por favor seleccione una orden de compra!";
+	    		echo ("<script>
+	    		alert('".$mensaje."')</script>");
+	    		redirect('/compras/imprimirOC/', 'refresh');
+			}
+		}else
+		{
+			//User didn´t select supplier!	
+			$mensaje = "Por favor seleccione un proveedor!";
+    		echo ("<script>
+    		alert('".$mensaje."')</script>");
+    		redirect('/compras/imprimirOC/', 'refresh');
+		}
     }
 
 

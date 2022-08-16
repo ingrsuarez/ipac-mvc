@@ -110,26 +110,24 @@ public $fecha;
 
 // if (array_key_exists('pdf',$_POST)) { //Generar PDF
 			
-	//Proveedor
-	$idprov = $_POST['iproveedor'];
-
-	//Listado de articulos a imprimir
-	$ocitems = $_POST['ocselect'];
-
-	//Imprimo un pagina por cada Orden de compra
-	$querynoc = "SELECT * from ocpendientes WHERE numero = ".$ocitems;
-	$resultadonoc = mysqli_query($enlace,$querynoc);
-	$row = mysqli_fetch_assoc($resultadonoc);
+	//Proveedor $idprov
 	
-	$queryp = "SELECT * FROM `proveedores` WHERE `id` = '".$idprov."'";
-	$resultadop = mysqli_query($enlace,$queryp);
-	$filaprov = mysqli_fetch_assoc($resultadop);
+
+	// //Listado de articulos a imprimir $ocitems
+	
+	//Imprimo un pagina por cada Orden de compra
+	// $querynoc = "SELECT * from ocpendientes WHERE numero = ".$ocitems;
+	// $resultadonoc = mysqli_query($enlace,$querynoc);
+	// $row = mysqli_fetch_assoc($resultadonoc);
+	
+	// $queryp = "SELECT * FROM `proveedores` WHERE `id` = '".$idprov."'";
+	// $resultadop = mysqli_query($enlace,$queryp);
+	// $filaprov = mysqli_fetch_assoc($resultadop);
 	//array datos del proveedor
 	$pdfprov = array($idprov,$filaprov['nombre'],$filaprov['cuit'],$filaprov['domicilio']);
 	$cont = 0;
-	//numero de orden de compra
-	$numero = $row['numero'];
-	$fecha = substr($row['numero'], 4, 2)."/".substr($row['numero'], 2, 2)."/20".substr($row['numero'], 0, 2);
+	
+	$fecha = substr($numero, 4, 2)."/".substr($numero, 2, 2)."/20".substr($numero, 0, 2);
 	
 	$pdf = new PDF("P","mm","A4");
 	$pdf-> AliasNbPages();
@@ -156,9 +154,7 @@ public $fecha;
 	$pdf->Ln(3);
 	$pdf->SetFont('Arial','',10);
 	
-	$query = "SELECT * FROM `vocimprimir` WHERE `numero` = '".$numero."'";
-	$result = mysqli_query($enlace,$query);
-	while ($fila = mysqli_fetch_assoc($result)){
+	foreach ($items as $fila){
 		$pdf->Cell($w[0],6,"      ".$fila['cantidad'],0,0,'L',false);
 		$pdf->Cell($w[1],6,substr($fila['descripcion'],0,40),0,0,'L',false);
 		$pdf->Cell($w[2],6,substr($fila['marca'],0,40),0,0,'L',false);
