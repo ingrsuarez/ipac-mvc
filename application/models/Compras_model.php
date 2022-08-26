@@ -7,6 +7,7 @@ class Compras_model extends CI_Model {
 	const vpedidos_table = "vpedidos";
 	const pedidos_table = "pedidos";
 	const proveedores_table = "proveedores";
+	const stock_table = "stock";
 
 	public function __constructor ($id=""){
 
@@ -36,13 +37,24 @@ class Compras_model extends CI_Model {
 
 	}
 
-	public function pedidos_pendientes($user='')
+	public function pedidos_pendientes($item='')
 	{
 		//Return pedidos table notes
-		$sql = "SELECT * FROM ".self::vpedidos_table." WHERE estado = 'pendiente' ORDER BY fecha DESC";
-		$query = $this->db->query($sql);
-		$result = $query->result();
-		return $result;
+		if (empty($item))
+		{
+			$sql = "SELECT * FROM ".self::vpedidos_table." WHERE estado = 'pendiente' ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;	
+		}else
+		{
+			$sql = "SELECT * FROM ".self::vpedidos_table." WHERE estado = 'pendiente' AND articulo LIKE ".$item." ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;	
+		}
+
+		
 
 	}
 
@@ -156,6 +168,27 @@ class Compras_model extends CI_Model {
 
 	}
 
+	public function pendientes_proveedor($idProveedor="1")
+	{
+		if (!empty($idProveedor))
+		{
+			$sql = "SELECT * FROM `vrecibir` WHERE pid = '".$idProveedor."' ORDER BY `numero`";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			
+			return $result;
+		}else
+		{
+			$sql = "SELECT * FROM `ocpendientes` WHERE proveedor = '1' ORDER BY `numero`";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			
+			return $result;
+		}
+		 
+
+	}
+
 	public function oc_items($number) {
 		// $sql = "SELECT * from ocpendientes WHERE numero = ".$number;
 		$sql = "SELECT * FROM `vocimprimir` WHERE `numero` = '".$number."'";
@@ -164,7 +197,64 @@ class Compras_model extends CI_Model {
 		return $result;
 	}
 
+	public function recibir_OC($OCid,$recibido,$userId,$articulo,$pedido,$lote,$vencimiento,$proveedor,$remito,$fecha)
+	{
+		if (!empty($OCid))
+		{
+			foreach ($OCid as $key => $id)
+			{
+				$sql = "SELECT cantidad FROM `ordencompra` WHERE `id` = ".$id;
+				$query = $this->db->query($sql);
+				$result = $query->result_array();
+				$cantidad = $result[0]['cantidad'];
+				$today = $fecha;
+				
+				if ($cantidad == $recibido[$key] )
+				{
+					$updateOC = "UPDATE `ordencompra` SET `estatus` = 'recibido', `recibe` = '".$userId."', `cantidad` = '0' WHERE `ordencompra`.`id` = '".$id."'";
+					$query = $this->db->query($updateOC);
+					// INSERT INTO `stock` (`id`, `fecha`, `articulo`, `cantidad`, `lote`, `vencimiento`, `deposito`, `ubicacion`, `movimiento`, `usuario`, `precio`, `proveedor`, `remito`, `factura`) VALUES (NULL, '2022-08-24', '160', '2', '333', '2022-08-31', '0', 'Leguizamon 356', 'ingreso', '1', '0', '1', '0002-00000123', '00000-00000000');
+					$row = array('fecha' => $today,
+						'articulo' => $articulo[$key], 
+						'cantidad' => $recibido[$key], 
+						'lote' => $lote[$key], 
+						'vencimiento' => $vencimiento[$key],
+						'movimiento' => 'ingreso',
+						'usuario' => $userId,
+						'proveedor' => $proveedor,
+						'remito' => $remito);
+					$this->db->insert(self::stock_table,$row); 
+					$updateP = "UPDATE pedidos SET estado = 'recibido' WHERE id = ".$pedido[$key];
+					$query = $this->db->query($updateP);
 
+				}elseif ($cantidad > $recibido[$key])
+				{
+					//UPDATE ORDEN DE COMPRA	
+					$pendiente = intval($cantidad) - intval($recibido[$key]);
+					$updateOC = "UPDATE `ordencompra` SET `cantidad` = '".($pendiente)."', `recibe` = '".$userId."' WHERE `ordencompra`.`id` = '".$id."'";
+					$query = $this->db->query($updateOC);
+					// UPDATE STOCK
+					$row = array('fecha' => $today,
+						'articulo' => $articulo[$key], 
+						'cantidad' => $recibido[$key], 
+						'lote' => $lote[$key], 
+						'vencimiento' => $vencimiento[$key],
+						'movimiento' => 'ingreso',
+						'usuario' => $userId,
+						'proveedor' => $proveedor,
+						'remito' => $remito);
+					$this->db->insert(self::stock_table,$row); 
+					$updateP = "UPDATE pedidos SET estado = 'recibido' WHERE id = ".$pedido[$key];
+					$query = $this->db->query($updateP);
+
+				}
+			}
+
+		}
+
+
+
+	}
 		
 }
 

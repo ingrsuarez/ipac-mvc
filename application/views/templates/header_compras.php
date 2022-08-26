@@ -30,7 +30,7 @@
 					<a href="#">COMPRAS</a>
 					<ul class="inside__menu" id="compras__inside">
 						<li class="inside__item">
-							<a href="#">Recibir pedido</a>
+							<a href="<?php echo base_url(); ?>index.php/compras/recibirOC/">Recibir pedido</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">

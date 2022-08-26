@@ -276,6 +276,17 @@
 
 	}
 
+	.container_wide{
+		display: flex;
+		position: relative;
+		bottom: 0;
+		padding: 10px;
+		margin: 10px 100px 10px 10px ;
+		background-color: #ffef96;
+		border-radius: 10px;
+		box-shadow: 5px 5px 5px #555;
+	}
+
 	.container__form {
 		display: inline-block;
 	}

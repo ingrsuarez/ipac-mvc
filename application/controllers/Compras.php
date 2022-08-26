@@ -78,7 +78,7 @@ class Compras extends CI_Controller {
         	$access = $this->session->userdata('puesto');
         	$delete = $this->input->post('delete');
         	$user = $this->session->userdata('usuario');
-        	$pedidos = $this->Compras_model->pedidos_pendientes($user);
+        	$pedidos = $this->Compras_model->pedidos_pendientes();
         	$data['pedidos'] = $pedidos;
         	$data['misPedidos'] = "";
         	$data['btn_anular'] = "";
@@ -146,6 +146,7 @@ class Compras extends CI_Controller {
 	    	$data['articulo'] = $this->input->post('articulo_pedido');
 	    	$data['id'] = $this->session->userdata('id');
 	    	$data['username'] = $this->session->userdata('usuario');
+	    	// var_dump($data['articulo']);
 	    	if ($this->session->has_userdata('usuario'))
 	        {
 	        	$this->Compras_model->insert_pedido($data);
@@ -155,6 +156,62 @@ class Compras extends CI_Controller {
 	        	 redirect('/secure/login', 'refresh');
 	        }
 	    }else{redirect('/compras/pedidos', 'refresh');}
+    }
+
+    public function recibirOC($param="")
+    {
+    	if ($this->session->has_userdata('usuario'))
+	        { 
+	        	$userId = $this->session->userdata('id');
+	        	$items = $this->input->post('ocselect');
+		        if (empty($param))
+		        {	
+		        	if (empty($items))
+		        	{
+				    	$proveedores = $this->Compras_model->list_proveedores();
+					    $data['proveedores'] = $proveedores;
+				    	$this->load->view('templates/head');
+				    	$this->load->view('templates/header_compras');
+				    	$this->load->view('templates/aside', $this->session->userdata());
+				    	$this->load->view('compras/recibir_OC',$data);
+				    	$this->load->view('templates/footer');
+			    	}else
+			    	{
+			    		$data['ocselect'] = $this->input->post('ocselect');
+	    				$data['pedido'] = $this->input->post('pedido');
+	    				$data['articulo'] = $this->input->post('articulo');
+	    				$data['ocnumber'] = $this->input->post('ocnumber');
+	    				$data['cantidad'] = $this->input->post('cantidad');
+	    				$data['lote'] = $this->input->post('lote');
+	    				$data['vencimiento'] = $this->input->post('vencimiento');
+	    				$remito = "R".($this->input->post('first'))."-".($this->input->post('last'));
+	    				$proveedor = $this->input->post('iproveedor');
+	    				$fecha = $this->input->post('fecha');
+			    		$pedido = array_intersect($data['pedido'],$data['ocselect']);
+			    		$OCnumber = array_intersect_key($data['ocnumber'],$pedido);
+			    		$articulo = array_intersect_key($data['articulo'],$pedido);	
+			    		$recibido = array_intersect_key($data['cantidad'],$pedido);	
+			    		$lote = array_intersect_key($data['lote'],$pedido);
+			    		$vencimiento = array_intersect_key($data['vencimiento'],$pedido);
+			    		$this->Compras_model->recibir_OC($OCnumber,$recibido,$userId,$articulo,$pedido,$lote,$vencimiento,$proveedor,$remito,$fecha);
+			    		redirect('/compras/recibirOC/', 'refresh');
+
+			    	}
+			    	
+				}elseif ($param == "ocPendientes")
+			    {
+			    	$idProveedor = $this->input->post('iproveedor');	 
+					// $idProveedor = 1;
+					$array['pendientes'] = $this->Compras_model->pendientes_proveedor($idProveedor);
+					
+			    	print_r(json_encode($array['pendientes']));
+
+		    	}
+	    }else
+	        {
+	        	 redirect('/secure/login', 'refresh');
+	        }
+
     }
 
     public function confeccionarOC($success="")
