@@ -45,7 +45,7 @@
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="#">Editar OC</a>
+							<a href="<?php echo base_url(); ?>index.php/compras/editarOC/">Editar OC</a>
 						</li>
 					</ul>
 				</li>

@@ -297,7 +297,7 @@ class Compras extends CI_Controller {
 		    		}
 		    	}else{
 		    		$data['mensaje'] = "Debe seleccionar al menos un item para generar la Orden de Compra!";
-		    		$data['location'] = "/compras/confeccionarOC";
+		    		$data['location'] = "/compras/confeccionarOC/";
 		    		$this->load->view('templates/mensaje',$data);
 		    		
 		    	}
@@ -347,24 +347,52 @@ class Compras extends CI_Controller {
 
     }
 
-    public function ocPendientes()
+    public function editarOC($action="")
     {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	if (empty($action))
+        	{
+	        	$this->session->set_userdata('last_page', 'editar_pedidos');
+	        	$access = $this->session->userdata('puesto');
+	        	$delete = $this->input->post('delete');
+	        	$user = $this->session->userdata('usuario');
+	        	$pedidos = $this->Compras_model->OC_itemsPendientes();
+	        	$proveedores = $this->Compras_model->list_proveedores();
+	        	$data['proveedores'] = $proveedores;
+	        	$data['pedidos'] = $pedidos;
+	        	$data['misPedidos'] = "";
+	        	$data['btn_anular'] = "";
+	        	$this->load->view('templates/head');
+	        	$this->load->view('templates/header_compras');
+	        	$this->load->view('templates/aside', $this->session->userdata());
+	        	$this->load->view('compras/editar_OC',$data);
+	        	$this->load->view('templates/footer');
+	        }elseif ($action == "edit")
+	        {
+	        	// var_dump($_POST);
+	        	$OC = $this->input->post('OC');
+	        	$idProveedor = $this->input->post('iproveedor');
+	        	$cantidad = $this->input->post('cantidad');
+	    		$user_id = $this->session->userdata('id');
+	    		$numero = date("y").date("m").date("d").$user_id.$idProveedor;//Purchase order number
+	        	$this->Compras_model->edit_OC($OC,$idProveedor,$cantidad,$numero);
+	        	redirect('/compras/editarOC/', 'refresh');
 
-  //   	if (!empty($_POST['iproveedor'])){
-		// $idProveedor = $_POST['iproveedor'];
-		// $enlace = new mysqli("127.0.0.1", "u540644031_suarroda", "Ipac2021", "u540644031_GestionIpac", 3306);	 
-		// $query = "SELECT * FROM `ocpendientes` WHERE proveedor = '".$idProveedor."' ORDER BY `numero`";
-		// $resultado = mysqli_query($enlace,$query);			 
-		// $cont = 0; 
-		// $data = array();
-		// while ($row = mysqli_fetch_assoc($resultado)) {
-		// 	$data[$cont] = $row;
-		// 	$cont++;
-		// }
-		$data = array("Peter"=>35, "Ben"=>37, "Joe"=>43);
-		echo $data;
-	
+	        }elseif ($action == "anular")
+	        {
+	        	var_dump($_POST);
+	        	$OC = $this->input->post('OC');
+	        	$pedido = $this->input->post('pedido');
+	        	$this->Compras_model->anular_OC($OC,$pedido);
+	        	redirect('/compras/editarOC/', 'refresh');
 
+	        }
+        	
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
     }
 
      public function pdfoc()

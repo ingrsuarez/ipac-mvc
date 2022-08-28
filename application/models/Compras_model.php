@@ -213,7 +213,6 @@ class Compras_model extends CI_Model {
 				{
 					$updateOC = "UPDATE `ordencompra` SET `estatus` = 'recibido', `recibe` = '".$userId."', `cantidad` = '0' WHERE `ordencompra`.`id` = '".$id."'";
 					$query = $this->db->query($updateOC);
-					// INSERT INTO `stock` (`id`, `fecha`, `articulo`, `cantidad`, `lote`, `vencimiento`, `deposito`, `ubicacion`, `movimiento`, `usuario`, `precio`, `proveedor`, `remito`, `factura`) VALUES (NULL, '2022-08-24', '160', '2', '333', '2022-08-31', '0', 'Leguizamon 356', 'ingreso', '1', '0', '1', '0002-00000123', '00000-00000000');
 					$row = array('fecha' => $today,
 						'articulo' => $articulo[$key], 
 						'cantidad' => $recibido[$key], 
@@ -255,6 +254,36 @@ class Compras_model extends CI_Model {
 
 
 	}
+
+	// OC PENDIENTES
+	public function OC_itemsPendientes()
+	{
+
+		$sql = "SELECT * FROM `vocimprimir` ORDER BY id";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+
+
+
+	}
+
+	public function edit_OC($id='',$idProveedor='',$cantidad='',$numero='')
+	{
+		$updateP = "UPDATE ordencompra SET numero = '".$numero."', proveedor = '".$idProveedor."', cantidad = '".$cantidad."', estatus = 'creada' WHERE id = ".$id;
+		$query = $this->db->query($updateP);
+
+	}
+
+	public function anular_OC($id='',$pedido='')
+	{
+		$updateOC = "UPDATE ordencompra SET estatus = 'anulada' WHERE id = ".$id;
+		$query = $this->db->query($updateOC);
+		$updateP = "UPDATE pedidos SET estado = 'anulado' WHERE id = ".$pedido;
+		$query = $this->db->query($updateP);
+
+	}
+
 		
 }
 
