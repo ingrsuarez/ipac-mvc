@@ -99,7 +99,7 @@ class Compras extends CI_Controller {
     	if ($this->session->has_userdata('usuario'))
         {	
         	$lastPage = $this->session->userdata('last_page');
-        	$access =  (int)$this->Secure_model->access(self::sector)['acceso'];
+        	$access =  $this->Secure_model->access(self::sector);
         	$edit = $this->input->post('articulo')[0];
         	$id = $this->input->post('pedido')[0];
         	//User has access to edit
@@ -107,7 +107,13 @@ class Compras extends CI_Controller {
 
         		$this->Compras_model->editar_pedido($edit,$id);
         		redirect('/compras/'.$lastPage, 'refresh');
-        	}else{redirect('/compras/pedidos', 'refresh');}
+        	}else
+        	{
+        		$mensaje = "Usted no tiene acceso para editar un pedido!";
+	    		echo ("<script>
+	    		alert('".$mensaje."')</script>");
+	    		redirect('/compras/editar_pedidos/', 'refresh');
+        	}
         	
         }else
         {	//No session started
@@ -120,14 +126,22 @@ class Compras extends CI_Controller {
     	if ($this->session->has_userdata('usuario'))
         {
         	$lastPage = $this->session->userdata('last_page');
-        	$access = (int) $this->Secure_model->access(self::sector);
+        	$access = $this->Secure_model->access(self::sector);
+        	
         	$edit = $this->input->post('delete');
         	
         	//User has access to edit
         	if (!empty($access) && $access <= 2){
         		$this->Compras_model->anular_pedido("anulado",$edit);
         		redirect('/compras/'.$lastPage, 'refresh');
-        	}
+        	}else
+	        {
+	        	$mensaje = "Usted no tiene acceso para anular un pedido!";
+	    		echo ("<script>
+	    		alert('".$mensaje."')</script>");
+	    		redirect('/compras/editar_pedidos/', 'refresh');
+	        	
+	        }
         	
         }else
         {	//No session started
@@ -351,10 +365,10 @@ class Compras extends CI_Controller {
     {
     	if ($this->session->has_userdata('usuario'))
         {
+        	$access = $this->Secure_model->access(self::sector);
         	if (empty($action))
         	{
 	        	$this->session->set_userdata('last_page', 'editar_pedidos');
-	        	$access = $this->session->userdata('puesto');
 	        	$delete = $this->input->post('delete');
 	        	$user = $this->session->userdata('usuario');
 	        	$pedidos = $this->Compras_model->OC_itemsPendientes();
@@ -371,22 +385,41 @@ class Compras extends CI_Controller {
 	        }elseif ($action == "edit")
 	        {
 	        	// var_dump($_POST);
-	        	$OC = $this->input->post('OC');
-	        	$idProveedor = $this->input->post('iproveedor');
-	        	$cantidad = $this->input->post('cantidad');
-	    		$user_id = $this->session->userdata('id');
-	    		$numero = date("y").date("m").date("d").$user_id.$idProveedor;//Purchase order number
-	        	$this->Compras_model->edit_OC($OC,$idProveedor,$cantidad,$numero);
-	        	redirect('/compras/editarOC/', 'refresh');
-
+	        	
+	        	$edit = $this->input->post('delete');
+	        	
+	        	//User has access to edit
+	        	if (!empty($access) && $access <= 2){
+		        	$OC = $this->input->post('OC');
+		        	$idProveedor = $this->input->post('iproveedor');
+		        	$cantidad = $this->input->post('cantidad');
+		    		$user_id = $this->session->userdata('id');
+		    		$numero = date("y").date("m").date("d").$user_id.$idProveedor;//Purchase order number
+		        	$this->Compras_model->edit_OC($OC,$idProveedor,$cantidad,$numero);
+		        	redirect('/compras/editarOC/', 'refresh');
+		        }else
+		        {
+		        	$mensaje = "Usted no tiene acceso a editar!";
+		    		echo ("<script>
+		    		alert('".$mensaje."')</script>");
+		        	redirect('/compras/editarOC/', 'refresh');
+		        }
 	        }elseif ($action == "anular")
 	        {
-	        	var_dump($_POST);
-	        	$OC = $this->input->post('OC');
-	        	$pedido = $this->input->post('pedido');
-	        	$this->Compras_model->anular_OC($OC,$pedido);
-	        	redirect('/compras/editarOC/', 'refresh');
-
+	        	if (!empty($access) && $access <= 2)
+	        	{
+		        	$OC = $this->input->post('OC');
+		        	$pedido = $this->input->post('pedido');
+		        	$this->Compras_model->anular_OC($OC,$pedido);
+		        	redirect('/compras/editarOC/', 'refresh');
+				}else
+		        {
+		        	$mensaje = "Usted no tiene acceso para anular un pedido!";
+		    		echo ("<script>
+		    		alert('".$mensaje."')</script>");
+		    		redirect('/compras/editarOC/', 'refresh');
+		        	
+		        }
 	        }
         	
         }else

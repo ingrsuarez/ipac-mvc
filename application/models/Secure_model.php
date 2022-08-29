@@ -31,7 +31,8 @@ class Secure_model extends CI_Model {
 			$sql = "SELECT acceso FROM `accesos` WHERE puesto =  '".$puesto."' AND sector = '".$sector."' LIMIT 1";
 			$query = $this->db->query($sql);
 			$result = $query->row_array();
-			return $result;
+			$access = $result['acceso'];
+			return ((int) $access);
 		}else
 		{return FALSE;}
 
