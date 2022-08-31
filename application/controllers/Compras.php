@@ -487,7 +487,7 @@ class Compras extends CI_Controller {
 		        		$this->load->view('templates/footer');
 		        	}else
 		        	{
-		        		var_dump($_POST);
+		        		
 		        		$articuloId = $this->input->post('artselect');
 		        		$list = $this->input->post('articulo');
 		        		$descarga = $this->input->post('cantidad');
@@ -497,14 +497,13 @@ class Compras extends CI_Controller {
 			    		$stock = array_intersect_key($total,$articulo);
 			    		foreach ($articulo as $key => $id)
 			    		{ 	//Check if the amount to unload is minor than the stock
-			    			if ($cantidad[$key] >= $stock[$key])
+			    			if ($cantidad[$key] <= $stock[$key])
 			    			{
 			    				$this->Compras_model->descargar_articulo($articulo[$key],$cantidad[$key]);
 			    			}
 			    		}
-			    		var_dump($articulo);
-			    		var_dump($cantidad);
-			    		var_dump($stock);
+			    		redirect('/compras/descargarArticulo', 'refresh');
+			    		
 		        	}
 		        }elseif ($param == "find")
 			    {
