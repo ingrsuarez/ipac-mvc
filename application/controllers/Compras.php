@@ -466,7 +466,58 @@ class Compras extends CI_Controller {
 		}
     }
 
+    //ARTICULOS
 
+    public function descargarArticulo($param='')
+    {
+    	if ($this->session->has_userdata('usuario'))
+	        { 
+	        	$userId = $this->session->userdata('id');
+	        	$proveedores = $this->Compras_model->list_proveedores();
+	        	$data['proveedores'] = $proveedores;
+		        if (empty($param))
+		        {	
+		        	if (empty($_POST))
+		        	{
+
+		        		$this->load->view('templates/head');
+			        	$this->load->view('templates/header_compras');
+			        	$this->load->view('templates/aside', $this->session->userdata());
+		        		$this->load->view('compras/descargar_articulo',$data);
+		        		$this->load->view('templates/footer');
+		        	}else
+		        	{
+		        		var_dump($_POST);
+		        		$articuloId = $this->input->post('artselect');
+		        		$list = $this->input->post('articulo');
+		        		$descarga = $this->input->post('cantidad');
+		        		$total = $this->input->post('total');
+		        		$articulo = array_intersect($list,$articuloId);
+		    			$cantidad = array_intersect_key($descarga,$articulo);
+			    		$stock = array_intersect_key($total,$articulo);
+			    		foreach ($articulo as $key => $id)
+			    		{ 	//Check if the amount to unload is minor than the stock
+			    			if ($cantidad[$key] >= $stock[$key])
+			    			{
+			    				$this->Compras_model->descargar_articulo($articulo[$key],$cantidad[$key]);
+			    			}
+			    		}
+			    		var_dump($articulo);
+			    		var_dump($cantidad);
+			    		var_dump($stock);
+		        	}
+		        }elseif ($param == "find")
+			    {
+			    	$nombre = $this->input->post('nombre');	 
+					
+					$array = $this->Compras_model->buscar_articulo($nombre);
+					// var_dump($array);
+			    	print_r(json_encode($array));
+
+		    	}
+		    }
+    	
+    }
 
 }
 

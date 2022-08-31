@@ -49,23 +49,26 @@
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item" id="proveedores">
-					<a href="#" >PROVEEDORES</a>
-					<ul class="inside__menu" id="proveedores__inside">
+				<li class="dropdown__item" id="articulos">
+					<a href="#" >ARTICULOS</a>
+					<ul class="inside__menu" id="articulos__inside">
 						<li class="inside__item">
-							<a href="#">Servicio 1</a>
+							<a href="#">Buscar Articulo</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Servicio 2</a>
+							<a href="#">Ingresar Articulo</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Servicio 3</a>
+							<hr class="dropdown__divider">
+						</li>
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/compras/descargarArticulo">Descargar Articulo</a>
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item" id="articulos">
-					<a href="#">ARTICULOS</a>
-					<ul class="inside__menu" id="articulos__inside">
+				<li class="dropdown__item" id="proveedores">
+					<a href="#">PROVEEDORES</a>
+					<ul class="inside__menu" id="proveedores__inside">
 						<li class="inside__item">
 							<a href="#">Servicio 1</a>
 						</li>
