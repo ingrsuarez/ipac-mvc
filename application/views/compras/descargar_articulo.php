@@ -40,6 +40,7 @@
 					$(document).ready(function(){
 
 						var e = document.getElementById("nombre");
+						var m = document.getElementById("brand");
 						e.addEventListener("input",function(){
 							var key = event.data;
 							// var articulo = e.value;	
@@ -50,6 +51,35 @@
 							// alert("Escribió: "+nombre);
 
 							$.post("descargarArticulo/find",{nombre: nombre},function(result){	
+
+								// alert("Escribió: "+result);
+								var cont = 0;
+								var json = JSON.parse(result);
+
+								json.forEach(function(value,label){
+									cont++;
+									$("#tpendientes>tbody").append("<tr class='pedidosT__row'><th scope='row' class = 'pedidosT__fecha'><div class='custom-control"
+										+" custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='artselect[]' value='"+json[label].id+"'></div></th>"
+										+"<td><input type='hidden' form='global' name = 'total[]' value='"+json[label].cantidad
+										+"'>"+json[label].cantidad+"</td>"
+										+"<td><input type='hidden' name = 'articulo[]' value='"+json[label].id+"'>"+ json[label].nombre+"</td>"
+										+"<td>"+json[label].marca+"</td>"
+										+"<td><input type='number' name = 'cantidad[]' max='"+json[label].cantidad+"' style ='width:60px'></td>"
+										+"</tr>");
+
+									
+								});
+							});
+						});
+						//BRAND SEARCH
+						m.addEventListener("input",function(){
+							var key = event.data;
+								
+							var brand = m.value;
+							
+							$("#tpendientes>tbody").empty();
+							
+							$.post("descargarArticulo/findBrand",{brand: brand},function(result){	
 
 								// alert("Escribió: "+result);
 								var cont = 0;

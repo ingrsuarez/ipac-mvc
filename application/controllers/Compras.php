@@ -513,6 +513,14 @@ class Compras extends CI_Controller {
 					// var_dump($array);
 			    	print_r(json_encode($array));
 
+		    	}elseif ($param == "findBrand")
+			    {
+			    	$nombre = $this->input->post('brand');	 
+					
+					$array = $this->Compras_model->brand_articulo($nombre);
+					// var_dump($array);
+			    	print_r(json_encode($array));
+
 		    	}
 		    }else
 		    {

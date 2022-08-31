@@ -8,6 +8,7 @@ class Compras_model extends CI_Model {
 	const pedidos_table = "pedidos";
 	const proveedores_table = "proveedores";
 	const stock_table = "stock";
+	const articulos_table = "articulos";
 
 	public function __constructor ($id=""){
 
@@ -290,6 +291,34 @@ class Compras_model extends CI_Model {
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
+	}
+
+	public function brand_articulo($marca)//SEARCH BY BRAND
+	{
+		$sql = "SELECT articulos.id, articulos.nombre, articulos.marca, SUM(stock.cantidad) as cantidad FROM articulos INNER JOIN stock ON stock.articulo = articulos.id WHERE articulos.marca LIKE '".$marca."%' GROUP BY articulos.nombre ORDER BY articulos.nombre";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+	public function nuevo_articulo($articulo,$cantidad)
+	{
+		$userId = $this->session->userdata('id');
+        $today = date("Y-m-d H:i:s");
+        
+		$row = array('fecha' => $today,
+					 'articulo' => $articulo, 
+					 'cantidad' => "-".$cantidad, 
+					 'lote' => '',
+					 'vencimiento' => '',
+					 'deposito' => '',
+					 'ubicacion' => '0',
+					 'movimiento' => 'baja',
+					 'usuario' => $userId);
+		
+		$this->db->insert(self::articulos_table,$row); 
+
+
 	}
 
 	public function descargar_articulo($articulo,$cantidad)
