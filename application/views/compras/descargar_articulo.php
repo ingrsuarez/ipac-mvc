@@ -14,7 +14,7 @@
 					</div>
 					
 					<div class="container__button">
-						<button type="submit" class="btn btn-insert" form = "global">Ingresar</button>
+						<button type="submit" class="btn btn-insert" form = "global">Descargar</button>
 					</div>
 				</div>				
 			
@@ -29,7 +29,6 @@
 							<th scope='col'>Nombre</th>
 							<th scope='col'>Marca</th>
 							<th scope='col'>Cantidad</th>
-							<th scope='col'>Accion</th>
 						</tr>
 					</thead>
 				  	<tbody>
@@ -65,7 +64,6 @@
 										+"<td><input type='hidden' name = 'articulo[]' value='"+json[label].id+"'>"+ json[label].nombre+"</td>"
 										+"<td>"+json[label].marca+"</td>"
 										+"<td><input type='number' name = 'cantidad[]' max='"+json[label].cantidad+"' style ='width:60px'></td>"
-										+"<td><input type='submit' name = 'descargar' class='btn' value='Descargar'></td>"
 										+"</tr>");
 
 									

@@ -514,7 +514,10 @@ class Compras extends CI_Controller {
 			    	print_r(json_encode($array));
 
 		    	}
-		    }
+		    }else
+		    {
+        	 redirect('/secure/login', 'refresh');
+        	}
     	
     }
 
