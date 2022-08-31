@@ -286,7 +286,7 @@ class Compras_model extends CI_Model {
 
 	public function buscar_articulo($nombre)
 	{
-		$sql = "SELECT articulos.id, articulos.nombre, articulos.marca, SUM(stock.cantidad) as cantidad FROM articulos INNER JOIN stock ON stock.articulo = articulos.id WHERE articulos.nombre LIKE '".$nombre."%' OR articulos.alt LIKE '".$nombre."%' GROUP BY articulos.nombre ORDER BY articulos.nombre LIMIT 10";
+		$sql = "SELECT articulos.id, articulos.nombre, articulos.marca, SUM(stock.cantidad) as cantidad FROM articulos INNER JOIN stock ON stock.articulo = articulos.id WHERE articulos.nombre LIKE '".$nombre."%' OR articulos.alt LIKE '".$nombre."%' GROUP BY articulos.nombre ORDER BY articulos.nombre LIMIT 15";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
