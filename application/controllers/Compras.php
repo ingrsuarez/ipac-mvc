@@ -529,6 +529,53 @@ class Compras extends CI_Controller {
     	
     }
 
+    public function ingresarArticulo($param='')
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	if (empty($param))
+		    {
+	        	if (empty($_POST))
+	        	{
+		        	$data['sector'] = $this->Compras_model->list_sector();
+		        	$this->load->view('templates/head');
+		        	$this->load->view('templates/header_compras');
+		        	$this->load->view('templates/aside', $this->session->userdata());
+		        	$this->load->view('compras/ingresar_articulo',$data);
+		        	$this->load->view('templates/footer');
+		        }else
+		        {
+
+  					$userId = $this->session->userdata('id');
+			        $today = date("Y-m-d H:i:s");
+			        $codigo = $this->input->post('brand');
+					$row = array('nombre' => strtoupper($this->input->post('nombre')),
+					'unidad' => $this->input->post('unidad'), 
+					'marca' => strtoupper($this->input->post('brand')), 
+					'sector' => $this->input->post('sector'), 
+					'fechain' => $today,
+					'codigo' => $this->input->post('tipo').$this->input->post('sector'),
+					'alt' => $this->input->post('alt1'));
+					$this->Compras_model->nuevo_articulo($row);
+					redirect('/compras/ingresarArticulo', 'refresh');
+
+		        }
+
+
+	        }elseif ($param == "find")
+		    {
+		    	$nombre = $this->input->post('nombre');	 
+				
+				$array = $this->Compras_model->buscar_articulo($nombre);
+				// var_dump($array);
+		    	print_r(json_encode($array));
+
+	    	}
+        }else
+	    {
+    	 redirect('/secure/login', 'refresh');
+    	}
+    }
 }
 
 

@@ -56,7 +56,7 @@
 							<a href="#">Buscar Articulo</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Ingresar Articulo</a>
+							<a href="<?php echo base_url(); ?>index.php/compras/ingresarArticulo">Ingresar Articulo</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">

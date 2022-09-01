@@ -121,6 +121,14 @@ class Compras_model extends CI_Model {
 		return $result;
 	}
 
+	public function list_sector($value='')
+	{
+		$sql = "SELECT id, nombre FROM `sector` ORDER BY nombre";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}	
+
 	public function select_proveedor($value='')
 	{
 		$sql = "SELECT * FROM ".self::proveedores_table." WHERE id = ".$value;
@@ -301,24 +309,26 @@ class Compras_model extends CI_Model {
 		return $result;
 	}
 
-	public function nuevo_articulo($articulo,$cantidad)
+	public function nuevo_articulo($articulo)
 	{
-		$userId = $this->session->userdata('id');
-        $today = date("Y-m-d H:i:s");
-        
-		$row = array('fecha' => $today,
-					 'articulo' => $articulo, 
-					 'cantidad' => "-".$cantidad, 
-					 'lote' => '',
-					 'vencimiento' => '',
-					 'deposito' => '',
-					 'ubicacion' => '0',
-					 'movimiento' => 'baja',
-					 'usuario' => $userId);
+				
+		$this->db->insert(self::articulos_table,$articulo); 
+
 		
-		$this->db->insert(self::articulos_table,$row); 
-
-
+		$userId = $this->session->userdata('id');
+		$sql = "SELECT MAX(id) FROM articulos";
+		$query = $this->db->query($sql);
+		$lastId = $query->result();
+		$row = array('fecha' => $articulo['fechain'],
+						'articulo' => $lastId[0]->{'MAX(id)'}, 
+						'cantidad' => '0', 
+						'lote' => '', 
+						'vencimiento' => '',
+						'movimiento' => 'ingreso',
+						'usuario' => $userId,
+						'proveedor' => '',
+						'remito' => '');
+		$this->db->insert(self::stock_table,$row);
 	}
 
 	public function descargar_articulo($articulo,$cantidad)
