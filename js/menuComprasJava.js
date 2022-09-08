@@ -16,7 +16,7 @@ menu1.addEventListener("click", function(){
 		resto2.style.opacity = "0";
 		submenu.style.opacity = "1";
 		submenu.style.cursor = "pointer";
-		submenu.style.top = "36px";
+		submenu.style.top = "80px";
 		submenu.style.display = "block";
 		submenu.style.transition = ".5s";
 		submenu.style.transitionTimingFunction = "cubic-bezier(0,0,0,1)";
@@ -37,7 +37,7 @@ menu2.addEventListener("click", function(){
 		resto2.style.opacity = "0";
 		submenu.style.opacity = "1";
 		submenu.style.cursor = "pointer";
-		submenu.style.top = "36px";
+		submenu.style.top = "80px";
 		submenu.style.display = "block";
 		submenu.style.transition = ".5s";
 		submenu.style.transitionTimingFunction = "cubic-bezier(0,0,0,1)";
@@ -58,7 +58,7 @@ menu3.addEventListener("click", function(){
 		resto2.style.opacity = "0";
 		submenu.style.opacity = "1";
 		submenu.style.cursor = "pointer";
-		submenu.style.top = "36px";
+		submenu.style.top = "80px";
 		submenu.style.display = "block";
 		submenu.style.transition = ".5s";
 		submenu.style.transitionTimingFunction = "cubic-bezier(0,0,0,1)";

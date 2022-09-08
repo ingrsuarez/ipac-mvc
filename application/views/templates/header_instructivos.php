@@ -4,11 +4,11 @@
 		<nav class="menu">
 			<div class="menu__logo" ><img src="<?php echo base_url(); ?>images/logo-color.png"></div>
 			<ul class="menu__item" >
-				<li class="dropdown__item dropdown__item--active" id="home"><a href="<?php echo base_url(); ?>index.php">INICIO</a></li> 
+				<li class="dropdown__item" id="home"><a href="<?php echo base_url(); ?>index.php">INICIO</a></li> 
 				<li class="dropdown__item" id="compras">
 					<a href="<?php echo base_url(); ?>index.php/compras/pedidos/" >COMPRAS</a>
 				</li>
-				<li class="dropdown__item" id="procedimientos">
+				<li class="dropdown__item dropdown__item--active" id="procedimientos">
 					<a href="<?php echo base_url(); ?>index.php/procedimientos/instructivos/">PROCEDIMIENTOS</a>
 					<ul class="inside__menu" id="procedimientos__inside">
 						<li class="inside__item">

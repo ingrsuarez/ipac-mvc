@@ -39,7 +39,7 @@ class Compras extends CI_Controller {
         	$pedidos = $this->Compras_model->get_pedidos();
         	$data['pedidos'] = $pedidos;
         	$data['misPedidos'] = "";
-        	$this->load->view('templates/head');
+        	$this->load->view('templates/head_compras');
         	$this->load->view('templates/header_compras');
         	$this->load->view('templates/aside', $this->session->userdata());
         	$this->load->view('compras/pedidos',$data);
@@ -59,7 +59,7 @@ class Compras extends CI_Controller {
         	$pedidos = $this->Compras_model->get_mispedidos($user);
         	$data['pedidos'] = $pedidos;
         	$data['misPedidos'] = "checked";
-        	$this->load->view('templates/head');
+        	$this->load->view('templates/head_compras');
         	$this->load->view('templates/header_compras');
         	$this->load->view('templates/aside', $this->session->userdata());
         	$this->load->view('compras/pedidos',$data);
@@ -82,7 +82,7 @@ class Compras extends CI_Controller {
         	$data['pedidos'] = $pedidos;
         	$data['misPedidos'] = "";
         	$data['btn_anular'] = "";
-        	$this->load->view('templates/head');
+			$this->load->view('templates/head_compras');
         	$this->load->view('templates/header_compras');
         	$this->load->view('templates/aside', $this->session->userdata());
         	$this->load->view('compras/editar_pedidos',$data);
@@ -184,8 +184,8 @@ class Compras extends CI_Controller {
 		        	{
 				    	$proveedores = $this->Compras_model->list_proveedores();
 					    $data['proveedores'] = $proveedores;
-				    	$this->load->view('templates/head');
-				    	$this->load->view('templates/header_compras');
+						$this->load->view('templates/head_compras');
+			        	$this->load->view('templates/header_compras');
 				    	$this->load->view('templates/aside', $this->session->userdata());
 				    	$this->load->view('compras/recibir_OC',$data);
 				    	$this->load->view('templates/footer');
@@ -245,7 +245,7 @@ class Compras extends CI_Controller {
 
 	        	$proveedores = $this->Compras_model->list_proveedores();
 	        	$data['proveedores'] = $proveedores;
-	        	$this->load->view('templates/head');
+				$this->load->view('templates/head_compras');
 	        	$this->load->view('templates/header_compras');
 	        	$this->load->view('templates/aside', $this->session->userdata());
 	        	$this->load->view('compras/confeccionar_OC',$data);
@@ -329,8 +329,8 @@ class Compras extends CI_Controller {
 		        {
 			    	$proveedores = $this->Compras_model->list_proveedores();
 				    $data['proveedores'] = $proveedores;
-			    	$this->load->view('templates/head');
-			    	$this->load->view('templates/header_compras');
+					$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_compras');
 			    	$this->load->view('templates/aside', $this->session->userdata());
 			    	$this->load->view('compras/imprimir_OC',$data);
 			    	$this->load->view('templates/footer');
@@ -377,7 +377,7 @@ class Compras extends CI_Controller {
 	        	$data['pedidos'] = $pedidos;
 	        	$data['misPedidos'] = "";
 	        	$data['btn_anular'] = "";
-	        	$this->load->view('templates/head');
+				$this->load->view('templates/head_compras');
 	        	$this->load->view('templates/header_compras');
 	        	$this->load->view('templates/aside', $this->session->userdata());
 	        	$this->load->view('compras/editar_OC',$data);
@@ -480,7 +480,7 @@ class Compras extends CI_Controller {
 		        	if (empty($_POST))
 		        	{
 
-		        		$this->load->view('templates/head');
+						$this->load->view('templates/head_compras');
 			        	$this->load->view('templates/header_compras');
 			        	$this->load->view('templates/aside', $this->session->userdata());
 		        		$this->load->view('compras/descargar_articulo',$data);
@@ -538,7 +538,7 @@ class Compras extends CI_Controller {
 	        	if (empty($_POST))
 	        	{
 		        	$data['sector'] = $this->Compras_model->list_sector();
-		        	$this->load->view('templates/head');
+					$this->load->view('templates/head_compras');
 		        	$this->load->view('templates/header_compras');
 		        	$this->load->view('templates/aside', $this->session->userdata());
 		        	$this->load->view('compras/ingresar_articulo',$data);
