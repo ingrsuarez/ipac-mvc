@@ -92,7 +92,8 @@
 				</div>	
 				<div class="flow_column">
 					<div class="flow_box2">
-						<a href="<?php echo base_url(); ?>index.php/procedimientos/calculos/">CALCULOS</a>	
+						<div class="container_title container_title-flow">SOPORTE</div>
+						<form action="<?php echo base_url(); ?>index.php/procedimientos/calculos/" method ='POST'>
 							<button type='submit' class='btn btn-flow' name='Verificar'>CALCULOS</button>
 						</form>
 					</div>

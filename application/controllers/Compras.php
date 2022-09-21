@@ -343,23 +343,13 @@ class Compras extends CI_Controller {
 					$array['pendientes'] = $this->Compras_model->oc_pendientes($idProveedor);
 					
 			    	print_r(json_encode($array['pendientes']));
-			    	// $this->load->view('compras/test',$array);
-			    	// $proveedores = $this->Compras_model->list_proveedores();
-				    // $data['proveedores'] = $proveedores;
-			    	// $this->load->view('templates/head');
-			    	// $this->load->view('templates/header_compras');
-			    	// $this->load->view('templates/aside', $this->session->userdata());
-			    	// $this->load->view('compras/imprimir_OC',$data);
-			    	// $this->load->view('templates/footer');
 		    	}
 	    }else
 	        {
 	        	 redirect('/secure/login', 'refresh');
 	        }
-
-
-
     }
+
 
     public function editarOC($action="")
     {
@@ -428,11 +418,8 @@ class Compras extends CI_Controller {
         }
     }
 
-     public function pdfoc()
+    public function pdfoc()
     {
-
-
-    	// var_dump($_POST);
 	    //Proveedor
 		$data['idprov'] = $this->input->post('iproveedor');
 		
@@ -446,7 +433,6 @@ class Compras extends CI_Controller {
 				$data['items'] = $this->Compras_model->oc_items($ocNumber);//Fila
 				//Send selected proveedor
 				$data['filaprov'] = $this->Compras_model->select_proveedor($data['idprov']);
-				// var_dump($data['filaprov']);
 				$this->load->view('compras/pdfoc',$data);
 			}else
 			{

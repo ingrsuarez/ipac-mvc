@@ -73,8 +73,6 @@
 		min-width: 300px;
 		width: 80vw;
 		height: 100%;
-/*	  	overflow-y: auto;
-	  	overflow-x: hidden;*/
 		border-radius: 15px;
 		box-shadow: 5px 5px 5px #555;
 		border-width: medium;
@@ -118,6 +116,7 @@
 		display: flex;
 		flex-direction: row;
 		padding-left: 80px;
+		margin-bottom: 10px;
 	}
 
 	.flow_box{
@@ -153,7 +152,7 @@
 
 	.tab-content{
 		display: none;
-		background-color: #fff;
+		background-color: #fcfefe;
 		margin-left: 1px;
 		margin-right: 1px;
 		margin-top: 1px;
@@ -168,20 +167,133 @@
 
 	.tab-content-active{
 		display: flex;
-		background-color: #fff;
+		background-color: #fcfefe;
 		margin-left: 1px;
 		margin-right: 1px;
-		margin-top: 1px;
+		margin-top: 20px;
 		padding: 10px 40px 10px 10px;
 		min-width: 300px;
 		height: 100%;
 		border-radius: 15px;
-		box-shadow: 5px 5px 5px #555;
-		border-width: medium;
+		border: 2px solid #73AD21;
 		z-index: 0;
 	}
 
-}
+	.calculos{
+		padding-right: 20px;
+
+	}
+
+	.calculos input{
+		height: 30px;
+		width: 60px;
+		border-radius: 4px;
+		
+	}
+
+	.calculos input[readonly]{
+		background-color: royalblue;
+		border-color: #feb236;
+	}
+
+	.tablaw{
+		border-left: 2px solid #73AD21;
+		padding-left: 20px;
+
+	}
+	.td-label{
+		text-align: right;
+		padding-right: 10px;
+	}
+
+
+} 
+
+@media screen and (min-width: 800px) 
+{
+
+	.register_title {
+		
+		height: 40px;
+		background-color: #0086d6;
+		padding: 10px 0px 10px 30px;
+		margin-bottom: 10px;
+		color:  white;
+		width: 100%;
+		border-radius: 5px;
+		
+	}
+	.input-container {
+		display: -ms-flexbox; /* IE10 */
+		display: flex;
+		width: 100%;
+		margin-bottom: 15px;
+	}
+
+	
+	.registros{
+		margin-top: 100px;
+		padding: 10px;
+		background: linear-gradient(to left, rgba(255,255,255,0.2), rgba(255,255,255,1)), url("../images/procedimientos-980x668.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	.column {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+	}
+
+	.icon {
+	  padding: 10px;
+	  background: #0086d6;
+	  color: white;
+	  min-width: 50px;
+	  text-align: center;
+	  border-top-left-radius: 5px;
+	  border-bottom-left-radius: 5px;
+	}
+
+
+	.input-field {
+	  width: 100%;
+	  padding: 10px;
+	  margin-right: 8px;
+	  outline: none;
+	  border-top-right-radius: 5px;
+	  border-bottom-right-radius: 5px;
+	}
+	.tex-area{
+		height: 200px;
+	}
+
+	.input-field:focus {
+	  border: 2px solid #0086d6;
+	}
+
+	.select-field {
+	  width: 100%;
+	  height: 40px;
+	  margin-right: 8px;
+	  outline: none;
+	}
+
+	.select-field:focus {
+	  border: 2px solid #0086d6;
+	}
+
+	.btn-register{
+		background-color: #feb236;/*#9de000;*/
+		padding: 10px;
+		margin: 5px;
+		width: fit-content;
+		box-shadow: 5px 5px 5px #555;
+		text-decoration: none;
+		font-size: 14px;
+
+	}
+
 	.arrow_right{
 		background-color: #fcfefe;
 		opacity: 0.5;
@@ -209,8 +321,6 @@
 		border-right: 20px solid transparent;
 		margin-right: 140px;
 		margin-left: 60px;
-
-
 	}
 
 	.rows__box{
@@ -225,13 +335,17 @@
 		border-right: 1px inset #2026cd;
 		border-bottom: 1px solid #0006ad;
 		background-color: #fcfefe;
-		height: 100px;
+		height: 80px;
 		width: 700px;
 		display: flex;
 		flex-direction: column;
 		text-align: center;
 		align-self: center;
 		box-shadow: 5px 10px 20px #555;
+	}
+
+	.flow_box2 .btn{
+		background-color:#73AD21 ;
 	}
 
 	.btn{
@@ -246,7 +360,10 @@
 		background-color: #feb236;/*#9de000;*/
 		padding: 6px;
 		margin: 5px;
+		width: fit-content;
 		box-shadow: 5px 5px 5px #555;
+		text-decoration: none;
+		font-size: 14px;
 
 	}
 
@@ -305,8 +422,6 @@
 
 	.container_table__insert {
 		background-color: lightblue;
-
-
 	}
 	.login {
 		background: #d9d9d9;
@@ -338,7 +453,6 @@
 	.login .submit:hover {
 
 		background-color: #73AD21;
-
 	}
 
 	.login .submit:active {
@@ -371,7 +485,6 @@
 	   	width: 100%;
 	   	margin-bottom: 10px;
 	}
-
 
 	.pedidosT tr:nth-child(even){
 		background-color: #f2f2f2;

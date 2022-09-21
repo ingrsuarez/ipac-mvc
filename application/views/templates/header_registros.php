@@ -1,4 +1,3 @@
- 
 <body>
 		
 	<header class="header">
@@ -6,7 +5,7 @@
 			<div class="menu__logo" ><img src="<?php echo base_url(); ?>images/logo-color.png"></div>
 			<ul class="menu__item" >
 				<li class="dropdown__item" id="home"><a href="<?php echo base_url(); ?>index.php">INICIO</a></li> 
-				<li class="dropdown__item dropdown__item--active" id="active">
+				<li class="dropdown__item" id="compras">
 					<a href="<?php echo base_url(); ?>index.php/compras/pedidos/" >COMPRAS</a>
 				</li>
 				<li class="dropdown__item" id="procedimientos">
@@ -23,7 +22,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item" id="registros">
+				<li class="dropdown__item  dropdown__item--active" id="registros">
 					<a href="<?php echo base_url(); ?>index.php/registros/circulares/" >REGISTROS</a>
 					<ul class="inside__menu" id="servicios__inside">
 						<li class="inside__item">
@@ -52,72 +51,69 @@
 			</div>
 		</nav>
 		<nav class="menu_compras">
-			<div class="menu__logo2" ><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
+			<div class="menu__logo2" ><a href="#"><i class="fa-solid fa-book"></i></i></a></div>
 			<ul class="menu__item" >
 				
-				<li class="dropdown__item2" id="pedidos">
-					<a href="#" >PEDIDOS</a>
-					<ul class="inside__menu" id="pedidos__inside">
+				<li class="dropdown__item2" id="circulares">
+					<a href="#" >CIRCULARES</a>
+					<ul class="inside__menu" id="circulares__inside">
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/pedidos/">Pedidos</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/circulares/">Nueva circular</a>
 						</li>
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/mis_pedidos/">Mis pedidos</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/circulares_activas/">Circulares activas</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/editar_pedidos/">Editar pedido</a>
-						</li>
-						<li class="inside__item">
-							<a href="#">Compra directa</a>
+							<a href="#">Editar circulares</a>
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item2" id="compras">
-					<a href="#">COMPRAS</a>
-					<ul class="inside__menu" id="compras__inside">
+				<li class="dropdown__item2" id="no_conformidades">
+					<a href="#">NO CONFORMIDADES</a>
+					<ul class="inside__menu" id="no_conformidades__inside">
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/recibirOC/">Recibir pedido</a>
+							<a href="#">Nueva No Conformidad</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/confeccionarOC/">Confeccionar OC</a>
+							<a href="#">Mis No conformidades</a>
 						</li>
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/imprimirOC/">Imprimir OC</a>
+							<a href="#">Imprimir NC</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/editarOC/">Editar OC</a>
+							<a href="#">Editar NC</a>
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item2" id="articulos">
-					<a href="#" >ARTICULOS</a>
-					<ul class="inside__menu" id="articulos__inside">
+				<li class="dropdown__item2" id="capacitaciones">
+					<a href="#" >CAPACITACIONES</a>
+					<ul class="inside__menu" id="capacitaciones__inside">
 						<li class="inside__item">
 							<a href="#">Buscar Articulo</a>
 						</li>
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/ingresarArticulo">Ingresar Articulo</a>
+							<a href="#">Ingresar Articulo</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/compras/descargarArticulo">Descargar Articulo</a>
+							<a href="#">Descargar Articulo</a>
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item2" id="proveedores">
-					<a href="#">PROVEEDORES</a>
-					<ul class="inside__menu" id="proveedores__inside">
+				<li class="dropdown__item2" id="orden_trabajo">
+					<a href="#">ORDEN DE TRABAJO</a>
+					<ul class="inside__menu" id="orden_trabajo__inside">
 						<li class="inside__item">
 							<a href="#">Servicio 1</a>
 						</li>
@@ -135,4 +131,5 @@
 			</ul>
 			<div class="menu__logo" ></div>
 		</nav>
+	
 	</header>

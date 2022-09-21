@@ -26,21 +26,32 @@
 
 			<!-- Tab panes -->
 			
-				<div id="hemoglobina" class="tab-content active"><br>
+				<div id="hemoglobina" class="tab-content-active"><br>
 					<div class="calculos">	
 						
-						<p>Glicosilada = ((HbA1c/Hb)*91.5)+2.15</p>
-						<label for="glic">HBA1C g/dl</label><input type="number" id="glic" step="0.001" min="0" name="glic" value="1" max="50">
-						<label for="hb">Hemoglobina</label><input type="number" id="hb" step="0.1" min="0" name="hb" value="10" max="100"><br><br>
-						<label for="pglic">Glicosilada:</label>
-						<input type="text" id="hba1c" name="pglic" value="0" readonly><br><br>
-						<!--IFCC-->	
-						
-						<p>IFCC = (%HbA1C-2.15)/0.095</p>
-						<label for="ifcc">IFCC</label>
-						<input type="text" name="ifcc " id="ifcc" value="0" readonly><br>
+						<h3>Glicosilada = ((HbA1c/Hb)*91.5)+2.15</h3><br>
+						<table class="pedidosT">
+							<tr>
+								<td class="td-label"><label for="glic">HBA1C g/dl</label></td>
+								<td><input type="number" id="glic" step="0.001" min="0" name="glic" value="1" max="50"></td>
+							
+								<td class="td-label"><label for="hb">Hemoglobina</label></td>
+								<td><input type="number" id="hb" step="0.1" min="0" name="hb" value="10" max="100"></td>
+							</tr>
+							<tr>
+								
+							</tr>
+							<!--IFCC-->	
+							<tr><td></td><td><h3>IFCC = (%HbA1C-2.15)/0.095</h3></td></tr>
+							
+							<tr>
+								<td class="td-label"><label for="pglic">Glicosilada:</label></td>
+								<td><input type="text" id="hba1c" name="pglic" value="0" readonly></td>
+								<td class="td-label"><label for="ifcc">IFCC</label></td>
+								<td><input type="text" name="ifcc " id="ifcc" value="0" readonly></td>	
+							</tr>						
+						</table>
 						<input type="submit" id="Calcular" value="Calcular" class="btn btn-verify">
-						
 					</div>
 					<script type="text/javascript">
 						$("#Calcular").click(function(){
@@ -65,14 +76,14 @@
 							<label for="diuresis">Diuresis:</label><input type="number" id="diuresis" step="1" min="0" name="diuresis" value="1" max="5000"> 
 							<label for="peso">Peso:</label><input type="number" id="peso" step="1" min="1" name="peso" value="50" max="500">
 							<label for="altura">Altura:</label><input type="number" id="altura" step="0.01" min="0.4" name="altura" value="1" max="500">
-							<label for="edad">Edad:</label><input type="number" id="edad" step="0.01" min="0.4" name="edad" value="1" max="500"><br><br>
+							<label for="edad">Edad:</label><input type="number" id="edad" step="1" min="1" name="edad" value="1" max="200"><br><br>
 
 							<label for="volmin">Vol/min:</label><input type="number" id="volmin" step="0.01" min="0" name="volmin" value="1" max="500" readonly><br><br>
 							<label for="supcorp">Superficie corporal:</label><input type="number" id="supcorp" step="0.01" min="0" name="supcorp" value="1" max="100" readonly>
 							<label for="supcorpcorr">CL corregido por Sup.:</label><input type="number" id="supcorpcorr" step="0.01" min="0" name="supcorpcorr" value="1" max="100" readonly><br><br>
 							<label for="hombre">Hombre:</label><input type="number" id="hombre" step="0.01" min="0" name="hombre" value="1" max="100" readonly>
 							<label for="mujer">Mujer:</label><input type="number" id="mujer" step="0.01" min="0" name="mujer" value="1" max="100" readonly>	<br><br>
-							<input type="submit" id="CalcularC" value="Calcular" class="btn btn-success">	
+							<input type="submit" id="CalcularC" value="Calcular" class="btn btn-verify">	
 						</div>
 						<div class="tablaw">
 							<table>
@@ -173,17 +184,17 @@
 					</script>	
 				</div>
 				<div id="homa" class="tab-content fade"><br>
-					<div class="tablah">
+					<div class="calculos">
 						<h4>Homa</h4>
 						<p style="font-size: 90%;">ÍNDICE DE RESISTENCIA A LA INSULINA (HOMA-IR): </p>
 						<label for="insulina">Insulina:</label><input type="number" id="insulina" step="0.01" min="0.4" name="insulina" value="1" max="500" style="float: right;"><br>
 						<label for="glucosa">Glucosa mg/dl:</label><input type="number" id="glucosa" step="0.01" min="0.4" name="glucosa" value="1" max="500" style="float: right;"><br>
 						
 						<label for="ih">Índice HOMA</label><input type="number" id="ih" step="0.01" min="0.4" name="ih" value="1" max="500" style="float: right;"><br>
-						<input type="submit" id="CalcularIh" value="Calcular" class="btn btn-success">
+						<input type="submit" id="CalcularIh" value="Calcular" class="btn btn-verify">
 
 					</div>
-					<div class="tablai" >
+					<div class="tablaw" >
 							<table>
 								<tr>
 									<th colspan="2" style="width: 100%; border: 1px solid #111111;"><h4>INDICE HOMA </h4></th>
@@ -232,32 +243,44 @@
 					</script>	
 				</div>
 				<div id="proteinograma" class="tab-content fade"><br>	
-					<div class="proteinograma">
-						<h4>Proteinograma</h4>
-						<tr>
-							<td><label for="proteinas">Proteinas:</label>
-							<input type="number" value="7" id="proteinas" name="proteinas" step="0.1" max="50"></td>
-							<td><label for="albumina">Albumina:</label>
-							<input type="number" value="4" id="albumina" name="albumina" step="0.1" max="50"></td>
-						</tr>
-						<tr>
-							<td><label for="globulinas">Globulinas:</label>
-							<input type="number" id="globulinas" name="globulinas" step="0.1" max="50" readonly></td>	
-							<td><label for="relacionag">Relación Alb/Glob:</label>
-							<input type="number" id="relacionag" name="relacionag" step="0.1" max="50" readonly></td>
-						</tr>	
-							
-							<label for="alfa1">Alfa1:</label>
-							<input type="number" id="alfa1" name="alfa1" step="0.1" style="padding: 2px;" value="0.29">
-							<label for="alfa2">Alfa2:</label>
-							<input type="number" id="alfa2" name="alfa2" step="0.1" style="padding: 2px;" value="0.75">
-							<label for="beta">Beta:</label>
-							<input type="number" id="beta" name="beta" step="0.1" style="padding: 2px;" value="0.9">	
-							<br>
-							<label for="gamma">Gamma:</label>
-							<input type="number" id="gamma" name="gamma" step="0.1" style="padding: 2px;" readonly>
+					<div class="calculos">
+						<h2>Proteinograma</h2>
 						<br>
-						<input type="submit" class="btn btn-success" value="Calcular" id="calcularP">	
+						<table class="pedidosT">
+							<tr>
+								<td class="td-label"><label for="proteinas">Proteinas:</label></td>
+								<td>
+								<input type="number" value="7" id="proteinas" name="proteinas" step="0.1" max="50"></td>
+								<td class="td-label"><label for="albumina">Albumina:</label></td>
+								<td>
+								<input type="number" value="4" id="albumina" name="albumina" step="0.1" max="50"></td>
+							</tr>
+							<tr>
+								<td class="td-label"><label for="globulinas">Globulinas:</label></td>
+								<td>
+								<input type="number" id="globulinas" name="globulinas" step="0.1" max="50" readonly></td>
+								<td class="td-label"><label for="relacionag">Relación Alb/Glob:</label></td>
+								<td>
+								<input type="number" id="relacionag" name="relacionag" step="0.1" max="50" readonly></td>
+							</tr>	
+							<tr>	
+								<td class="td-label"><label for="alfa1">Alfa1:</label></td>
+								<td>
+								<input type="number" id="alfa1" name="alfa1" step="0.1" style="padding: 2px;" value="0.29"></td>
+								<td class="td-label"><label for="alfa2">Alfa2:</label></td>
+								<td>
+								<input type="number" id="alfa2" name="alfa2" step="0.1" style="padding: 2px;" value="0.75"></td>
+							</tr>
+							<tr>
+								<td class="td-label"><label for="beta">Beta:</label></td>
+								<td>
+								<input type="number" id="beta" name="beta" step="0.1" style="padding: 2px;" value="0.9"></td>	
+								<td class="td-label"><label for="gamma">Gamma:</label></td>
+								<td>
+								<input type="number" id="gamma" name="gamma" step="0.1" style="padding: 2px;" readonly></td>
+							</tr>
+						</table>
+						<input type="submit" class="btn btn-verify" value="Calcular" id="calcularP">	
 
 
 					</div>
@@ -317,11 +340,24 @@
 					<div class="tablah">
 						<h4>Calcio Iónico</h4>
 						<p style="font-size: 90%;">Es el calcio que no está adherido a las proteínas.</p>
-						<label for="calcio">Calcio:</label><input type="number" id="calcio" step="0.01" min="0" name="calcio" value="1" max="50" style="float: right;"><br>
-						<label for="proteinasC">Proteinas:</label><input type="number" id="proteinasC" step="0.01" min="0" name="proteinasC" value="1" max="50" style="float: right;"><br>
-						
-						<label for="calcioI">Calcio Iónico:</label><input type="number" id="calcioI" step="0.01" min="0" name="calcioI" value="1" max="100" style="float: right;"><br>
-						<input type="submit" id="CalcularCI" value="Calcular" class="btn btn-success">
+						<table class="pedidosT">
+							<tr>
+								<td><label for="calcio">Calcio:</label></td>
+							<td><input class="number" type="number" id="calcio" step="0.01" min="0" name="calcio" value="1" max="50" style="float: right;"></td>
+							</tr>
+							<tr>
+								<td><label for="proteinasC">Proteinas:</label></td>
+								<td><input class="number" type="number" id="proteinasC" step="0.01" min="0" name="proteinasC" value="1" max="50" style="float: right;"></td>
+							</tr>
+							<tr>
+								<td><label for="calcioI">Calcio Iónico:</label></td>
+								<td><input class="number" type="number" id="calcioI" step="0.01" min="0" name="calcioI" value="1" max="100" style="float: right;"></td>
+							</tr>	
+							
+							
+						</table>
+						<br>
+						<input type="submit" id="CalcularCI" value="Calcular" class="btn btn-verify">
 
 					</div>
 

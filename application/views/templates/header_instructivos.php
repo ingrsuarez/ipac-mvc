@@ -23,7 +23,7 @@
 					</ul>
 				</li>
 				<li class="dropdown__item" id="registros">
-					<a href="#" >REGISTROS</a>
+					<a href="<?php echo base_url(); ?>index.php/registros/circulares/" >REGISTROS</a>
 					<ul class="inside__menu" id="servicios__inside">
 						<li class="inside__item">
 							<a href="#">Servicio 1</a>
