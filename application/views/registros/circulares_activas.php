@@ -7,6 +7,7 @@
 			<div class="container_insert">	  
 				<div class="container__form">
 					<div class="col-md-4">
+						<label for="iestado">Estado:</label>
 						<select class="form-control" id="iestado" name="iestado" >
 							<option value="">Seleccione estado......</option>
 							<option value="activa">ACTIVAS</option>
@@ -46,11 +47,11 @@
 							
 							var e = document.getElementById("iestado");
 							
-							var filterCircular = e.value;	
+							var estadoCircular = e.value;	
 							
 							$("#tpendientes>tbody").empty();
 
-							$.post("listado",{idCircular: filterCircular},function(result){	
+							$.post("listado",{idCircular: estadoCircular, },function(result){	
 								// var data = JSON.parse(result);
 								var cont = 0;
 								

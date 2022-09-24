@@ -5,6 +5,7 @@ class Registros_model extends CI_Model {
 
 	public $usrId = "";
 	const circulares_table = "circulares";
+	const vcirculares_table = "vcirculares";
 	const sector_table = "sector";
 	const procesos_table = "documentos";
 
@@ -40,7 +41,15 @@ class Registros_model extends CI_Model {
 
 	public function list_circulares($value='')
 	{
-		$sql = "SELECT * FROM ".self::circulares_table." WHERE estado = '".$value."' ORDER BY fecha";
+		$sql = "SELECT * FROM ".self::circulares_table." WHERE estado = '".$value."' ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+	public function list_vcirculares($value='')
+	{
+		$sql = "SELECT * FROM ".self::vcirculares_table." ORDER BY fecha DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
@@ -58,6 +67,27 @@ class Registros_model extends CI_Model {
 
 	}
 
+	public function activar_circular($idCircular="")
+	{
+		if (!empty($idCircular))
+		{
+			$sql = "UPDATE `circulares` SET `estado`='activa' WHERE id = '".$idCircular."'";
+			$query = $this->db->query($sql);
+
+		}
+
+	}
+
+	public function anular_circular($idCircular="")
+	{
+		if (!empty($idCircular))
+		{
+			$sql = "UPDATE `circulares` SET `estado`='caducada' WHERE id = '".$idCircular."'";
+			$query = $this->db->query($sql);
+
+		}
+
+	}
 
 
 

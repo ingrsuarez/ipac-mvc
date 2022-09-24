@@ -91,7 +91,7 @@ class Registros extends CI_Controller {
  										'proceso' => $this->input->post('proceso'),
  										'sector' => $this->input->post('sector'),
  										'tareas' => $this->input->post('tareas'),
- 										'estado' => 'activa');
+ 										'estado' => 'revision');
  				$this->Registros_model->insert_circular($array_circular);
  				unset($_POST);
                 redirect('/registros/circulares/', 'refresh');
@@ -143,7 +143,7 @@ class Registros extends CI_Controller {
 		$data['estado'] = $this->input->post('iestado');
 		$data['action'] = $this->input->post('print');
 		$data['idCircular'] = $this->input->post('select');
-		if ($data['estado'] == "caducada"){
+		if (($data['estado'] == "caducada") || ($data['estado'] == "revision") ){
 			$mensaje = "Por favor seleccione una circular activa!";
 			echo ("<script>
 			alert('".$mensaje."')</script>");
@@ -168,8 +168,145 @@ class Registros extends CI_Controller {
   	}
 
 
+  	public function editar_circulares()
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$this->session->set_userdata('last_page', 'editar_circulares');
+        	$access = $this->session->userdata('puesto');
+        	$delete = $this->input->post('delete');
+        	$user = $this->session->userdata('usuario');
+        	$circulares = $this->Registros_model->list_vcirculares();
+        	$data['circulares'] = $circulares;
+        	// var_dump($circulares);
+			$this->load->view('templates/head_compras');
+        	$this->load->view('templates/header_registros');
+        	$this->load->view('templates/aside', $this->session->userdata());
+        	$this->load->view('registros/editar_circulares',$data);
+        	$this->load->view('templates/footer');
+        	
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
+    }
+
+    public function activar_circular()
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$idCircular = $this->input->post('circularActivar');
+        	$result = $this->Registros_model->activar_circular($idCircular);
+        	redirect('/registros/editar_circulares/', 'refresh');
+
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
+    }
+
+    public function anular_circular()
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+
+        	$idCircular = $this->input->post('delete');
+        	$result = $this->Registros_model->anular_circular($idCircular);
+        	redirect('/registros/editar_circulares/', 'refresh');
+        	
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
+    }
+
+
+
+    public function no_conformidades($action="")
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+ 			if (empty($action))
+ 			{
+ 				$sector = $this->Registros_model->list_sectores();
+ 				$procesos = $this->Registros_model->list_procesos();
+				$data['sector'] = $sector;
+				$data['procesos'] = $procesos;
+	        	$this->load->view('templates/head_compras');
+	        	$this->load->view('templates/header_registros');
+	        	$this->load->view('templates/aside', $this->session->userdata());	
+		        $this->load->view('registros/no_conformidades',$data);
+		        $this->load->view('templates/footer');
+ 			}elseif ($action == "nueva")
+ 			{
+ 				
+ 				$userId = $this->session->userdata('id');
+        		$today = date("Y-m-d H:i:s");
+ 				$array_circular = array('fecha' => $today,
+ 										'titulo' => $this->input->post('titulo'),
+ 										'descripcion' => $this->input->post('descripcion'),
+ 										'creador' => $userId,
+ 										'tipo' => $this->input->post('tipo'),
+ 										'proceso' => $this->input->post('proceso'),
+ 										'sector' => $this->input->post('sector'),
+ 										'tareas' => $this->input->post('tareas'),
+ 										'estado' => 'revision');
+ 				$this->Registros_model->insert_circular($array_circular);
+ 				unset($_POST);
+                redirect('/registros/circulares/', 'refresh');
+ 			}
+
+
+	    }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }  
+
+
+    }
 
    
+   	public function nueva_reunion($action="")
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+ 			if (empty($action))
+ 			{
+ 				$sector = $this->Registros_model->list_sectores();
+ 				$procesos = $this->Registros_model->list_procesos();
+				$data['sector'] = $sector;
+				$data['procesos'] = $procesos;
+	        	$this->load->view('templates/head_compras');
+	        	$this->load->view('templates/header_registros');
+	        	$this->load->view('templates/aside', $this->session->userdata());	
+		        $this->load->view('registros/nueva_reunion',$data);
+		        $this->load->view('templates/footer');
+ 			}elseif ($action == "nueva")
+ 			{
+ 				
+ 				$userId = $this->session->userdata('id');
+        		$today = date("Y-m-d H:i:s");
+ 				$array_circular = array('fecha' => $today,
+ 										'titulo' => $this->input->post('titulo'),
+ 										'descripcion' => $this->input->post('descripcion'),
+ 										'creador' => $userId,
+ 										'tipo' => $this->input->post('tipo'),
+ 										'proceso' => $this->input->post('proceso'),
+ 										'sector' => $this->input->post('sector'),
+ 										'tareas' => $this->input->post('tareas'),
+ 										'estado' => 'revision');
+ 				$this->Registros_model->insert_circular($array_circular);
+ 				unset($_POST);
+                redirect('/registros/circulares/', 'refresh');
+ 			}
+
+
+	    }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }  
+
+    }
 }
 
 

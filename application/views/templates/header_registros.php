@@ -67,7 +67,7 @@
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="#">Editar circulares</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/editar_circulares/">Editar circulares</a>
 						</li>
 					</ul>
 				</li>
@@ -75,7 +75,7 @@
 					<a href="#">NO CONFORMIDADES</a>
 					<ul class="inside__menu" id="no_conformidades__inside">
 						<li class="inside__item">
-							<a href="#">Nueva No Conformidad</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/no_conformidades/">Nueva No Conformidad</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
@@ -98,16 +98,16 @@
 					<a href="#" >CAPACITACIONES</a>
 					<ul class="inside__menu" id="capacitaciones__inside">
 						<li class="inside__item">
-							<a href="#">Buscar Articulo</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/nueva_reunion/">Nueva Reunion</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Ingresar Articulo</a>
+							<a href="#">I</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="#">Descargar Articulo</a>
+							<a href="#">D</a>
 						</li>
 					</ul>
 				</li>

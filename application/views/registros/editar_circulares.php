@@ -1,37 +1,36 @@
 	<div class="container">
 		<div class="container_title">
-			<h3><i class="fas fa-tasks"></i>  EDITAR PEDIDO: </h3>
+			<h3><i class="fas fa-tasks"></i>  EDITAR CIRCULARES: </h3>
 		</div>
 		<table class='pedidosT'>
 			<thead>
 				<tr class="pedidosT__encabezado">
 				  <th class="pedidosT__fecha" scope='col'>Fecha </th>
-				  <th class="pedidosT__usuario" scope='col'>Solicitó <input class="form-check-input" type="checkbox" id="userCheck" name="userCheck" <?php echo $misPedidos ?>></th>
-				  <th scope='col'>Artículo</th>
-				  <th scope='col'>Estado</th>
-				  <th scope='col' colspan="2">Opciones</th>
+				  <th class="pedidosT__usuario" scope='col'>Creador <input class="form-check-input" type="checkbox" id="userCheck" name="userCheck"></th>
+				  <th scope='col'>Título</th>
+				  <th scope='col' colspan="3">Estado</th>
 				</tr>
 			</thead>
 			<tbody>
 			<?php	
-			$arrayLength = count($pedidos);
+			$arrayLength = count($circulares);
 			$i = 0;
 			
 			while ($i < $arrayLength) {?>
 				<tr class="pedidosT__row">						
-					<td class="pedidosT__fecha"> <?php echo $pedidos[$i]->fecha;?></td>
-					<td> <?php echo $pedidos[$i]->usuario."-";?></td>
-					<td> <input class="form-check-input" form="edit<?php echo$i?>" type="text" name="articulo[]" value="<?php echo $pedidos[$i]->articulo;?>"></td>
-					<td> <?php echo $pedidos[$i]->estado;?></td>
+					<td class="pedidosT__fecha"> <?php echo $circulares[$i]->fecha;?></td>
+					<td> <?php echo $circulares[$i]->nombre."-";?></td>
+					<td> <?php echo $circulares[$i]->titulo;?></td>
+					<td> <?php echo $circulares[$i]->estado;?></td>
 					<td>
-						<form action="<?php echo site_url('compras/editar_pedido'); ?>" id='edit<?php echo$i?>' method ='POST'>
-							<input type="hidden" name="pedido[]" value="<?= $pedidos[$i]->id?>">
-							<button type='submit' class='btn btn-delete' name='edit'>Editar</button>
+						<form action="<?php echo site_url('registros/activar_circular'); ?>" id='edit<?php echo$i?>' method ='POST'>
+							<input type="hidden" name="circularActivar" value="<?= $circulares[$i]->id?>">
+							<button type='submit' class='btn btn-delete' name='edit'>Activar</button>
 						</form>
 					</td>
 					<td>
-						<form action="<?php echo site_url('compras/anular_pedido'); ?>" method ='POST'>	
-							<input type="hidden" name="delete" value="<?= $pedidos[$i]->id?>">
+						<form action="<?php echo site_url('registros/anular_circular'); ?>" method ='POST' name="anular">	
+							<input type="hidden" name="delete" for="anular" value="<?= $circulares[$i]->id?>">
 							<button type='submit' class='btn btn-delete'>Anular</button>
 						</form>
 					</td>						
@@ -81,5 +80,4 @@
 		</div>
 	</div>
 </div>	
-<script type = 'text/javascript' src = "<?php echo base_url();?>js/comprasJava.js"></script>
-<script type = 'text/javascript' src = "<?php echo base_url();?>js/menuComprasJava.js"></script>
+<script type = 'text/javascript' src = "<?php echo base_url();?>js/menuRegistrosJava.js"></script>
