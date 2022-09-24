@@ -38,6 +38,7 @@
 							<th scope='col'>Número</th>
 							<th scope='col'>Artículos</th>
 							<th scope='col'>Cantidad</th>
+							<th scope="col">Proveedor</th>
 							<th scope='col'>Ingresó</th>
 						</tr>
 					</thead>
@@ -70,6 +71,7 @@
 										+"'>"+ "<input type='hidden' name = 'articulo[]' value='"+json[label].articulo+"'>"+json[label].remito+"</td>"
 										+"<td><input type='hidden' name = 'ocnumber[]' value='"+json[label].remito+"'>"+ json[label].articulo+"</td>"
 										+"<td>"+ json[label].cantidad+"</td>"
+										+"<td>"+ json[label].proveedor+"</td>"
 										+"<td>"+ json[label].usuario+"</td>"
 										+"</tr>");
 
