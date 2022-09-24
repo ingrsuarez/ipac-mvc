@@ -226,6 +226,20 @@ class Compras_model extends CI_Model {
 
 	}
 
+	public function articulo_remito($articulo="")
+	{
+	if (!empty($articulo))
+		{
+			$sql = "SELECT * FROM `vremitos` WHERE vremitos.articulo LIKE '%".$articulo."%' ORDER BY `fecha` DESC LIMIT 25";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			
+			return $result;
+		}
+
+
+	}
+
 	public function oc_items($number) {
 		// $sql = "SELECT * from ocpendientes WHERE numero = ".$number;
 		$sql = "SELECT * FROM `vocimprimir` WHERE `numero` = '".$number."'";

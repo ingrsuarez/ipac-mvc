@@ -261,6 +261,15 @@ class Compras extends CI_Controller {
 			    	print_r(json_encode($array['items']));
 
 
+		    	}elseif ($param == "articulo")
+			    {
+			    	$articulo = $this->input->post('nombreArticulo');	 
+					$array['items'] = $this->Compras_model->articulo_remito($articulo);
+					// echo("<script>
+	    // 			alert('".$array['items']."')</script>");
+			    	print_r(json_encode($array['items']));
+
+
 		    	}
 
 	        }else
