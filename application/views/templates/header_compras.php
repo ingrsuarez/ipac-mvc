@@ -82,6 +82,9 @@
 							<a href="<?php echo base_url(); ?>index.php/compras/recibirOC/">Recibir pedido</a>
 						</li>
 						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/compras/remitos/">Remitos</a>
+						</li>
+						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">

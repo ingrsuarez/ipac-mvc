@@ -198,6 +198,34 @@ class Compras_model extends CI_Model {
 
 	}
 
+	public function numero_remito($numero="")
+	{
+	if (!empty($numero))
+		{
+			$sql = "SELECT * FROM `vremitos` WHERE vremitos.remito LIKE '%".$numero."%' ORDER BY `fecha` DESC LIMIT 25";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			
+			return $result;
+		}
+
+
+	}
+
+	public function proveedor_remito($proveedor="")
+	{
+	if (!empty($proveedor))
+		{
+			$sql = "SELECT * FROM `vremitos` WHERE vremitos.proveedor LIKE '%".$proveedor."%' ORDER BY `fecha` DESC LIMIT 25";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			
+			return $result;
+		}
+
+
+	}
+
 	public function oc_items($number) {
 		// $sql = "SELECT * from ocpendientes WHERE numero = ".$number;
 		$sql = "SELECT * FROM `vocimprimir` WHERE `numero` = '".$number."'";

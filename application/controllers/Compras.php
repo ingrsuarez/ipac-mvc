@@ -228,6 +228,47 @@ class Compras extends CI_Controller {
 
     }
 
+    public function remitos($param='')
+    {
+    	if ($this->session->has_userdata('usuario'))
+	        {
+	        	$userId = $this->session->userdata('id');
+	        	if (empty($param))
+		        {
+		        	$proveedores = $this->Compras_model->list_proveedores();
+				    $data['proveedores'] = $proveedores;
+					$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_compras');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('compras/remitos',$data);
+			    	$this->load->view('templates/footer');
+
+		        }
+		        elseif ($param == "remito")
+			    {
+			    	$numeroRemito = $this->input->post('remitoLastNumber');	 
+					$array['items'] = $this->Compras_model->numero_remito($numeroRemito);
+
+			    	print_r(json_encode($array['items']));
+
+
+		    	}elseif ($param == "proveedor")
+			    {
+			    	$iProveedor = $this->input->post('iproveedor');	 
+					$array['items'] = $this->Compras_model->proveedor_remito($iProveedor);
+					// echo("<script>
+	    // 			alert('".$array['items']."')</script>");
+			    	print_r(json_encode($array['items']));
+
+
+		    	}
+
+	        }else
+	        {
+	        	 redirect('/secure/login', 'refresh');
+	        }
+    }
+
     public function confeccionarOC($success="")
     {
     	if ($this->session->has_userdata('usuario'))
