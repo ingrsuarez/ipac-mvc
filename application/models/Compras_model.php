@@ -202,7 +202,7 @@ class Compras_model extends CI_Model {
 	{
 	if (!empty($numero))
 		{
-			$sql = "SELECT * FROM `vremitos` WHERE vremitos.remito LIKE '%".$numero."%' ORDER BY `fecha` ASC LIMIT 25";
+			$sql = "SELECT * FROM `vremitos` WHERE vremitos.remito LIKE '%".$numero."%' ORDER BY `fecha` DESC LIMIT 25";
 			$query = $this->db->query($sql);
 			$result = $query->result();
 			
