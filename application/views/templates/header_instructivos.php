@@ -37,7 +37,7 @@
 					</ul>
 				</li>
 				<li class="dropdown__item" id="contacto">
-					<a href="#">CONTACTO</a>
+					<a href="<?php echo base_url(); ?>index.php/rrhh/panel/">RRHH</a>
 				</li>
 				<div class="dropdown__toggle" id="toggle">
 					<i class="fa-solid fa-bars"></i>

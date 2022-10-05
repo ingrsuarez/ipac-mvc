@@ -46,8 +46,8 @@ class Pages extends CI_Controller {
         'userName'  => $user,
         'password'     => md5($userPassword));
         $newUser = $this->Secure_model->check_password($newdata);
+        ($newUser != false ? $this->session->set_userdata($newUser) : false);
 
-        $this->session->set_userdata($newUser);
 
         if ($this->session->has_userdata('usuario'))
         {
@@ -61,7 +61,9 @@ class Pages extends CI_Controller {
             $this->load->view('pages/home', $this->session->userdata());
             $this->load->view('templates/footer', $data);
         }else {
-            echo("Por favor introduzca un usuario y contraseña correctos!");
+            $mensaje = "Por favor introduzca un usuario y contraseña correctos!";
+                echo ("<script>
+                alert('".$mensaje."')</script>");
             redirect('/secure/login', 'refresh');
         }
 	}

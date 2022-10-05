@@ -8,6 +8,42 @@
 	box-shadow: 5px 5px 5px #555;
 }
 
+.container-small{
+	display: flex;
+	background-color: #fcfefe;
+	border-radius: 15px;
+	box-shadow: 5px 5px 5px #555;
+	margin: 5px 1rem;
+	width: 80%;
+	max-height: 200px;
+
+}
+
+.container-small form{
+
+	background-color: #fcfefe;
+	
+
+}
+
+.container-small2{
+	display: flex;
+	background-color: #fcfefe;
+	width: 350px;
+	height: 320px;
+	margin-top: 5px;
+}
+
+/***FOOTER*****/
+.footer {
+	position: fixed;
+	bottom: 0px;
+	width: 80vw;
+	left: 15vw;
+	margin-bottom: 0px;
+	background-color: white;
+	z-index: 100;
+}
 
 
 @media screen and (min-width: 400px) {
@@ -25,6 +61,7 @@
 		border-radius: 15px;
 		box-shadow: 5px 5px 5px #555;
 	}
+
 
 	.container_title {
 		
@@ -230,7 +267,33 @@
 		margin-bottom: 15px;
 	}
 
-	
+	.container__form2 {
+		display: inline-block;
+		margin-left: 10px;
+	}
+
+	.container-grid{
+		margin-left: 210px;
+		grid-template-columns: 1fr 1fr;
+	}
+
+
+
+	.calendar {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		margin-top: 5px;
+	}
+
+	/*CALENDAR TABLE STYLE*/
+
+	.tCalendar {
+		padding: 10px;
+		font-size: 16px;
+
+	}
+
 	.registros{
 		margin-top: 100px;
 		padding: 10px;
@@ -239,6 +302,13 @@
 		background-size: cover;
 	}
 
+	.board-rrhh {
+		height: 85vh;
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+
+	}
 	.column {
 		display: flex;
 		flex-direction: row;
@@ -560,7 +630,7 @@
 		box-shadow: 5px 5px 5px #555;
 	}
 
-	.container__form {
+	.container__form2 {
 		display: inline-block;
 	}
 
@@ -586,14 +656,5 @@
 		overflow-x: auto;
 	}
 
-	/***FOOTER*****/
-	.footer {
-		position: fixed;
-		bottom: 0px;
-		width: 80vw;
-		left: 15vw;
-		margin-bottom: 0px;
-		background-color: white;
-		z-index: 100;
-	}
+
 }

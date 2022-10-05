@@ -1,7 +1,8 @@
 <?php
 class Empleados_model extends CI_Model {
 
-        public $table = 'empleados';
+        const table = 'empleados';
+
 
         public function __construct()
         {
@@ -34,13 +35,23 @@ class Empleados_model extends CI_Model {
                 if (empty($year)){
                         $year = date('Y');
                 }
-                if ($year <= date('Y')){//Has already take vacation this year
-                        $sql = "SELECT empleados.vacaciones-SUM(licencias.dias) as vacaciones, licencias.año as year FROM licencias INNER JOIN empleados ON licencias.empleado = empleados.id WHERE año = '".$year."' AND empleados.id = '".$id."' AND licencias.estado <> 'ANULADO' GROUP BY empleado";
-                        $this->db->select($sql);
+                if ($year <= date('Y'))
+                {//Has already take vacation this year
+                        $sql = "SELECT empleados.vacaciones-SUM(licencias.dias) as vacaciones, licencias.año as year FROM licencias INNER JOIN empleados ON licencias.empleado = empleados.id WHERE año = '".$year."' AND empleados.id = '".$id."' AND (licencias.estado = 'aprobado' OR licencias.estado = 'revision') GROUP BY empleado";
+                        
                         $query = $this->db->query($sql);
                         $result = $query->row();
                         if (!empty($result)){
-                             return $result;   
+                                if ($result->vacaciones >= 0)
+                                {
+                                   return $result;     
+                                }else
+                                {
+                                        $result->vacaciones = 0;
+                                        return $result;
+                                }
+
+                                     
                         }else{//Never took vacacions this year
                                 $sql2 = "SELECT empleados.vacaciones, '".$year."' as year FROM empleados WHERE empleados.id = ".$id;
                                 $this->db->select($sql);
@@ -50,13 +61,11 @@ class Empleados_model extends CI_Model {
                         }
                         
                 }else
-                {
+                {       //Return all avalible vacation for current year
                         $sql3 = "SELECT empleados.vacaciones, '".$year."' as year FROM empleados WHERE empleados.id = ".$id;
                         $this->db->select($sql3);
                         $query3 = $this->db->query($sql3);
                         $result = $query3->row();
-                        // $result = $row->vacaciones;
-                        
                         return $result; 
                 }
                
@@ -64,5 +73,143 @@ class Empleados_model extends CI_Model {
 
         }
 
+        private function existe_filaVacaciones($year, $usuario)
+        {
 
+                $sql = "SELECT * FROM `vacaciones` WHERE vacaciones.user = '".$usuario."' AND vacaciones.year = ".$year." LIMIT 1";
+                $query = $this->db->query($sql);
+                $result = $query->result();
+                if(!empty($result)) {
+                 return TRUE; 
+                 }else{
+                  return FALSE;
+                }
+        }
+
+        private function dias_vacacionales_disponibles($idUsuario)
+        {
+            $year = date("Y");
+            if($this->existe_filaVacaciones($year,$idUsuario))  
+            {
+                $sql = "SELECT name, (vacaciones.total_days - vacaciones.used_days) as dias_disponibles FROM `vacaciones` WHERE user = '".$idUsuario."' AND vacaciones.year = '".$year."' LIMIT 1";
+                $query = $this->db->query($sql);
+                $result = $query->result();
+                return $result[0]->dias_disponibles;
+            }else
+            {
+                $sql = "SELECT vacaciones FROM `empleados` WHERE id = ".$idUsuario;
+                $query = $this->db->query($sql);
+                $result = $query->result();
+                
+                return $result[0]->vacaciones;
+            }  
+
+
+        }
+
+        public function solicitar_licencia($fecha_inicial="",$fecha_final="")
+        {
+
+                $nombre_usuario = $this->session->userdata('nombre');
+                $id_usuario = $this->session->userdata('id');
+                $vacaciones_usuario = $this->session->userdata('vacaciones');
+                $year = date("Y");
+                $month = date("m");
+                $today = date("Y-m-d H:i:s");
+                $sql = "INSERT INTO `licencias` (`id`, `fecha`, `empleado`, `tipo`, `descripcion`, `fechaini`, `fechafin`, `justificado`, `medico`, `horas50`, `horas100`, `supervisor`, `mes`, `estado`) VALUES (NULL, '".$today."', '".$id_usuario."', 'vacaciones', 'vacaciones ".$year."', '".$fecha_inicial."', '".$fecha_final."', 'si', 'na', '0', '0', '', '".$month."', 'revision')";
+                $query = $this->db->query($sql);        
+        }
+
+        public function get_userName($id_usuario)
+        {
+                $sql = "SELECT nombre FROM empleados WHERE id = '".$id_usuario."'";
+                $query = $this->db->query($sql);
+                $result = $query->result();
+                return $result[0]->nombre;
+
+        }
+
+        public function registrar_licencia($fecha_inicial="",$fecha_final="",$dias_solicitados="",$id_usuario)
+        {
+                $nombre_usuario = $this->Empleados_model->get_userName($id_usuario);
+                $year = date("Y");
+                $dias_disponibles = $this->Empleados_model->dias_vacacionales_disponibles($id_usuario);
+
+                if(!empty($fecha_inicial) )
+                {
+                        $year = date("Y");
+                        //Check if has vacation row created
+                        if (($this->existe_filaVacaciones($year,$id_usuario)) == FALSE )
+                        {
+                                $sql = "INSERT INTO `vacaciones` (`id`, `user`, `name`, `year`, `total_days`, `used_days`, `next_year_days`) VALUES (NULL, '".$id_usuario."', '".$nombre_usuario."', '".$year."', '".$dias_disponibles."', '0', '0')";
+                                $query = $this->db->query($sql);
+                        }
+
+                        if ($dias_solicitados <= $dias_disponibles)
+                        {
+                                $sql = "UPDATE `vacaciones` SET `used_days`= `used_days`+'".$dias_solicitados." 'WHERE user = ".$id_usuario;
+                                $query = $this->db->query($sql);                                      
+                        }else
+                        {
+                                $dias_proximo_año = $dias_solicitados - $dias_disponibles;
+                                //fill current year row
+                                $sql = "UPDATE `vacaciones` SET `used_days`= `total_days`, `next_year_days` = '".$dias_proximo_año."' WHERE user = ".$id_usuario;
+                                $query = $this->db->query($sql);
+                                $year +=1;
+                                //create next year row
+                                $sql = "INSERT INTO `vacaciones` (`id`, `user`, `name`, `year`, `total_days`, `used_days`, `next_year_days`) VALUES (NULL, '".$id_usuario."', '".$nombre_usuario."', '".$year."', '".$dias_disponibles."', '".$dias_proximo_año."', '0')";
+                                $query = $this->db->query($sql);
+
+                        }
+
+                        
+                }
+
+        }
+
+        public function get_licencias($id_usuario='', $year='')
+        {
+                //Return pedidos table notes
+               if (!empty($id_usuario))
+               {
+                        $sql = "SELECT * FROM `licencias` WHERE `empleado` = '".$id_usuario."' AND `año` = '".$year."' ORDER BY  fecha DESC";
+                        $query = $this->db->query($sql);
+                        $result = $query->result();
+                        return $result;
+
+               }        
+               else
+               {
+                        $sql = "SELECT licencias.id, fecha, empleados.nombre, fechaini, fechafin, tipo, estado FROM `licencias` 
+                                INNER JOIN empleados ON licencias.empleado = empleados.id WHERE `estado` = 'revision' AND `año` = ".$year." ORDER BY  fecha DESC";
+                        $query = $this->db->query($sql);
+                        $result = $query->result();
+                        return $result;
+               }
+
+        }
+
+        public function aprobar_licencia($licencia_id='')
+        {
+                $sql = "UPDATE `licencias` SET estado = 'aprobado' WHERE licencias.id = '".$licencia_id."'";
+                $query = $this->db->query($sql);
+                $sql = "SELECT * FROM licencias WHERE id = ".$licencia_id;
+                $query = $this->db->query($sql);
+                $result = $query->result();
+                $id_usuario = $result[0]->empleado;
+                $fecha_inicial = $result[0]->fechaini;
+                $fecha_final = $result[0]->fechafin;
+                $dias_solicitados = $result[0]->dias;
+
+                $this->registrar_licencia($fecha_inicial,$fecha_final,$dias_solicitados,$id_usuario) ;
+
+        }
+
+        public function rechazar_licencia($licencia_id='')
+        {
+                $sql = "UPDATE `licencias` SET estado = 'rechazado' WHERE licencias.id = '".$licencia_id."'";
+                $query = $this->db->query($sql);
+                // $result = $query->result();
+
+        }
 }

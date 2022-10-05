@@ -15,6 +15,8 @@ body {
 
 }
 
+
+
 header {
 	position: fixed;
 	top: 0;
@@ -41,6 +43,8 @@ span > a {
 em {
 	cursor: none;
 }
+
+
 
 .menu {
 	background-color: #00417A;  /*#536d88*/
@@ -454,17 +458,5 @@ em {
 	}
 
 
-
-
-
-
-	/*CALENDAR TABLE STYLE*/
-
-	.tCalendar {
-		margin-left: 100px;
-		margin-top: 30px;
-		font-size: 22px;
-
-	}
 
 }

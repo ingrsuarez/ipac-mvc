@@ -19,7 +19,12 @@ class Secure_model extends CI_Model {
 		$sql = "SELECT * FROM empleados WHERE usuario = '".$userName."' AND clave = '".$password."' LIMIT 1";
 		$query = $this->db->query($sql);
 		$result = $query->row_array();
-		return $result;
+		if (!empty($result))
+		{
+			return $result;
+		}else{
+			return false;
+		}
 
 	}
 
@@ -31,10 +36,16 @@ class Secure_model extends CI_Model {
 			$sql = "SELECT acceso FROM `accesos` WHERE puesto =  '".$puesto."' AND sector = '".$sector."' LIMIT 1";
 			$query = $this->db->query($sql);
 			$result = $query->row_array();
-			$access = $result['acceso'];
-			return ((int) $access);
+			
+			if ($result <> NULL){
+				$access = $result['acceso'];
+				return ((int) $access);
+			}else
+			{	return 1000;
+			}			
+
 		}else
-		{return FALSE;}
+		{return 1000;}
 
 	}
 

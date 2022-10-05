@@ -5,9 +5,9 @@
 
 	<div class="item-grid item1">
 			
-			<form method="POST" action="<?php echo site_url('rrhh/solicitar_vacaciones'); ?>"  id="ingresoVacaciones">
+		<form method="POST" action="<?php echo site_url('rrhh/insertar_licencia'); ?>"  id="ingresoVacaciones">
 			
-				<h3 class="container_title"><i class="fas fa-suitcase" ></i>   VACACIONES</h3>
+				<h3 class="container_title"><i class="fas fa-suitcase" ></i>   LICENCIA:</h3>
 				<div class="column">	
 						<label class="input-group-text" for="fechai">Días disponibles: <?php echo $vacaciones;?></label>
 				</div>	
@@ -43,9 +43,6 @@
 				</div>
 						
 			</form>	
-		
-		
-
 	</div>
 
  	
@@ -53,15 +50,15 @@
  			
  		
 		<div class="row">
-			<h3 class="container_title"><i class="fas fa-tasks"></i>  LICENCIAS DEL AÑO: </h3>
+			<h3 class="container_title"><i class="fas fa-tasks"></i>  LICENCIAS EN REVISION: </h3>
 			<table class='pedidosT'>
 				
 				<thead>
 					<tr class="pedidosT__encabezado">
-					  <th class="pedidosT__fecha" scope='col'>Fecha Solicitud </th>
+					  <th class="pedidosT__fecha" scope='col'>Fecha </th>
+					  <th class="pedidosT__usuario" scope='col'>Usuario</th>
 					  <th scope='col'>Fecha Inicial</th>
 					  <th scope='col'>Fecha Final</th>
-					  <th scope='col'>Días</th>
 					  <th scope='col'>Tipo</th>
 					  <th scope='col'>Estado</th>
 					</tr>
@@ -74,11 +71,19 @@
 				while ($i < $arrayLength) {?>
 					<tr class="pedidosT__row">						
 						<td style="min-width: 120px"> <?php echo $licencias[$i]->fecha;?></td>
+						<td> <?php echo $licencias[$i]->nombre;?></td>
 						<td style="min-width: 120px"> <?php echo $licencias[$i]->fechaini;?></td>
 						<td style="min-width: 120px"> <?php echo $licencias[$i]->fechafin;?></td>
-						<td> <?php echo $licencias[$i]->dias;?></td>
 						<td> <?php echo $licencias[$i]->tipo;?></td>	
-						<td> <?php echo $licencias[$i]->estado;?></td>					
+						<td> <a href="<?php echo base_url(); ?>index.php/rrhh/panel/<?php echo $licencias[$i]->id?>"><?php echo $licencias[$i]->estado;?></a></td>	
+						<td><form action="<?php echo base_url(); ?>index.php/rrhh/panel/aprobar" id='edit<?php echo$i?>' method ='POST'>
+							<input type="hidden" name="licencia" value="<?= $licencias[$i]->id?>">
+							<button type='submit' class='btn btn-delete' name='edit'>APROBAR</button>
+						</form></td>
+						<td><form action="<?php echo base_url(); ?>index.php/rrhh/panel/rechazar" id='edit<?php echo$i?>' method ='POST'>
+							<input type="hidden" name="licencia" value="<?= $licencias[$i]->id?>">
+							<button type='submit' class='btn btn-delete' name='edit'>RECHAZAR</button>
+						</form></td>				
 					</tr><?php
 					$i++;
 					}
@@ -90,11 +95,6 @@
  	<div class="item-grid item3">
  		
 			
-			<?php
-			$this->lang->load('calendar_lang', 'spanish');
-			echo $this->calendar->generate($year,$month);
-
-			?>
 						
 
  	</div>	

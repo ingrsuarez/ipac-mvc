@@ -1,4 +1,15 @@
+<style>
+	
+body {
 
+		background-image: url("../../images/professional.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+		width: auto;
+		height : 100vh;
+	}
+
+</style>
 
 <body>
 	
