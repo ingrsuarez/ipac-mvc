@@ -79,7 +79,8 @@ class Rrhh extends CI_Controller {
             //Obtengo las vacaciones pendientes del año seleccionado
             $id_usuario = $this->session->userdata('id');
         	$licencias = $this->Empleados_model->get_vacaciones($id_usuario,$year);
-            
+            $parameter = substr($year, 0, 8);
+
         	$data['vacaciones'] = $licencias->vacaciones;
         	if ($year == FALSE){
         		$year = date('Y');
@@ -88,58 +89,76 @@ class Rrhh extends CI_Controller {
         	if ($month == FALSE){
         		$month = date('m');
         	}
-        	$prefs = array(
-        		'show_next_prev'=> TRUE,
-        		'next_prev_url' => base_url().'index.php/rrhh/calendario'
-        	);
+            
+            if ($parameter == 'imprimir')
+            {
+                $userDNI = $this->session->userdata('dni');
+                $id = $_GET['lid'];
+                $licencia = $this->Empleados_model->get_licencia_by_id($id);
+                if ($licencia[0]['dni'] == $userDNI)
+                    {
+                       $this->load->view('rrhh/pdfLicencia.php',$licencia[0]); 
+                    }
 
-        	$prefs['template'] = '
 
-            {table_open}<table class="tCalendar" border="0" cellpadding="1" cellspacing="18px">{/table_open}
+                // 
 
-            {heading_row_start}<tr>{/heading_row_start}
+            }else
+            {
+                $prefs = array(
+                'show_next_prev'=> TRUE,
+                'next_prev_url' => base_url().'index.php/rrhh/calendario'
+                );
 
-            {heading_previous_cell}<th><a href="{previous_url}">&lt;&lt;</a></th>{/heading_previous_cell}
-            {heading_title_cell}<th colspan="{colspan}">{heading}</th>{/heading_title_cell}
-            {heading_next_cell}<th><a href="{next_url}">&gt;&gt;</a></th>{/heading_next_cell}
+                $prefs['template'] = '
 
-            {heading_row_end}</tr>{/heading_row_end}
+                {table_open}<table class="tCalendar" border="0" cellpadding="1" cellspacing="18px">{/table_open}
 
-            {week_row_start}<tr>{/week_row_start}
-            {week_day_cell}<td>{week_day}</td>{/week_day_cell}
-            {week_row_end}</tr>{/week_row_end}
+                {heading_row_start}<tr>{/heading_row_start}
 
-            {cal_row_start}<tr>{/cal_row_start}
-            {cal_cell_start}<td>{/cal_cell_start}
-            {cal_cell_start_today}<td>{/cal_cell_start_today}
-            {cal_cell_start_other}<td class="other-month">{/cal_cell_start_other}
+                {heading_previous_cell}<th><a href="{previous_url}">&lt;&lt;</a></th>{/heading_previous_cell}
+                {heading_title_cell}<th colspan="{colspan}">{heading}</th>{/heading_title_cell}
+                {heading_next_cell}<th><a href="{next_url}">&gt;&gt;</a></th>{/heading_next_cell}
 
-            {cal_cell_content}<a href="{content}">{day}</a>{/cal_cell_content}
-            {cal_cell_content_today}<div class="highlight"><a href="{content}">{day}</a></div>{/cal_cell_content_today}
+                {heading_row_end}</tr>{/heading_row_end}
 
-            {cal_cell_no_content}{day}{/cal_cell_no_content}
-            {cal_cell_no_content_today}<div class="highlight">{day}</div>{/cal_cell_no_content_today}
+                {week_row_start}<tr>{/week_row_start}
+                {week_day_cell}<td>{week_day}</td>{/week_day_cell}
+                {week_row_end}</tr>{/week_row_end}
 
-            {cal_cell_blank}&nbsp;{/cal_cell_blank}
+                {cal_row_start}<tr>{/cal_row_start}
+                {cal_cell_start}<td>{/cal_cell_start}
+                {cal_cell_start_today}<td>{/cal_cell_start_today}
+                {cal_cell_start_other}<td class="other-month">{/cal_cell_start_other}
 
-            {cal_cell_other}{day}{/cal_cel_other}
+                {cal_cell_content}<a href="{content}">{day}</a>{/cal_cell_content}
+                {cal_cell_content_today}<div class="highlight"><a href="{content}">{day}</a></div>{/cal_cell_content_today}
 
-            {cal_cell_end}</td>{/cal_cell_end}
-            {cal_cell_end_today}</td>{/cal_cell_end_today}
-            {cal_cell_end_other}</td>{/cal_cell_end_other}
-            {cal_row_end}</tr>{/cal_row_end}
+                {cal_cell_no_content}{day}{/cal_cell_no_content}
+                {cal_cell_no_content_today}<div class="highlight">{day}</div>{/cal_cell_no_content_today}
 
-            {table_close}</table>{/table_close}';
-            $data['licencias'] = $this->Empleados_model->get_licencias($id_usuario,$year);
-        	$this->load->library('calendar',$prefs);
-        	$data['year'] = $year;
-        	$data['month'] = $month;
-        	$data['title'] = 'Calendario';
-    		$this->load->view('templates/head', $data);
-    		$this->load->view('templates/header', $data);
-    		$this->load->view('templates/aside', $this->session->userdata());
-    		$this->load->view('rrhh/pedidoVacaciones', $data);	
-    		$this->load->view('templates/footer', $data);
+                {cal_cell_blank}&nbsp;{/cal_cell_blank}
+
+                {cal_cell_other}{day}{/cal_cel_other}
+
+                {cal_cell_end}</td>{/cal_cell_end}
+                {cal_cell_end_today}</td>{/cal_cell_end_today}
+                {cal_cell_end_other}</td>{/cal_cell_end_other}
+                {cal_row_end}</tr>{/cal_row_end}
+
+                {table_close}</table>{/table_close}';
+                $data['licencias'] = $this->Empleados_model->get_licencias($id_usuario,$year);
+                $this->load->library('calendar',$prefs);
+                $data['year'] = $year;
+                $data['month'] = $month;
+                $data['title'] = 'Calendario';
+                $this->load->view('templates/head', $data);
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/aside', $this->session->userdata());
+                $this->load->view('rrhh/pedidoVacaciones', $data);  
+                $this->load->view('templates/footer', $data);
+            }
+        	
         }else
         {
              redirect('/secure/login', 'refresh');
@@ -157,7 +176,7 @@ class Rrhh extends CI_Controller {
             $dias_solicitados = $differ->days+1;
             $year = date("Y");
            
-            $this->Empleados_model->solicitar_licencia($fecha_inicial->format('Y-m-d H:i:s'),$fecha_final->format('Y-m-d H:i:s'),$dias_solicitados);
+            $this->Empleados_model->solicitar_licencia($fecha_inicial->format('Y-m-d H:i:s'),$fecha_final->format('Y-m-d H:i:s'),'vacaciones');
             redirect('/rrhh/calendario', 'refresh');
         }else
         {
@@ -166,6 +185,28 @@ class Rrhh extends CI_Controller {
 
     }
 
+
+    public function insertar_licencia()
+    {
+        if ($this->session->has_userdata('usuario'))
+        {
+            $fecha_inicial = new DateTime($this->input->post('fechai'));
+            $fecha_final = new DateTime($this->input->post('fechafin'));
+            $id_usuario = $this->input->post('empleado');
+            $medico = $this->input->post('medico');
+            $tipo = $this->input->post('tipo');
+            $differ = $fecha_final->diff($fecha_inicial);       
+            $dias_solicitados = $differ->days+1;
+            $year = date("Y");
+           
+            $this->Empleados_model->solicitar_licencia($fecha_inicial->format('Y-m-d H:i:s'),$fecha_final->format('Y-m-d H:i:s'),$tipo,$id_usuario,$medico);
+             redirect('/rrhh/panel', 'refresh');
+        }else
+        {
+             redirect('/secure/login', 'refresh');
+        }
+
+    }
 
     public function registrar_vacaciones($param="")
     {
@@ -191,13 +232,16 @@ class Rrhh extends CI_Controller {
         if ($this->session->has_userdata('usuario'))
         {
             $acceso_rrhh = $this->Secure_model->access(self::sector);
-            
+            $empleados = $this->Empleados_model->get_empleados_activos();
+            $data['empleados'] = $empleados;
+
             if ($acceso_rrhh < 2)
             {
                 if (empty($param))
                 {
                     $id_usuario = ""; //All users in revision    
                     $year = date("Y");
+
                     $data['licencias'] = $this->Empleados_model->get_licencias($id_usuario,$year);
                     $this->load->view('templates/head', $data);
                     $this->load->view('templates/header', $data);
@@ -206,8 +250,12 @@ class Rrhh extends CI_Controller {
                     $this->load->view('templates/footer', $data);
                 }elseif ($param == "aprobar")
                 {
-                    $licencia_id = $this->input->post('licencia');    
-                    $this->Empleados_model->aprobar_licencia($licencia_id);
+                    $licencia_id = $this->input->post('licencia'); 
+                    $tipo = $this->input->post('tipo');
+                    if ($tipo == 'vacaciones')
+                    {
+                        $this->Empleados_model->aprobar_licencia($licencia_id);
+                    }   
                     redirect('/rrhh/panel', 'refresh');
                 }elseif ($param == "rechazar")
                 {

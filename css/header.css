@@ -12,6 +12,7 @@ body {
 	font-family: 'Dosis', sans-serif;
 	width: 100%;
 	height : auto;
+	overflow-x: hidden;
 
 }
 

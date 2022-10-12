@@ -313,6 +313,7 @@
 		display: flex;
 		flex-direction: row;
 		width: 100%;
+		min-height: 50px;
 	}
 
 	.icon {
@@ -325,6 +326,27 @@
 	  border-bottom-left-radius: 5px;
 	}
 
+	.iconSmall {
+	  padding: 10px;
+	  background: #0086d6;
+	  color: white;
+	  min-width: 20px;
+	  height: 30px;
+	  text-align: center;
+	  border-top-left-radius: 5px;
+	  border-bottom-left-radius: 5px;
+	}
+
+	.iconSelect{
+		padding: 10px;
+		background: #0086d6;
+		color: white;
+		min-width: 20px;
+		height: 40px;
+		text-align: center;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+	}
 
 	.input-field {
 	  width: 100%;
