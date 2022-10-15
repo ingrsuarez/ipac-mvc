@@ -125,6 +125,20 @@
 						</li>
 					</ul>
 				</li>
+				<li class="dropdown__item2" id="documentos">
+					<a href="#">DOCUMENTOS</a>
+					<ul class="inside__menu" id="documentos__inside">
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/insertar_documento/">Subir documento</a>
+						</li>
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/listado_documentos/">Listado de documentos</a>
+						</li>
+						<li class="inside__item">
+							<a href="#">Servicio 3</a>
+						</li>
+					</ul>
+				</li>
 				<div class="dropdown__toggle" id="toggle">
 					<i class="fa-solid fa-bars"></i>
 				</div>

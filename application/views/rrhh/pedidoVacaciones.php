@@ -32,23 +32,6 @@
 						<i class="fa-solid fa-calendar iconSmall"></i>
 						<input type="date" class="select-field" id="fechafin" name="fechafin">	
 					</div>
-
-							
-														
-							
-							
-						<script type="text/javascript">
-							$(document).ready(function(){
-								$("#fechai").change(function(){
-									var diasd = 0;
-
-
-								})
-
-
-							});
-
-						</script>
 						
 				</div>
 				<div class="column">
@@ -72,7 +55,7 @@
 			<table class='pedidosT' id="tabla_licencias">
 				
 				<thead>
-					<tr class="pedidosT__encabezado">
+					<tr class="dataTable__encabezado">
 					  <th scope="col">#</th>
 					  <th class="pedidosT__fecha" scope='col'>Fecha Solicitud </th>
 					  <th scope='col'>Fecha Inicial</th>

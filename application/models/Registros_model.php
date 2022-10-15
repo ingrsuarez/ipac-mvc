@@ -7,7 +7,7 @@ class Registros_model extends CI_Model {
 	const circulares_table = "circulares";
 	const vcirculares_table = "vcirculares";
 	const sector_table = "sector";
-	const procesos_table = "documentos";
+	const procesos_table = "procesos";
 
 
 
@@ -33,7 +33,7 @@ class Registros_model extends CI_Model {
 
 	public function list_procesos($value='')
 	{
-		$sql = "SELECT * FROM ".self::procesos_table." ORDER BY nombre ASC";
+		$sql = "SELECT * FROM ".self::procesos_table." ORDER BY numero ASC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
@@ -89,10 +89,30 @@ class Registros_model extends CI_Model {
 
 	}
 
+	public function insert_document($data = array('nombre'=>'','fecha'=>'','revision'=>'','proceso'=>'','tipo'=>'','sector'=>'','fecharev'=>'','path'=>'','vencimiento'=>''))
+	{
+		$sql = "INSERT INTO `documentos` (`id`, `nombre`, `fecha`, `revision`, `proceso`, `sector`, `fecharev`, `usuario`, `urlfile`, `duracion`) VALUES (NULL, '".$data['nombre']."', '2022-10-13', '".$data['revision']."', '".$data['proceso']."', '".$data['sector']."', '".$data['fecharev']."', '1', '".$data['path']."', '".$data['vencimiento']."')";
+		$query = $this->db->query($sql);
+			
+
+	}
 
 
+	public function listado_documentos()
+	{
+		$sql = "SELECT * FROM `documentos` ORDER BY documentos.proceso, documentos.nombre ASC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
 	
-
+	public function get_document_path($id)
+	{
+		$sql = "SELECT urlfile FROM `documentos` WHERE id = '".$id."'";
+		$query = $this->db->query($sql);
+		$result = $query->row_array();
+		return $result;
+	}
 		
 }
 

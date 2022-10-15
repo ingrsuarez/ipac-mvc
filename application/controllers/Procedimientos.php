@@ -47,13 +47,14 @@ class Procedimientos extends CI_Controller {
         	 redirect('/secure/login', 'refresh');
         }
     }
-
+    
     public function viewfile(){
     	if ($this->session->has_userdata('usuario'))
         {
 	        $sector = $this->uri->segment(3);
-	        $fname = $this->uri->segment(4);
+	        $fname = str_replace(' ', '_', $this->uri->segment(4));
 	        $tofile= base_url('/procedimientos/'.$sector.'/'.$fname);
+	        
 	        header('Content-Type: application/pdf');
 	        readfile($tofile);
 	    }else
