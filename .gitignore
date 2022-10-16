@@ -1,8 +1,7 @@
 application/config/config.*
 /js/comprasJava*
 application/views/compras/test*
-
-.DS_Store
+documentos/*
 
 application/cache/*
 !application/cache/index.html
