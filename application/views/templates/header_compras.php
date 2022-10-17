@@ -105,7 +105,7 @@
 					<a href="#" >ARTICULOS</a>
 					<ul class="inside__menu" id="articulos__inside">
 						<li class="inside__item">
-							<a href="#">Buscar Articulo</a>
+							<a href="<?php echo base_url(); ?>index.php/compras/buscarArticulo">Buscar Articulo</a>
 						</li>
 						<li class="inside__item">
 							<a href="<?php echo base_url(); ?>index.php/compras/ingresarArticulo">Ingresar Articulo</a>
