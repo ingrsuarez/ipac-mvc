@@ -504,6 +504,26 @@ class Compras extends CI_Controller {
 
     //ARTICULOS
 
+    public function buscarArticulo()
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+			$userId = $this->session->userdata('id');
+			$proveedores = $this->Compras_model->list_proveedores();
+			$data['proveedores'] = $proveedores;
+        	$this->load->view('templates/head_compras');
+        	$this->load->view('templates/header_compras');
+        	$this->load->view('templates/aside', $this->session->userdata());
+    		$this->load->view('compras/buscar_articulo',$data);
+    		$this->load->view('templates/footer');
+
+        }else
+	    {
+    		redirect('/secure/login', 'refresh');
+    	}
+
+    }
+
     public function descargarArticulo($param='')
     {
     	if ($this->session->has_userdata('usuario'))
