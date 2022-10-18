@@ -1,5 +1,5 @@
 	
-<form method="POST" action="<?php echo site_url('registros/circulares/nueva'); ?>" id="ingresoCircular">
+<form method="POST" action="<?php echo site_url('registros/no_conformidades/nueva'); ?>" id="ingresoNoConformidad">
 	<div class="container registros">
 		<div class="column">
 			<div class="register_title">
@@ -37,10 +37,23 @@
 						}
 						?>	
 				</select>
+			
+				<i class="fa-solid fa-book icon"></i>
+				<select class="select-field" id="empleado1" name="empleado1" required>
+
+					<option selected value=''> Personal... </option>
+					<?php
+					  	$arrayLength = count($empleados);
+						$i = 0;
+						while ($i < $arrayLength) {?>
+							<option value='<?php echo $empleados[$i]->id;?>'><?php echo $empleados[$i]->nombre;?></option>
+					 	<?php
+						$i++;
+						}
+						?>	
+				</select>
 			</div>
 			<div class="input-container">
-					
-
 			</div>
 		</div>
 		<div class="column">
@@ -48,11 +61,11 @@
 				<i class="far fa-address-card icon"></i>
 				<select class="select-field" id="tipo" name="tipo" required>
 					<option selected value=''> Tipo... </option>
-					<option value='PRE-ANALITICA'> PRE-ANALITICA </option>
-					<option value='ANALITICA'> ANALITICA </option>
-					<option value='POS ANALITICA'> POS ANALITICA </option>
-					<option value='MEDICA'> MEDICA </option>
-					<option value='ADMINISTRATIVA'> ADMINISTRATIVA </option>
+					<option value='NO SE SIGUE EL PROCEDIMIENTO'> NO SE SIGUE EL PROCEDIMIENTO </option>
+					<option value='ERROR DE INGRESO'> ERROR DE INGRESO </option>
+					<option value='TAREAS SIN REALIZAR'> TAREAS SIN REALIZAR </option>
+					<option value='NO SE CONOCE EL PROCEDIMIENTO'> NO SE CONOCE EL PROCEDIMIENTO </option>
+
 				</select>
 
 				<i class="fas fa-tasks icon"></i>
@@ -76,7 +89,7 @@
 		<div class="column">
 			<div class="input-container">
 				<i class="far fa-comments icon"></i>
-				<textarea class="input-field tex-area"rows="4" cols="100" form="ingresoCircular" id="descripcion" name="descripcion" maxlength="1200" placeholder="Descripción:"></textarea>
+				<textarea class="input-field tex-area"rows="4" cols="100" form="ingresoNoConformidad" id="descripcion" name="descripcion" maxlength="1200" placeholder="Descripción:"></textarea>
 			</div>
 			<div class="input-container">
 				
@@ -86,7 +99,17 @@
 		<div class="column">
 			<div class="input-container">
 				<i class="fa-solid fa-toolbox icon"></i>
-				<textarea class="input-field"rows="4" cols="100" form="ingresoCircular" id="tareas" name="tareas" maxlength="1200" placeholder="Tareas:"></textarea>
+				<textarea class="input-field"rows="4" cols="100" form="ingresoNoConformidad" id="accion_inmediata" name="accion_inmediata" maxlength="1200" placeholder="Acción inmediata:"></textarea>
+			</div>
+			<div class="input-container">
+				
+			</div>
+
+		</div>
+		<div class="column">
+			<div class="input-container">
+				<i class="fa-solid fa-toolbox icon"></i>
+				<textarea class="input-field"rows="4" cols="100" form="ingresoNoConformidad" id="causas" name="causas" maxlength="1200" placeholder="Causas:"></textarea>
 			</div>
 			<div class="input-container">
 				
@@ -96,7 +119,7 @@
 		<div class="column">
 			<div class="input-container">
 				<i class="icon"></i>
-				<input type="submit" class="btn btn-register" form="ingresoCircular" style="margin-left: 40px; width: 100px;">
+				<input type="submit" class="btn btn-register" form="ingresoNoConformidad" style="margin-left: 40px; width: 100px;">
 			</div>
 			<div class="input-container">
 				

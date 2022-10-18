@@ -3,7 +3,7 @@
 			<h3><i class="fas fa-tasks"></i>  Listado de documentos: </h3>
 		</div>
 		
-		<form method="POST">
+		
 		<table class='dataTable'>
 			<thead>
 				<tr class="dataTable__encabezado">
@@ -26,7 +26,7 @@
 					<td class="dataTable__fecha"> <?php echo $listado[$i]->fecha;?></td>
 					<td> <?php echo $listado[$i]->nombre."-";?></td>
 					<td> <?php echo $listado[$i]->revision;?></td>
-					<td><input type="hidden" id='proceso' name = 'proceso' value='<?php echo $listado[$i]->proceso?>'> <?php echo $listado[$i]->proceso."/".$listado[$i]->sector;?></td>
+					<td> <?php echo $listado[$i]->proceso."/".$listado[$i]->sector;?></td>
 					<td> <?php echo $listado[$i]->duracion;?></td>						
 				</tr><?php
 				$i++;
@@ -34,7 +34,7 @@
 				 ?>	  
 			</tbody>
 		</table>
-	</form>	
+
 
 
 	</div>

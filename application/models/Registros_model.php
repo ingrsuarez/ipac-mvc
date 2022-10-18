@@ -6,9 +6,12 @@ class Registros_model extends CI_Model {
 	public $usrId = "";
 	const circulares_table = "circulares";
 	const vcirculares_table = "vcirculares";
+	const noConformidades_table = "ncregistros";
 	const sector_table = "sector";
 	const procesos_table = "procesos";
-
+	const activos_table = "activos";
+	const orden_trabajo_table = "ordentrabajo";
+	const vorden_trabajo_table = "votabiertas";
 
 
 	public function __constructor ($id=""){
@@ -23,6 +26,16 @@ class Registros_model extends CI_Model {
 		$this->db->insert(self::circulares_table,$array); 		
 	}
 
+	public function insert_noConformidad($array)
+	{
+		$this->db->insert(self::noConformidades_table,$array); 		
+	}
+
+	public function insert_orden_trabajo($array)
+	{
+		$this->db->insert(self::orden_trabajo_table,$array); 		
+	}
+
 	public function list_sectores($value='')
 	{
 		$sql = "SELECT * FROM ".self::sector_table." ORDER BY nombre ASC";
@@ -34,6 +47,40 @@ class Registros_model extends CI_Model {
 	public function list_procesos($value='')
 	{
 		$sql = "SELECT * FROM ".self::procesos_table." ORDER BY numero ASC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+	public function list_activos($value='')
+	{
+		$sql = "SELECT * FROM ".self::activos_table." ORDER BY prioridad DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+	public function list_ordenes_trabajo($value="")
+	{
+		$sql = "SELECT * FROM ".self::vorden_trabajo_table." ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+
+	}
+
+	public function list_ordenes_trabajo_Xequipo($name="")
+	{
+		$sql = "SELECT * FROM ".self::vorden_trabajo_table." WHERE equipo LIKE '%".$name."%' ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+
+	}
+
+	public function noConformidades_abiertas($value='')
+	{
+		$sql = "SELECT * FROM ".self::activos_table." ORDER BY prioridad DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;

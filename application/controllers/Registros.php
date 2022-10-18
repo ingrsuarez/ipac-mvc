@@ -19,7 +19,7 @@ class Registros extends CI_Controller {
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 * 
 	 */
-	const sector = "5";
+	const sector = "17";
 
 	public function __construct()
     {
@@ -108,6 +108,9 @@ class Registros extends CI_Controller {
         }    
     }
 
+
+// DOCUMENTOS DEL SISTEMA --------------->
+
     public function insertar_documento($action="")
     {
     	if ($this->session->has_userdata('usuario'))
@@ -168,6 +171,8 @@ class Registros extends CI_Controller {
         }
     }
 
+
+// CIRCULARES ----------------------->
     public function circulares($action="")
     {
     	if ($this->session->has_userdata('usuario'))
@@ -325,40 +330,56 @@ class Registros extends CI_Controller {
     }
 
 
+//NO CONFORMIDADES ------------------->
 
     public function no_conformidades($action="")
     {
     	if ($this->session->has_userdata('usuario'))
         {
- 			if (empty($action))
- 			{
- 				$sector = $this->Registros_model->list_sectores();
- 				$procesos = $this->Registros_model->list_procesos();
-				$data['sector'] = $sector;
-				$data['procesos'] = $procesos;
-	        	$this->load->view('templates/head_compras');
-	        	$this->load->view('templates/header_registros');
-	        	$this->load->view('templates/aside', $this->session->userdata());	
-		        $this->load->view('registros/no_conformidades',$data);
-		        $this->load->view('templates/footer');
- 			}elseif ($action == "nueva")
- 			{
- 				
- 				$userId = $this->session->userdata('id');
-        		$today = date("Y-m-d H:i:s");
- 				$array_circular = array('fecha' => $today,
- 										'titulo' => $this->input->post('titulo'),
- 										'descripcion' => $this->input->post('descripcion'),
- 										'creador' => $userId,
- 										'tipo' => $this->input->post('tipo'),
- 										'proceso' => $this->input->post('proceso'),
- 										'sector' => $this->input->post('sector'),
- 										'tareas' => $this->input->post('tareas'),
- 										'estado' => 'revision');
- 				$this->Registros_model->insert_circular($array_circular);
- 				unset($_POST);
-                redirect('/registros/circulares/', 'refresh');
- 			}
+        	$acceso_registros = $this->Secure_model->access(self::sector);
+            
+
+            if ($acceso_registros < 3)
+            {
+	 			if (empty($action))
+	 			{
+	 				$sector = $this->Registros_model->list_sectores();
+	 				$procesos = $this->Registros_model->list_procesos();
+	 				$data['empleados'] = $this->empleados_model->get_empleados_activos();
+					$data['sector'] = $sector;
+					$data['procesos'] = $procesos;
+		        	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+		        	$this->load->view('templates/aside', $this->session->userdata());	
+			        $this->load->view('registros/no_conformidades',$data);
+			        $this->load->view('templates/footer');
+	 			}elseif ($action == "nueva")
+	 			{
+	 				
+	 				$userId = $this->session->userdata('id');
+	        		$today = date("Y-m-d H:i:s");
+	 				$array_noConformidad = array('fecha' => $today,
+	 										'titulo' => $this->input->post('titulo'),
+	 										'descripcion' => $this->input->post('descripcion'),
+	 										'accionin' => $this->input->post('accion_inmediata'),
+	 										'ingreso' => $userId,
+	 										'empleado1' => $this->input->post('empleado1'),
+	 										'tipo' => $this->input->post('tipo'),
+	 										'proceso' => $this->input->post('proceso'),
+	 										'sector' => $this->input->post('sector'),
+	 										'causas' => $this->input->post('causas'),
+	 										'estado' => 'revision');
+	 				$this->Registros_model->insert_noConformidad($array_noConformidad);
+	 				unset($_POST);
+	                redirect('/registros/no_conformidades/', 'refresh');
+	 			}
+	 		}else
+            {
+                $mensaje = "Usted no tiene acceso a este modulo!";
+                echo ("<script>
+                alert('".$mensaje."')</script>");
+                redirect('/registros/circulares', 'refresh');
+            }
 
 
 	    }else
@@ -366,10 +387,105 @@ class Registros extends CI_Controller {
         	 redirect('/secure/login', 'refresh');
         }  
 
+	}
+
+// ORDENES DE TRABAJO ------------------------>
+
+
+    public function orden_trabajo($action="")
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$acceso_registros = $this->Secure_model->access(self::sector);
+            
+
+            if ($acceso_registros < 5)
+            {
+	 			if (empty($action))
+	 			{
+	 				$sector = $this->Registros_model->list_sectores();
+	 				$procesos = $this->Registros_model->list_procesos();
+	 				$data['activos'] = $this->Registros_model->list_activos();
+					$data['sector'] = $sector;
+					$data['procesos'] = $procesos;
+		        	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+		        	$this->load->view('templates/aside', $this->session->userdata());	
+			        $this->load->view('registros/nueva_orden',$data);
+			        $this->load->view('templates/footer');
+	 			}elseif ($action == "nueva")
+	 			{
+	 			
+	 				$userId = $this->session->userdata('id');
+	        		$today = date("Y-m-d H:i:s");
+	 				$array_ordenTrabajo = array('fecha' => $today,
+	 										'equipo' => $this->input->post('activo'),
+	 										'tipo' => $this->input->post('tipo'),
+	 										'usuario' => $userId,
+	 										'descripcion' => $this->input->post('descripcion'),
+	 										'horas' => $this->input->post('horas'),
+	 										'fechaAct' => $today,
+	 										'sector' => $this->input->post('sector'),
+	 										'estado' => 'abierta');
+	 				$this->Registros_model->insert_orden_trabajo($array_ordenTrabajo);
+	 				unset($_POST);
+	                redirect('/registros/orden_trabajo/', 'refresh');
+	 			}
+	 		}else
+            {
+                $mensaje = "Usted no tiene acceso a este modulo!";
+                echo ("<script>
+                alert('".$mensaje."')</script>");
+                redirect('/registros/circulares', 'refresh');
+            }
+
+
+	    }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }  
 
     }
 
-   
+ 
+    public function listado_ordenes($param="")
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	if (empty($param))
+		        {
+				    $data['ordenes'] = $this->Registros_model->list_ordenes_trabajo();
+				    $data['activos'] = $this->Registros_model->list_activos();
+					$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('registros/listado_ordenes',$data);
+			    	$this->load->view('templates/footer');
+	
+				}elseif ($param == "listado")
+			    {
+			    	
+			    	$estado = $this->input->post('estadoOrden'); 
+					
+					$array['ordenes'] = $this->Registros_model->list_ordenes_trabajo($estado);
+					
+			    	print_r(json_encode($array['ordenes']));
+			    }elseif ($param == "equipo")
+			    {
+			    	
+			    	$equipo = $this->input->post('iequipo'); 
+					
+	                
+					$array['ordenes'] = $this->Registros_model->list_ordenes_trabajo_Xequipo($equipo);
+					
+			    	print_r(json_encode($array['ordenes']));
+			    }
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        } 	
+    }
+
    	public function nueva_reunion($action="")
     {
     	if ($this->session->has_userdata('usuario'))

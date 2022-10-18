@@ -24,17 +24,7 @@
 				</li>
 				<li class="dropdown__item  dropdown__item--active" id="registros">
 					<a href="<?php echo base_url(); ?>index.php/registros/circulares/" >REGISTROS</a>
-					<ul class="inside__menu" id="servicios__inside">
-						<li class="inside__item">
-							<a href="#">Servicio 1</a>
-						</li>
-						<li class="inside__item">
-							<a href="#">Servicio 2</a>
-						</li>
-						<li class="inside__item">
-							<a href="#">Servicio 3</a>
-						</li>
-					</ul>
+					
 				</li>
 				<li class="dropdown__item" id="contacto">
 					<a href="<?php echo base_url(); ?>index.php/rrhh/panel/">RRHH</a>
@@ -115,13 +105,13 @@
 					<a href="#">ORDEN DE TRABAJO</a>
 					<ul class="inside__menu" id="orden_trabajo__inside">
 						<li class="inside__item">
-							<a href="#">Servicio 1</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/orden_trabajo/">Nueva Orden</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Servicio 2</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/listado_ordenes/">Listado de Ordenes</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">Servicio 3</a>
+							<a href="#">Cerrar Orden</a>
 						</li>
 					</ul>
 				</li>
