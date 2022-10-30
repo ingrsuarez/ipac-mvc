@@ -12,6 +12,7 @@
 				  	<th scope='col'>Nombre</th>
 				  	<th scope='col'>Revisión</th>
 				  	<th scope='col'>Proceso</th>
+				  	<th scope="col">Tipo </th>
 				  	<th scope='col'>Próxima revisión</th>
 				</tr>
 			</thead>
@@ -27,6 +28,7 @@
 					<td> <?php echo $listado[$i]->nombre."-";?></td>
 					<td> <?php echo $listado[$i]->revision;?></td>
 					<td> <?php echo $listado[$i]->proceso."/".$listado[$i]->sector;?></td>
+					<td> <?php echo $listado[$i]->tipo;?></td>
 					<td> <?php echo $listado[$i]->duracion;?></td>						
 				</tr><?php
 				$i++;

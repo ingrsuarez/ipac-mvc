@@ -10,7 +10,7 @@
 						<label for="iestado">Estado:</label>
 						<select class="form-control" id="iestado" name="iestado" >
 							<option value="">Seleccione estado......</option>
-							<option value="activa">ACTIVAS</option>
+							<option value="abierta">ACTIVAS</option>
 							<option value="revision">REVISION</option>
 							<option value="cerrada">CERRADA</option>
 						</select>  

@@ -65,39 +65,46 @@
 					<a href="#">NO CONFORMIDADES</a>
 					<ul class="inside__menu" id="no_conformidades__inside">
 						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/mis_noConformidades/">Mis No conformidades</a>
+						</li>
+						<li class="inside__item">
 							<a href="<?php echo base_url(); ?>index.php/registros/no_conformidades/">Nueva No Conformidad</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="#">Mis No conformidades</a>
-						</li>
-						<li class="inside__item">
-							<a href="#">Imprimir NC</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/listado_noConformidades/">Listado NC</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="#">Editar NC</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/editar_noConformidades/">Editar NC</a>
 						</li>
 					</ul>
 				</li>
 				<li class="dropdown__item2" id="capacitaciones">
-					<a href="#" >CAPACITACIONES</a>
+					<a href="#" >REPORTES</a>
 					<ul class="inside__menu" id="capacitaciones__inside">
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/registros/nueva_reunion/">Nueva Reunion</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/nuevo_reporte/">Nuevo Reporte</a>
 						</li>
 						<li class="inside__item">
-							<a href="#">I</a>
+							<hr class="dropdown__divider">
+						</li>
+
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/listado_reportes/">Listado de Reportes</a>
+						</li>
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/nueva_reunion/">Nueva Reunion</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
-							<a href="#">D</a>
+							<a href="#"></a>
 						</li>
 					</ul>
 				</li>

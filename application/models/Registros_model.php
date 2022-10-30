@@ -7,11 +7,16 @@ class Registros_model extends CI_Model {
 	const circulares_table = "circulares";
 	const vcirculares_table = "vcirculares";
 	const noConformidades_table = "ncregistros";
+	const vnoConformidades_table = "vncabiertas";
 	const sector_table = "sector";
 	const procesos_table = "procesos";
 	const activos_table = "activos";
 	const orden_trabajo_table = "ordentrabajo";
-	const vorden_trabajo_table = "votabiertas";
+	const reportes_table = "reportes";
+	const asignaciones_table = "asignaciones";
+	const vorden_trabajo_table = "votrabajo";
+	const vreportes_table = "vreportes";
+	const vMisNoConformidades_table ="vmisnoconformidades";
 
 
 	public function __constructor ($id=""){
@@ -36,6 +41,38 @@ class Registros_model extends CI_Model {
 		$this->db->insert(self::orden_trabajo_table,$array); 		
 	}
 
+	private function last_id($table)
+	{
+		$sql = "SELECT MAX(id) as last_id FROM ".$table;
+		$query = $this->db->query($sql);
+		$result = $query->row_array();
+
+		return $result;
+
+	}
+
+	public function insert_reporte($array)
+	{
+		if(empty($array['tarea']))
+		{
+			$this->db->insert(self::reportes_table,$array);	
+		}else{
+			$tarea = array(
+				'fecha'=> $array['fecha'],
+				'empleado'=> $array['empleado'],
+				'descripcion'=> $array['tarea'],
+				'origen'=> 'REPORTE',
+				'supervisor'=> $array['usuario'],
+				'fechaActualizacion	'=>$array['fecha'],
+				'estado'=>'pendiente');
+			$this->db->insert(self::asignaciones_table,$tarea);
+			$id_tarea = $this->last_id(self::asignaciones_table);
+			$array['tarea'] = $id_tarea['last_id'];
+			$this->db->insert(self::reportes_table,$array);
+		}
+		 		
+	}
+
 	public function list_sectores($value='')
 	{
 		$sql = "SELECT * FROM ".self::sector_table." ORDER BY nombre ASC";
@@ -54,20 +91,66 @@ class Registros_model extends CI_Model {
 
 	public function list_activos($value='')
 	{
-		$sql = "SELECT * FROM ".self::activos_table." ORDER BY prioridad DESC";
+		$sql = "SELECT * FROM ".self::activos_table."  ORDER BY prioridad DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
 	}
 
-	public function list_ordenes_trabajo($value="")
+	public function mis_noConformidades($userId)
 	{
-		$sql = "SELECT * FROM ".self::vorden_trabajo_table." ORDER BY fecha DESC";
+		$sql = "SELECT * FROM ".self::vMisNoConformidades_table." WHERE empleado = ".$userId." ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+	public function list_no_conformidades($tipo="")
+	{
+		if (empty($tipo))
+		{
+			$sql = "SELECT * FROM ".self::vnoConformidades_table." ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}else{
+			$sql = "SELECT * FROM ".self::vnoConformidades_table." WHERE tipo = '".$tipo."' ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}
+		
+
+	}
+
+	public function empleado_no_conformidades($userId)
+	{
+		$sql = "SELECT * FROM ".self::vMisNoConformidades_table." WHERE empleado = ".$userId." ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+	public function list_reportes($tipo="")
+	{
+		$sql = "SELECT * FROM ".self::vreportes_table." WHERE tipo = '".$tipo."' ORDER BY fecha DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
 
 	}
+
+	public function list_ordenes_trabajo($estado="")
+	{
+		
+		$sql = "SELECT * FROM ".self::vorden_trabajo_table." WHERE estado = '".$estado."' ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+
+	}
+
+	
 
 	public function list_ordenes_trabajo_Xequipo($name="")
 	{
@@ -138,7 +221,7 @@ class Registros_model extends CI_Model {
 
 	public function insert_document($data = array('nombre'=>'','fecha'=>'','revision'=>'','proceso'=>'','tipo'=>'','sector'=>'','fecharev'=>'','path'=>'','vencimiento'=>''))
 	{
-		$sql = "INSERT INTO `documentos` (`id`, `nombre`, `fecha`, `revision`, `proceso`, `sector`, `fecharev`, `usuario`, `urlfile`, `duracion`) VALUES (NULL, '".$data['nombre']."', '2022-10-13', '".$data['revision']."', '".$data['proceso']."', '".$data['sector']."', '".$data['fecharev']."', '1', '".$data['path']."', '".$data['vencimiento']."')";
+		$sql = "INSERT INTO `documentos` (`id`, `nombre`, `fecha`, `revision`, `proceso`, `sector`,`tipo`, `fecharev`, `usuario`, `urlfile`, `duracion`) VALUES (NULL, '".$data['nombre']."', '2022-10-13', '".$data['revision']."', '".$data['proceso']."', '".$data['sector']."', '".$data['tipo']."', '".$data['fecharev']."', '1', '".$data['path']."', '".$data['vencimiento']."')";
 		$query = $this->db->query($sql);
 			
 

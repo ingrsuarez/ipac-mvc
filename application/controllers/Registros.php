@@ -53,16 +53,13 @@ class Registros extends CI_Controller {
         if ( ! $this->upload->do_upload('userfile'))
         {
                 $error = $this->upload->display_errors('','');
-
-               	
 	    		echo ("<script>
 	    		alert('".$error."')</script>");
 	    		redirect('/registros/insertar_documento/', 'refresh');
         }
         else
         {
-
-            // $data = array('upload_data' => $this->upload->data());
+           
             $file = $this->upload->data();
             $today = date("Y-m-d H:i:s");
         	$data = array('nombre'=> $this->input->post('nombre'),
@@ -109,7 +106,7 @@ class Registros extends CI_Controller {
     }
 
 
-// DOCUMENTOS DEL SISTEMA --------------->
+// <------------------------DOCUMENTOS DEL SISTEMA --------------->
 
     public function insertar_documento($action="")
     {
@@ -127,11 +124,7 @@ class Registros extends CI_Controller {
 	        	$this->load->view('templates/aside', $this->session->userdata());	
 		        $this->load->view('registros/ingresar_documentos',$data);
 		        $this->load->view('templates/footer');
- 			}elseif ($action == "upload")
- 			{
-				var_dump($_POST);
-				// $this->do_upload('userfile');
-        	}
+ 			}
         }else
         {
         	redirect('/secure/login', 'refresh');
@@ -172,7 +165,7 @@ class Registros extends CI_Controller {
     }
 
 
-// CIRCULARES ----------------------->
+// <----------------------------CIRCULARES ----------------------->
     public function circulares($action="")
     {
     	if ($this->session->has_userdata('usuario'))
@@ -330,7 +323,35 @@ class Registros extends CI_Controller {
     }
 
 
-//NO CONFORMIDADES ------------------->
+//<--------------------------------------NO CONFORMIDADES ------------------->
+
+    public function mis_noConformidades($param="")
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	if (empty($param))
+			    {
+			    	$userId = $this->session->userdata('id');
+			    	$data['noConformidades'] = $this->Registros_model->mis_noConformidades($userId);
+			    	$data['empleados'] = $this->empleados_model->get_empleados_activos();
+			    	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('registros/mis_noConformidades',$data);
+			    	$this->load->view('templates/footer');
+
+			    }elseif($param == "listado")
+				{
+        			$tipo = $this->input->post('tipo');
+        			$array['noConformidades'] = $this->Registros_model->list_no_conformidades($tipo);
+						
+				    print_r(json_encode($array['noConformidades']));
+				}
+    	}else
+        {
+        	 redirect('/secure/login', 'refresh');
+        } 
+    }
 
     public function no_conformidades($action="")
     {
@@ -339,7 +360,7 @@ class Registros extends CI_Controller {
         	$acceso_registros = $this->Secure_model->access(self::sector);
             
 
-            if ($acceso_registros < 3)
+            if ($acceso_registros <= 3)
             {
 	 			if (empty($action))
 	 			{
@@ -389,7 +410,174 @@ class Registros extends CI_Controller {
 
 	}
 
-// ORDENES DE TRABAJO ------------------------>
+
+	public function listado_noConformidades($param="")
+	{
+		if ($this->session->has_userdata('usuario'))
+        {
+        	$acceso_calidad = $this->Secure_model->access(self::sector);
+        	if ($acceso_calidad <= 2)
+            {
+            	if (empty($param))
+			    {
+			    	$data['noConformidades'] = $this->Registros_model->list_no_conformidades();
+			    	$data['empleados'] = $this->empleados_model->get_empleados_activos();
+			    	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('registros/listado_noConformidades',$data);
+			    	$this->load->view('templates/footer');
+
+			    }elseif($param == "listado")
+				{
+        			$tipo = $this->input->post('tipo');
+        			$array['noConformidades'] = $this->Registros_model->list_no_conformidades($tipo);
+						
+				    print_r(json_encode($array['noConformidades']));
+
+				}elseif($param == "listado_empleado")
+				{
+        			$userId = $this->input->post('userId');
+        			$array['noConformidades'] = $this->Registros_model->empleado_no_conformidades($userId);
+						
+				    print_r(json_encode($array['noConformidades']));
+				}
+
+            }else
+			{
+				$mensaje = "Usted no tiene acceso a este modulo!";
+                echo ("<script>
+                alert('".$mensaje."')</script>");
+                redirect('/registros/no_conformidades', 'refresh');
+			}
+
+
+
+		}else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }  
+
+	}
+
+	public function editar_noConformidades()
+
+	{
+		if ($this->session->has_userdata('usuario'))
+        {
+        	$acceso_registros = $this->Secure_model->access(self::sector);
+
+            if ($acceso_registros <= 3)
+            {
+	 			if (empty($action))
+	 			{
+	 				$sector = $this->Registros_model->list_sectores();
+	 				$procesos = $this->Registros_model->list_procesos();
+	 				$data['empleados'] = $this->empleados_model->get_empleados_activos();
+					$data['sector'] = $sector;
+					$data['procesos'] = $procesos;
+		        	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+		        	$this->load->view('templates/aside', $this->session->userdata());	
+			        $this->load->view('registros/no_conformidades',$data);
+			        $this->load->view('templates/footer');
+	 			}elseif ($action == "nueva")
+	 			{}
+	 		}
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
+
+	}
+
+
+// <-----------------------------REPORTES ------------------------------>
+    
+    public function nuevo_reporte($action="")
+    {
+		if ($this->session->has_userdata('usuario'))
+        {
+        	if (empty($action))
+ 			{
+
+ 				$data['empleados'] = $this->empleados_model->get_empleados_activos();
+				$data['sector'] = $this->Registros_model->list_sectores();
+				$data['procesos'] = $this->Registros_model->list_procesos();
+	        	$this->load->view('templates/head_compras');
+	        	$this->load->view('templates/header_registros');
+	        	$this->load->view('templates/aside', $this->session->userdata());	
+		        $this->load->view('registros/nuevo_reporte',$data);
+		        $this->load->view('templates/footer');
+ 			}elseif ($action == "insertar")
+ 			{
+ 				$usuario = $this->session->userdata('id');
+ 				$today = date("Y-m-d H:i:s");
+ 				$nuevo_reporte = array(
+ 					'fecha' => $today,
+	 				'usuario' => $usuario,		
+					'titulo' => $this->input->post('titulo'),
+					'proceso' => $this->input->post('proceso'),
+					'empleado' => $this->input->post('involucrado'),
+					'tipo' => $this->input->post('tipo'),
+					'sector' => $this->input->post('sector'),
+					'descripcion' => $this->input->post('descripcion'),
+					'tarea' => $this->input->post('tarea'),
+					'fechaAct' => $today);
+
+ 				$this->Registros_model->insert_reporte($nuevo_reporte);
+
+ 				unset($_POST);
+                redirect('/registros/nuevo_reporte/', 'refresh');
+ 			}
+
+    	}else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }  
+
+    }
+
+    public function listado_reportes($param='')
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$acceso_calidad = $this->Secure_model->access(self::sector);
+        	if ($acceso_calidad <= 2)
+            {
+	        	if (empty($param))
+			    {
+			    	$data['ordenes'] = $this->Registros_model->list_ordenes_trabajo();
+			    	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('registros/listado_reportes',$data);
+			    	$this->load->view('templates/footer');
+
+			    }elseif($param == "listado")
+				{
+
+					$tipo = $this->input->post('tipoReporte');
+					$array['reportes'] = $this->Registros_model->list_reportes($tipo);
+						
+				    print_r(json_encode($array['reportes']));
+
+				}
+			}else
+			{
+				$mensaje = "Usted no tiene acceso a este modulo!";
+                echo ("<script>
+                alert('".$mensaje."')</script>");
+                redirect('/registros/nuevo_reporte', 'refresh');
+			}
+
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        } 
+    }	
+
+//<--------------------------- ORDENES DE TRABAJO ------------------------>
 
 
     public function orden_trabajo($action="")
@@ -447,6 +635,7 @@ class Registros extends CI_Controller {
 
     }
 
+    
  
     public function listado_ordenes($param="")
     {
@@ -527,6 +716,8 @@ class Registros extends CI_Controller {
         }  
 
     }
+
+
 }
 
 
