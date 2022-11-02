@@ -156,7 +156,7 @@ class Registros_model extends CI_Model {
 
 	public function empleado_no_conformidades($userId)
 	{
-		$sql = "SELECT * FROM ".self::vMisNoConformidades_table." WHERE empleado = ".$userId." ORDER BY fecha DESC";
+		$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE empleado = ".$userId." ORDER BY fecha DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
