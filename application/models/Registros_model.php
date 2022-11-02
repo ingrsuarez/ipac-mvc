@@ -16,7 +16,7 @@ class Registros_model extends CI_Model {
 	const asignaciones_table = "asignaciones";
 	const vorden_trabajo_table = "votrabajo";
 	const vreportes_table = "vreportes";
-	const vMisNoConformidades_table ="vmisnoconformidades";
+	const vNoConformidades_table ="vnoconformidades";
 
 
 	public function __constructor ($id=""){
@@ -34,6 +34,12 @@ class Registros_model extends CI_Model {
 	public function insert_noConformidad($array)
 	{
 		$this->db->insert(self::noConformidades_table,$array); 		
+	}
+
+	public function update_noConformidad($array,$id)
+	{
+		$this->db->where('id', $id);
+		$this->db->update(self::noConformidades_table,$array);
 	}
 
 	public function insert_orden_trabajo($array)
@@ -97,9 +103,18 @@ class Registros_model extends CI_Model {
 		return $result;
 	}
 
+	public function get_noConformidad($id)
+	{
+		$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE id =".$id." LIMIT 1";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+
+	}
+
 	public function mis_noConformidades($userId)
 	{
-		$sql = "SELECT * FROM ".self::vMisNoConformidades_table." WHERE empleado = ".$userId." ORDER BY fecha DESC";
+		$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE empleado = ".$userId." ORDER BY fecha DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
@@ -115,6 +130,22 @@ class Registros_model extends CI_Model {
 			return $result;
 		}else{
 			$sql = "SELECT * FROM ".self::vnoConformidades_table." WHERE tipo = '".$tipo."' ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}
+	}
+
+		public function list_no_conformidades_estado($estado="")
+	{
+		if (empty($estado))
+		{
+			$sql = "SELECT * FROM ".self::vNoConformidades_table." ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}else{
+			$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE estado = '".$estado."' ORDER BY fecha DESC";
 			$query = $this->db->query($sql);
 			$result = $query->result();
 			return $result;

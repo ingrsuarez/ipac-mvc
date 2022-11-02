@@ -228,7 +228,7 @@ class Registros extends CI_Controller {
 			    {
 			    	$idCircular = $this->input->post('idCircular');	
 			    	$estado = $this->input->post('idCircular'); 
-					// $idProveedor = 1;
+					
 					$array['circulares'] = $this->Registros_model->list_circulares($idCircular);
 					
 			    	print_r(json_encode($array['circulares']));
@@ -255,7 +255,7 @@ class Registros extends CI_Controller {
 			if (!empty($data['idCircular']))
 			{
 				$data['circular_selected'] = $this->Registros_model->get_circular($data['idCircular'])[0];//Fila
-				// var_dump($data['circular_selected']);
+				
 				$this->load->view('registros/pdfCirculares',$data);
 			}else
 			{
@@ -441,6 +441,12 @@ class Registros extends CI_Controller {
         			$array['noConformidades'] = $this->Registros_model->empleado_no_conformidades($userId);
 						
 				    print_r(json_encode($array['noConformidades']));
+				}elseif($param == "listado_estado")
+				{
+        			$estado = $this->input->post('estado');
+        			$array['noConformidades'] = $this->Registros_model->list_no_conformidades_estado($estado);
+						
+				    print_r(json_encode($array['noConformidades']));
 				}
 
             }else
@@ -460,7 +466,7 @@ class Registros extends CI_Controller {
 
 	}
 
-	public function editar_noConformidades()
+	public function editar_noConformidad($action="")
 
 	{
 		if ($this->session->has_userdata('usuario'))
@@ -471,18 +477,50 @@ class Registros extends CI_Controller {
             {
 	 			if (empty($action))
 	 			{
+	 				
 	 				$sector = $this->Registros_model->list_sectores();
 	 				$procesos = $this->Registros_model->list_procesos();
 	 				$data['empleados'] = $this->empleados_model->get_empleados_activos();
 					$data['sector'] = $sector;
 					$data['procesos'] = $procesos;
-		        	$this->load->view('templates/head_compras');
-		        	$this->load->view('templates/header_registros');
-		        	$this->load->view('templates/aside', $this->session->userdata());	
-			        $this->load->view('registros/no_conformidades',$data);
-			        $this->load->view('templates/footer');
-	 			}elseif ($action == "nueva")
-	 			{}
+					$noConformidadId = $this->input->post('select');
+					if (!empty($noConformidadId))
+					{
+						$data['noConformidad'] = $this->Registros_model->get_noConformidad($noConformidadId);
+			        	$this->load->view('templates/head_compras');
+			        	$this->load->view('templates/header_registros');
+			        	$this->load->view('templates/aside', $this->session->userdata());	
+				        $this->load->view('registros/editar_noConformidades',$data);
+				        $this->load->view('templates/footer');
+
+					}else
+					{
+						redirect('/registros/no_conformidades/', 'refresh');
+					}
+
+	 			}elseif ($action == "guardar")
+	 			{
+	 				$userId = $this->session->userdata('id');
+	        		$today = date("Y-m-d H:i:s");
+	 				$array_noConformidad = array('ultimaAct' => $today,
+	 										'titulo' => $this->input->post('titulo'),
+	 										'descripcion' => $this->input->post('descripcion'),
+	 										'accionin' => $this->input->post('accion_inmediata'),
+	 										'ingreso' => $userId,
+	 										'empleado1' => $this->input->post('empleado1'),
+	 										'sector' => $this->input->post('sector'),
+	 										'proceso' => $this->input->post('proceso'),
+	 										'tipo' => $this->input->post('tipo'),
+	 										'causas' => $this->input->post('causas'),
+	 										'accionCorrectiva' => $this->input->post('accion_correctiva'),
+	 										'eficacia' => $this->input->post('eficacia'),
+	 										'estado' => $this->input->post('estado'));
+	 				$noConformidadId = $this->input->post('id_noConformidad');
+	 				$this->Registros_model->update_noConformidad($array_noConformidad,$noConformidadId);
+	 				redirect('/registros/listado_noConformidades/', 'refresh');
+	 			}else{
+	 				redirect('/registros/listado_noConformidades/', 'refresh');
+	 			}
 	 		}
         }else
         {

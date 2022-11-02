@@ -1,7 +1,7 @@
 
 	<div class="container">
 		<div class="container_title">
-			<h3><i class="fas fa-tasks"></i>  NO CONFORMIDADES: </h3>
+			<h3><i class="fas fa-tasks"></i> LISTADO NO CONFORMIDADES: </h3>
 		</div>
 		<form method="POST" id = "global" action="<?php echo site_url('registros/editar_noConformidad'); ?>">
 			<div class="container_insert">	  
@@ -31,9 +31,18 @@
 								?>	
 						</select>
 					</div>
+					<div class="col-md-4">
+						<label for="iestado">Tipo:</label>
+						<select class="form-control" id="estado" name="estado" >
+							<option value="">Seleccione estado......</option>
+							<option value='cerrada'> CERRADA </option>
+							<option value='abierta'> ABIERTA </option>
+							<option value='revision'> EN REVISIÓN </option>
+						</select>  
+					</div>
 					<div class="container__button">
 						
-						<button type="submit" class="btn btn-insert" name="action" value="print" form = "global">Descargar</button>
+						<button type="submit" class="btn btn-insert" name="action" value="print" form = "global">Editar</button>
 					</div>
 				</div>				
 			
@@ -130,6 +139,42 @@
 								});
 							});
 						});
+
+						$("#estado").change(function(){
+							
+							var e = document.getElementById("estado");
+							
+							var estado = e.value;	
+							
+							$("#tpendientes>tbody").empty();
+							
+							$.post("listado_estado",{estado: estado, },function(result){	
+								
+								var cont = 0;
+								
+								var json = JSON.parse(result);
+								
+								
+								
+								json.forEach(function(value,label){
+									cont++;
+									$("#tpendientes>tbody").append("<tr class='pedidosT__row'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
+										"<td style='max-width: 100px;'>"+ json[label].fecha+"</td>"+
+										"<td style='max-width: 180px;'>"+ json[label].titulo+"</td>"+
+										"<td style='max-width: 110px;'>"+ json[label].tipo+"</td>"+
+										"<td style='max-width: 100px;'>"+ json[label].nombre+" "+json[label].apellido+"</td>"+
+										"<td style='max-width: 300px;'>"+ json[label].descripcion+"</td>"+
+										"<td>"+ json[label].estado+"</td></tr>");
+									$('#select'+cont).change(function() {
+								        if ($(this).is(':checked')) {
+								            $('input[type="checkbox"]').prop("checked", false); //uncheck all checkboxes
+  											$(this).prop("checked", true);  //check the clicked one
+								        };
+					    			});
+								});
+							});
+						});
+
 
 					});
 				</script> 
