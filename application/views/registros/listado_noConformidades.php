@@ -54,6 +54,7 @@
 						<tr class="pedidosT__encabezado">
 							<th scope='col'>#</th>
 							<th scope='col' style="min-width: 100px;">Fecha</th>
+							<th scope="col"> Última Actualización</th>
 							<th scope='col'>Título</th>
 							<th scope='col'>Tipo</th>
 							<th scope='col'>Creador</th>
@@ -89,6 +90,7 @@
 									cont++;
 									$("#tpendientes>tbody").append("<tr class='pedidosT__row'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
 										"<td style='max-width: 100px;'>"+ json[label].fecha+"</td>"+
+										"<td style='max-width: 100px;'>"+ json[label].ultimaAct+"</td>"+
 										"<td style='max-width: 180px;'>"+ json[label].titulo+"</td>"+
 										"<td style='max-width: 110px;'>"+ json[label].tipo+"</td>"+
 										"<td style='max-width: 100px;'>"+ json[label].nombre+" "+json[label].apellido+"</td>"+
@@ -125,6 +127,7 @@
 									cont++;
 									$("#tpendientes>tbody").append("<tr class='pedidosT__row'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
 										"<td style='max-width: 100px;'>"+ json[label].fecha+"</td>"+
+										"<td style='max-width: 100px;'>"+ json[label].ultimaAct+"</td>"+
 										"<td style='max-width: 180px;'>"+ json[label].titulo+"</td>"+
 										"<td style='max-width: 110px;'>"+ json[label].tipo+"</td>"+
 										"<td style='max-width: 100px;'>"+ json[label].nombre+" "+json[label].apellido+"</td>"+
@@ -160,6 +163,7 @@
 									cont++;
 									$("#tpendientes>tbody").append("<tr class='pedidosT__row'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
 										"<td style='max-width: 100px;'>"+ json[label].fecha+"</td>"+
+										"<td style='max-width: 100px;'>"+ json[label].ultimaAct+"</td>"+
 										"<td style='max-width: 180px;'>"+ json[label].titulo+"</td>"+
 										"<td style='max-width: 110px;'>"+ json[label].tipo+"</td>"+
 										"<td style='max-width: 100px;'>"+ json[label].nombre+" "+json[label].apellido+"</td>"+
