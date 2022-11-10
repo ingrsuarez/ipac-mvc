@@ -29,6 +29,7 @@ class Registros extends CI_Controller {
         $this->load->model('Secure_model');
         $this->load->model('empleados_model');
         $this->load->model('Registros_model');
+        $this->load->model('Novedades_model');
         $this->load->helper('url_helper');
         $this->load->helper(array('form', 'url'));
     }
@@ -242,31 +243,60 @@ class Registros extends CI_Controller {
     public function pdf_circulares()
     {
 	    //Circular to print
+	    $acceso_registros = $this->Secure_model->access(self::sector);
 		$data['estado'] = $this->input->post('iestado');
-		$data['action'] = $this->input->post('print');
+		$data['action'] = $this->input->post('action');
 		$data['idCircular'] = $this->input->post('select');
-		if (($data['estado'] == "caducada") || ($data['estado'] == "revision") ){
-			$mensaje = "Por favor seleccione una circular activa!";
-			echo ("<script>
-			alert('".$mensaje."')</script>");
-			redirect('/registros/circulares_activas/', 'refresh');
-		}else
+		if ($data['action'] == 'print')
 		{
-			if (!empty($data['idCircular']))
-			{
-				$data['circular_selected'] = $this->Registros_model->get_circular($data['idCircular'])[0];//Fila
-				
-				$this->load->view('registros/pdfCirculares',$data);
-			}else
-			{
-				//User didn´t select circular!	
-				$mensaje = "Por favor seleccione una circular!";
+			if (($data['estado'] == "caducada") || ($data['estado'] == "revision") ){
+				$mensaje = "Por favor seleccione una circular activa!";
 				echo ("<script>
 				alert('".$mensaje."')</script>");
 				redirect('/registros/circulares_activas/', 'refresh');
+			}else
+			{
+				if (!empty($data['idCircular']))
+				{
+					$data['circular_selected'] = $this->Registros_model->get_circular($data['idCircular'])[0];//Fila
+					
+					$this->load->view('registros/pdfCirculares',$data);
+				}else
+				{
+					//User didn´t select circular!	
+					$mensaje = "Por favor seleccione una circular!";
+					echo ("<script>
+					alert('".$mensaje."')</script>");
+					redirect('/registros/circulares_activas/', 'refresh');
+				}
+			}
+		}elseif ($data['action'] == 'activate')
+		{
+            if ($acceso_registros <= 2)
+            {
+			$this->Registros_model->activar_circular($data['idCircular']);
+			redirect('/registros/circulares_activas/', 'refresh');	
+			}else{
+				$mensaje = "No tiene acceso para activar circulares!";
+					echo ("<script>
+					alert('".$mensaje."')</script>");
+					redirect('/registros/circulares_activas/', 'refresh');
+			}
+		}elseif ($data['action'] == 'deactivate')
+		{
+			if ($acceso_registros <= 3)
+            {
+				$this->Registros_model->anular_circular($data['idCircular']);
+				redirect('/registros/circulares_activas/', 'refresh');
+			}else{
+				$mensaje = "No tiene acceso para desactivar circulares!";
+					echo ("<script>
+					alert('".$mensaje."')</script>");
+					redirect('/registros/circulares_activas/', 'refresh');
 			}
 		}
 		
+
   	}
 
 
@@ -293,34 +323,7 @@ class Registros extends CI_Controller {
         }
     }
 
-    public function activar_circular()
-    {
-    	if ($this->session->has_userdata('usuario'))
-        {
-        	$idCircular = $this->input->post('circularActivar');
-        	$result = $this->Registros_model->activar_circular($idCircular);
-        	redirect('/registros/editar_circulares/', 'refresh');
-
-        }else
-        {
-        	 redirect('/secure/login', 'refresh');
-        }
-    }
-
-    public function anular_circular()
-    {
-    	if ($this->session->has_userdata('usuario'))
-        {
-
-        	$idCircular = $this->input->post('delete');
-        	$result = $this->Registros_model->anular_circular($idCircular);
-        	redirect('/registros/editar_circulares/', 'refresh');
-        	
-        }else
-        {
-        	 redirect('/secure/login', 'refresh');
-        }
-    }
+   
 
 
 //<--------------------------------------NO CONFORMIDADES ------------------->
@@ -399,7 +402,7 @@ class Registros extends CI_Controller {
                 $mensaje = "Usted no tiene acceso a este modulo!";
                 echo ("<script>
                 alert('".$mensaje."')</script>");
-                redirect('/registros/circulares', 'refresh');
+                redirect('/registros/mis_noConformidades', 'refresh');
             }
 
 
@@ -454,7 +457,7 @@ class Registros extends CI_Controller {
 				$mensaje = "Usted no tiene acceso a este modulo!";
                 echo ("<script>
                 alert('".$mensaje."')</script>");
-                redirect('/registros/no_conformidades', 'refresh');
+                redirect('/registros/mis_noConformidades', 'refresh');
 			}
 
 
@@ -529,6 +532,27 @@ class Registros extends CI_Controller {
 
 	}
 
+	public function ingresar_auditoria()
+	{
+		if ($this->session->has_userdata('usuario'))
+        {
+        	$data['empleados'] = $this->empleados_model->get_empleados_activos();
+        	$data['procesos'] = $this->Registros_model->list_procesos();
+
+        	$this->load->view('templates/head_compras');
+        	$this->load->view('templates/header_registros');
+        	$this->load->view('templates/aside', $this->session->userdata());	
+	        $this->load->view('registros/ingresar_auditoria',$data);
+	        $this->load->view('templates/footer');
+
+
+		}else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }
+	}
+
+
 
 // <-----------------------------REPORTES ------------------------------>
     
@@ -585,7 +609,8 @@ class Registros extends CI_Controller {
             {
 	        	if (empty($param))
 			    {
-			    	$data['ordenes'] = $this->Registros_model->list_ordenes_trabajo();
+			    	$data['empleados'] = $this->empleados_model->get_empleados_activos();
+			    	
 			    	$this->load->view('templates/head_compras');
 		        	$this->load->view('templates/header_registros');
 			    	$this->load->view('templates/aside', $this->session->userdata());
@@ -600,13 +625,35 @@ class Registros extends CI_Controller {
 						
 				    print_r(json_encode($array['reportes']));
 
+				}elseif($param == "listado_empleado")
+				{
+        			$nombre_empleado = $this->input->post('empleado');
+        			$array['reportes'] = $this->Registros_model->listado_empleado_reportes($nombre_empleado);
+						
+				    print_r(json_encode($array['reportes']));
 				}
 			}else
+			//Not RRHH access
 			{
-				$mensaje = "Usted no tiene acceso a este modulo!";
-                echo ("<script>
-                alert('".$mensaje."')</script>");
-                redirect('/registros/nuevo_reporte', 'refresh');
+				if (empty($param))
+			    {
+			    	$data['empleados'] = $this->empleados_model->get_empleados_activos();
+			    	
+			    	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('registros/listado_reportes_empleado',$data);
+			    	$this->load->view('templates/footer');
+
+			    }elseif($param == "listado")
+				{
+					$userName = $this->session->userdata('nombre');
+					$tipo = $this->input->post('tipoReporte');
+					$array['reportes'] = $this->Registros_model->list_reportes_empleado($tipo,$userName);
+						
+				    print_r(json_encode($array['reportes']));
+
+				}
 			}
 
         }else
@@ -614,6 +661,28 @@ class Registros extends CI_Controller {
         	 redirect('/secure/login', 'refresh');
         } 
     }	
+
+    public function pdfReportes()
+    {
+	    //Reportes to print
+
+		$data['action'] = $this->input->post('print');
+		$idReportes = $this->input->post('select');
+		if (!empty($idReportes))
+		{
+			$reportes_id_array=implode(',', array_map('intval', $idReportes));
+			$data['reportes'] = $this->Registros_model->get_reportes($reportes_id_array);
+			$this->load->view('registros/pdfReportes',$data);
+		}else
+		{
+			//User didn´t select any reporte!	
+			$mensaje = "Por favor seleccione un reporte primero!";
+			echo ("<script>
+			alert('".$mensaje."')</script>");
+			redirect('/registros/listado_reportes/', 'refresh');
+		}		
+		
+  	}
 
 //<--------------------------- ORDENES DE TRABAJO ------------------------>
 
@@ -753,6 +822,31 @@ class Registros extends CI_Controller {
         	 redirect('/secure/login', 'refresh');
         }  
 
+    }
+// INSERT BOARD NOTE ----------------------->
+    public function insert_task()
+    {
+        if ($this->session->has_userdata('usuario'))
+        {    
+            if( isset($_POST['nota'])){$note = $_POST['nota'];}
+
+            if (!empty($note)){
+                $this->Novedades_model->insert_board($note);
+                redirect('/pages/index', 'refresh');
+            }else{
+                $board = $this->Novedades_model->get_board();
+                $data['board'] = $board;
+                $data['title'] = $page;
+                $this->load->view('templates/head', $data);
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/aside', $this->session->userdata());
+                $this->load->view('pages/home', $data);
+                $this->load->view('templates/footer', $data);
+            }
+
+        }else{
+             redirect('/secure/login', 'refresh');
+        }
     }
 
 

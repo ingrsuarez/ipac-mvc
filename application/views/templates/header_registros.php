@@ -61,29 +61,6 @@
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown__item2" id="no_conformidades">
-					<a href="#">NO CONFORMIDADES</a>
-					<ul class="inside__menu" id="no_conformidades__inside">
-						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/registros/mis_noConformidades/">Mis No conformidades</a>
-						</li>
-						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/registros/no_conformidades/">Nueva No Conformidad</a>
-						</li>
-						<li class="inside__item">
-							<hr class="dropdown__divider">
-						</li>
-						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/registros/listado_noConformidades/">Listado NC</a>
-						</li>
-						<li class="inside__item">
-							<hr class="dropdown__divider">
-						</li>
-						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/registros/editar_noConformidades/">Editar NC</a>
-						</li>
-					</ul>
-				</li>
 				<li class="dropdown__item2" id="capacitaciones">
 					<a href="#" >REPORTES</a>
 					<ul class="inside__menu" id="capacitaciones__inside">
@@ -122,6 +99,31 @@
 						</li>
 					</ul>
 				</li>
+				<li class="dropdown__item2" id="no_conformidades">
+					<a href="#">NO CONFORMIDADES</a>
+					<ul class="inside__menu" id="no_conformidades__inside">
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/mis_noConformidades/">Mis No conformidades</a>
+						</li>
+						<li class="inside__item">
+							<hr class="dropdown__divider">
+						</li>
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/no_conformidades/">Nueva No Conformidad</a>
+						</li>
+
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/listado_noConformidades/">Listado NC</a>
+						</li>
+						<li class="inside__item">
+							<hr class="dropdown__divider">
+						</li>
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/ingresar_auditoria/">Nueva Auditoría</a>
+						</li>
+					</ul>
+				</li>
+				
 				<li class="dropdown__item2" id="documentos">
 					<a href="#">DOCUMENTOS</a>
 					<ul class="inside__menu" id="documentos__inside">

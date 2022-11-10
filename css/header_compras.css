@@ -170,7 +170,8 @@ em {
 	aside {
 		position: fixed;
 		top: 80px;
-		background-color: #194756;
+		background:  linear-gradient(135deg,#194756,#184453,#2f85a2);
+		/*background-color: #194756;*/
 		color: #fefefe;
 		width: 15vw;
 		min-width: 200px;
@@ -279,7 +280,7 @@ em {
 	}
 
 	.fa-user {
-		margin-right: 10px;
+		
 		cursor: pointer;
 	}
 }

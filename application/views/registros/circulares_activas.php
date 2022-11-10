@@ -19,6 +19,8 @@
 					<div class="container__button">
 						
 						<button type="submit" class="btn btn-insert" name="action" value="print" form = "global">Descargar</button>
+						<button type="submit" class="btn btn-insert" name="action" value="activate" form = "global">Activar</button>
+						<button type="submit" class="btn btn-insert" name="action" value="deactivate" form = "global">Desactivar</button>
 					</div>
 				</div>				
 			

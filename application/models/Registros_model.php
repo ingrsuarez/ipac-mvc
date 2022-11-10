@@ -171,6 +171,38 @@ class Registros_model extends CI_Model {
 
 	}
 
+	public function list_reportes_empleado($tipo,$userNombre)
+	{
+		$sql = "SELECT * FROM ".self::vreportes_table." WHERE tipo = '".$tipo."' AND nombre = '".$userNombre."' ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+	public function listado_empleado_reportes($nombre_empleado)
+	{
+		$sql = "SELECT * FROM ".self::vreportes_table." WHERE nombre = '".$nombre_empleado."' ORDER BY fecha DESC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+
+
+	public function get_reportes($idArray)
+	{
+		if (!empty($idArray))
+		{
+			$sql = "SELECT * FROM `".self::vreportes_table."` WHERE `id` IN (".$idArray.")";
+			$query = $this->db->query($sql);
+			$result = $query->result_array();
+			return $result;
+		}
+
+	}
+
+	
+
 	public function list_ordenes_trabajo($estado="")
 	{
 		
