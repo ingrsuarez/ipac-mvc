@@ -64,7 +64,7 @@
 								<th scope='row'>
 									<label class='custom-control-label' for='tableDefaultCheck2'></label>
 								</th>						
-								<td style = 'font-size: 12px; width: 100px'><?php echo $board[$i]->usuario;?></td>
+								<td style = 'font-size: 12px; width: 100px'><?php echo $board[$i]->fecha;?></td>
 								<td> <?php echo $board[$i]->nota."-";?></td>
 								<td style='padding-left: 1em'> <?php echo $board[$i]->usuario;?></td>
 								<td style='padding-left: 1em'>
@@ -97,7 +97,7 @@
 								<th scope='row'>
 									<label class='custom-control-label' for='tableDefaultCheck2'></label>
 								</th>						
-								<td style = 'font-size: 12px; width: 100px'><?php echo $board[$i]->usuario;?></td>
+								<td style = 'font-size: 12px; width: 100px'><?php echo $board[$i]->fecha;?></td>
 								<td> <?php echo $board[$i]->nota."-";?></td>
 								<td style='padding-left: 1em'> <?php echo $board[$i]->usuario;?></td>
 								<td style='padding-left: 1em'>

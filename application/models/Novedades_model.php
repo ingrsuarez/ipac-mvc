@@ -27,9 +27,12 @@ class Novedades_model extends CI_Model {
 
 	public function set_board($id,$param,$value)
 	{
-		
+		$userId = $this->session->userdata('id');
+		$today = date("Y-m-d H:i:s");
 		$row = array(
 			"id" => $id,
+			"fechar" => $today,
+			"usuarior" => $userId,
 			$param => $value);
 	
 		$this->db->where('id', $id);
