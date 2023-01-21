@@ -37,12 +37,12 @@ class Novedades_model extends CI_Model {
 			
 	}
 
-	public function insert_board($value)
+	public function insert_board($value,$sector)
 	{
 		
 		$userId = $this->session->userdata('id');
         $today = date("Y-m-d H:i:s");
-		$row = array('fecha' => $today, 'nota' => $value, 'usuario' => $userId, 'estado' => 'pendiente');
+		$row = array('fecha' => $today, 'nota' => $value, 'usuario' => $userId, 'sector' => $sector, 'estado' => 'pendiente');
 		
 		$this->db->insert(self::board_table,$row); 
 		// $this->db->where('id', $id);

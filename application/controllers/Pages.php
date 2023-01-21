@@ -108,10 +108,13 @@ class Pages extends CI_Controller {
     {
         if ($this->session->has_userdata('usuario'))
         {    
-            if( isset($_POST['nota'])){$note = $_POST['nota'];}
+            if( isset($_POST['nota'])){
+                $note = $_POST['nota'];
+                $sector = $_POST['sector'];
+            }
 
             if (!empty($note)){
-                $this->Novedades_model->insert_board($note);
+                $this->Novedades_model->insert_board($note,$sector);
                 redirect('/pages/index', 'refresh');
             }else{
                 $board = $this->Novedades_model->get_board();

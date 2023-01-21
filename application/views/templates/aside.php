@@ -49,11 +49,10 @@
 					</li>
 
 				</ul>
-				<!-- <form  class="form-note" method="POST" id="form_note" action="
-					 <?php //echo site_url('pages/insert_task'); ?>index.php/pages/insert_task"> --> 
 					
-
-					<button class="btn btn-note" type="button" id="btn_note">Agregar Nota</button>
+					<button class="btn btn-note" type="button" id="btn_general">Agregar Nota</button>
+					<button class="btn btn-note fade" type="button" id="btn_ordenes">Agregar Nota</button>
+					<button class="btn btn-note fade" type="button" id="btn_analitica">Agregar Nota</button>
 				<!-- </form> -->
 			</nav>
 		</aside>

@@ -91,16 +91,52 @@ toggle.addEventListener("click",function(evt){
 
 // --------BOARD NEW NOTE -------------------------------//
 
-const btn_note = document.getElementById("btn_note");
+const btn_general = document.getElementById("btn_general");
+const btn_ordenes = document.getElementById("btn_ordenes");
+const btn_analitica = document.getElementById("btn_analitica");
 
-btn_note.addEventListener("click",function(evt){
+btn_general.addEventListener("click",function(evt){
 	evt.preventDefault();
 	var nota = prompt("Ingrese su anotación:", "Nota");
 
 		if (nota!=null && nota!="")
 		{
+			var sector = 0;
+			$.post("insert_task", {nota: nota, sector: sector}, function(result){
+				//This is for reload de new register!
+				window.location.href = "index";
+			});
+			//To avoid reload of the page return false
+			return false;
 			
-			$.post("insert_task", {nota: nota}, function(result){
+		}
+})
+
+btn_ordenes.addEventListener("click",function(evt){
+	evt.preventDefault();
+	var nota = prompt("Ingrese su anotación:", "Nota");
+
+		if (nota!=null && nota!="")
+		{
+			var sector = 4;
+			$.post("insert_task", {nota: nota, sector: sector}, function(result){
+				//This is for reload de new register!
+				window.location.href = "index";
+			});
+			//To avoid reload of the page return false
+			return false;
+			
+		}
+})
+
+btn_analitica.addEventListener("click",function(evt){
+	evt.preventDefault();
+	var nota = prompt("Ingrese su anotación:", "Nota");
+
+		if (nota!=null && nota!="")
+		{
+			var sector = 5;
+			$.post("insert_task", {nota: nota, sector: sector}, function(result){
 				//This is for reload de new register!
 				window.location.href = "index";
 			});
