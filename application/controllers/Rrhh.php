@@ -275,4 +275,57 @@ class Rrhh extends CI_Controller {
              redirect('/secure/login', 'refresh');
         }
     }
+
+    public function modificar_clave($param="")
+    {
+        if ($this->session->has_userdata('usuario'))
+        {   
+            $id = $this->session->userdata('id');
+            $this->load->model('Empleados_model');
+            if($param == "modificar")
+            {
+                $clave_registrada = $this->session->userdata('clave');
+                $clave_antigua = $this->input->post('clave');
+                $clave_nueva = $this->input->post('nuevaClave');
+                $clave_repetida = $this->input->post('claveRepetida');
+                if ($clave_nueva <> $clave_repetida)
+                {
+                    echo ("<script>
+                    alert('Las claves no coinciden!')</script>");
+                    redirect('/rrhh/modificar_clave', 'refresh');
+                }elseif ($clave_registrada == md5($clave_antigua))
+                {
+                    $clave = md5($clave_nueva);
+                    $this->Empleados_model->set_newPassword($id,$clave);
+                    echo ("<script>
+                    alert('Su clave fue modificada con éxito!')</script>");
+                    redirect('/pages/index', 'refresh');
+
+                }else{
+                    echo ("<script>
+                    alert('La clave actual no coincide!')</script>");
+                    redirect('/rrhh/modificar_clave', 'refresh');
+                }
+
+            }else{
+                
+                $data['empleados_item'] = $this->Empleados_model->get_empleado($id);
+                $data['title'] = 'Empleados archive';
+                
+                $empleado = $this->Empleados_model->get_empleado($id);
+                $this->load->view('templates/head', $data);
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/aside', $this->session->userdata());
+                $this->load->view('rrhh/modificar_clave', $empleado);
+                $this->load->view('templates/footer', $data);
+            }
+            
+        }else
+        {
+             redirect('/secure/login', 'refresh');
+        }
+
+
+    }
+
 }

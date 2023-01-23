@@ -22,7 +22,7 @@
 						<span id="horiz2"><a href="#"><i class="fas fa-user-edit"></i> Cuenta  </a><i class="fas fa-angle-right" style="padding-left: 10px;" id="flecha2"></i></span>
 						<ul class="inside__menu__horiz" id="horiz2__inside" style="opacity: 0">
 							<li class="inside__item__horiz">
-								<a href="#"><i class="fas fa-unlock" style="padding-right: 10px;"></i> Modificar contraseña</a>
+								<a href="<?php echo base_url(); ?>index.php/rrhh/modificar_clave/"><i class="fas fa-unlock" style="padding-right: 10px;"></i> Modificar contraseña</a>
 							</li>
 							<li class="inside__item__horiz">
 								<a href="#"><i class="fas fa-id-card" style="padding-right: 10px;"	></i> Datos personales</a>

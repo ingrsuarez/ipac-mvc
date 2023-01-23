@@ -20,7 +20,8 @@ class Empleados_model extends CI_Model {
                         return $query->row();
                 }
 
-                $query = $this->db->get_where($this->table, array('id' => $id));
+                $sql = "SELECT * FROM empleados WHERE id = $id";
+                $query = $this->db->query($sql);
                 return $query->row();
         }
 
@@ -31,6 +32,13 @@ class Empleados_model extends CI_Model {
                 $result = $query->result();
                 return $result;
 
+        }
+
+        public function set_newPassword($id,$clave)
+        {
+                $sql = "UPDATE `empleados` SET clave = '".$clave."' WHERE id = ".$id;
+                $query = $this->db->query($sql);
+                
         }
 
         public function get_vacaciones($id = FALSE, $year = "")
