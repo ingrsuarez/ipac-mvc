@@ -1,7 +1,7 @@
 
 		<!-- <div MAIN IN ASIDE TEMPLATE> -->
 
-			<div class="board board-flow">
+			<div class="board center-flow">
 				<div class="flow_column">
 
 					<div class="flow_box2">

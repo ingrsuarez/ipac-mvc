@@ -312,6 +312,19 @@
 		width: 100%;
 
 	}
+
+	.center-flow {
+		background-color: #FFF;
+		height: 85vh;
+		padding-left: 70px;
+		margin-left: 220px;
+		margin-top: 60px;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(to left, rgba(255,255,255,0.2), rgba(255,255,255,1)), url("../images/work1.webp");
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 	.column {
 		display: flex;
 		flex-direction: row;
