@@ -343,12 +343,20 @@ class Registros extends CI_Controller {
 			    	$this->load->view('registros/mis_noConformidades',$data);
 			    	$this->load->view('templates/footer');
 
-			    }elseif($param == "listado")
+			    }
+			    elseif($param == "listado")
 				{
+					$idEmpleado = $userId = $this->session->userdata('id');
         			$tipo = $this->input->post('tipo');
-        			$array['noConformidades'] = $this->Registros_model->list_no_conformidades($tipo);
-						
+        			$array['noConformidades'] = $this->Registros_model->list_no_conformidades_empleado($tipo,$idEmpleado);
+	
 				    print_r(json_encode($array['noConformidades']));
+				}
+				elseif($param == "imprimir")
+				{
+					$noConformidadId = $_GET['documentId'];
+					$array['noConformidad'] = $this->Registros_model->get_noConformidad($noConformidadId);
+					$this->load->view('registros/pdfnoConformidad',$array);
 				}
     	}else
         {

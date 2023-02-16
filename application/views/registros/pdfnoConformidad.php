@@ -9,6 +9,7 @@ class PDF extends FPDF
 public $fecha;
 public $auditado;
 public $proceso;
+public $sector;
 public $auditor;
 public $id;
 
@@ -53,16 +54,25 @@ public $id;
 		$this->Cell(27,10,$this -> id,0,0,'L');
 		$this->Ln(10);
 		
+		$this->Cell(30,10,'IPAC LABORATORIO',0,0,'L');
+		$this->SetFont('Times','',10);
+		$this->SetTextColor(47,79,79);
+		$this->Cell(89,10,utf8_decode('AUDITADO:'),0,0,'R');
+		$this->SetFont('Times','B',10);
+		$this->SetTextColor(0,0,0);
+		$this->Cell(37,10,$this -> auditado,0,0,'L');
+		$this->Ln(4);
+
 		$this->SetFont('Times','B',10);
 		$this->SetTextColor(0,0,0);
 		$this->Cell(30,10,'LEGUIZAMON 356',0,0,'L');
 		$this->SetFont('Times','',10);
 		$this->SetTextColor(47,79,79);
 		
-		$this->Cell(89,10,utf8_decode('AUDITADO:'),0,0,'R');
+		$this->Cell(89,10,utf8_decode('SECTOR:'),0,0,'R');
 		$this->SetFont('Times','B',10);
 		$this->SetTextColor(0,0,0);
-		$this->Cell(37,10,$this -> auditado,0,0,'L');
+		$this->Cell(37,10,$this -> sector,0,0,'L');
 		$this->Ln(4);
 		
 		$this->Cell(30,10,'8300 - NEUQUEN',0,0,'L');
@@ -82,7 +92,7 @@ public $id;
 		$this->SetTextColor(0,0,0);
 		$this->SetFont('Times','B',10);
 		$this->Cell(10,10,$this -> auditor,0,0,'L');
-		$this->Ln(30);
+		$this->Ln(25);
 	}
 
 // Pie de página
@@ -106,9 +116,10 @@ public $id;
 
 $idnc = $noConformidad['id'];
 
-$auditado = strtoupper($noConformidad['apellido'])." ".strtoupper($noConformidad['nombre']);
+$auditado = strtoupper($noConformidad['auditado']);
 $proceso = mb_strtoupper($noConformidad['proceso']);
-$auditor = "Rodrigo";
+$sector = mb_strtoupper($noConformidad['sector']);
+$auditor = strtoupper($noConformidad['auditor']);
 $titulo = mb_strtoupper($noConformidad['titulo']);
 $descripcion = $noConformidad['descripcion'];
 $causas = $noConformidad['causas'];
@@ -119,6 +130,7 @@ $accionCorrectiva = $noConformidad['accionCorrectiva'];
 $pdf = new PDF("P","mm","A4");
 $pdf-> AliasNbPages();
 $pdf-> proceso = $proceso; 
+$pdf-> sector = $sector; 
 $pdf-> auditado = $auditado;
 $pdf-> auditor = $auditor;
 $pdf-> fecha = $fecha;

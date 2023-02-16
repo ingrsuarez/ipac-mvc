@@ -7,7 +7,7 @@ class Registros_model extends CI_Model {
 	const circulares_table = "circulares";
 	const vcirculares_table = "vcirculares";
 	const noConformidades_table = "ncregistros";
-	const vnoConformidades_table = "vncabiertas";
+	const vnoConformidades_abiertas = "vncabiertas";
 	const sector_table = "sector";
 	const procesos_table = "procesos";
 	const activos_table = "activos";
@@ -114,7 +114,7 @@ class Registros_model extends CI_Model {
 
 	public function mis_noConformidades($userId)
 	{
-		$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE empleado = ".$userId." ORDER BY fecha DESC";
+		$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE auditadoId = ".$userId." ORDER BY fecha DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
@@ -124,12 +124,28 @@ class Registros_model extends CI_Model {
 	{
 		if (empty($tipo))
 		{
-			$sql = "SELECT * FROM ".self::vnoConformidades_table." ORDER BY fecha DESC";
+			$sql = "SELECT * FROM ".self::vNoConformidades_table." ORDER BY fecha DESC";
 			$query = $this->db->query($sql);
 			$result = $query->result();
 			return $result;
 		}else{
-			$sql = "SELECT * FROM ".self::vnoConformidades_table." WHERE tipo = '".$tipo."' ORDER BY fecha DESC";
+			$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE tipo = '".$tipo."' ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}
+	}
+
+	public function list_no_conformidades_empleado($tipo="",$id)
+	{
+		if (empty($tipo))
+		{
+			$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE auditadoId = '".$id."' ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}else{
+			$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE tipo = '".$tipo."' AND auditadoId = '".$id."' ORDER BY fecha DESC";
 			$query = $this->db->query($sql);
 			$result = $query->result();
 			return $result;
@@ -156,7 +172,7 @@ class Registros_model extends CI_Model {
 
 	public function empleado_no_conformidades($userId)
 	{
-		$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE empleado = ".$userId." ORDER BY fecha DESC";
+		$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE auditadoId = ".$userId." ORDER BY fecha DESC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;
