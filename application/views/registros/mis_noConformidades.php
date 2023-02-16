@@ -32,6 +32,7 @@
 							<th scope='col' style="min-width: 100px;">Fecha</th>
 							<th scope='col'>Título</th>
 							<th scope='col'>Tipo</th>
+							<th scope='col'>Auditor</th>
 							<th scope='col'>Descripción</th>
 							<th scope="col">Estado </th>
 						</tr>
@@ -43,10 +44,11 @@
 						$i = 0;
 						
 						while ($i < $arrayLength) {?>
-							<tr class="pedidosT__row">						
-								<td class="pedidosT__fecha"> <?php echo $noConformidades[$i]->fecha;?></td>
+							<tr class="pedidosT__row" onclick='getIndex(this)'>						
+								<td class="pedidosT__fecha"><input type='hidden' class='custom-control-input' id='select"+cont+"' name='select' value='<?php echo $noConformidades[$i]->id;?>'> <?php echo $noConformidades[$i]->fecha;?></td>
 								<td> <?php echo $noConformidades[$i]->titulo."-";?></td>
 								<td> <?php echo $noConformidades[$i]->tipo;?></td>
+								<td> <?php echo $noConformidades[$i]->auditor;?></td>
 								<td> <?php echo $noConformidades[$i]->descripcion;?></td>
 								<td> <?php echo $noConformidades[$i]->estado;?></td>						
 							</tr><?php
@@ -85,14 +87,13 @@
 								json.forEach(function(value,label){
 									cont++;
 									
-									$("#tpendientes>tbody").append("<tr class='pedidosT__row' onclick='getIndex(this)'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
+									$("#tpendientes>tbody").append("<tr class='pedidosT__row' onclick='getIndex(this)'>"+
 										"<td style='max-width: 100px;'>"+ json[label].fecha+
 										"<input type='hidden' name='idnoConformidad'"+
 										"value='"+json[label].id+"'></td>"+
-										"<td style='max-width: 100px;'>"+ json[label].ultimaAct+"</td>"+
 										"<td style='max-width: 180px;'>"+ json[label].titulo+"</td>"+
 										"<td style='max-width: 110px;'>"+ json[label].tipo+"</td>"+
-										"<td style='max-width: 100px;'>"+ json[label].nombre+" "+json[label].apellido+"</td>"+
+										"<td style='max-width: 100px;'>"+ json[label].auditor+"</td>"+
 										"<td style='max-width: 300px;'>"+ json[label].descripcion+"</td>"+
 										"<td>"+ json[label].estado+"</td></tr>");
 									$('#select'+cont).change(function() {
