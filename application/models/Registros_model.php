@@ -107,7 +107,7 @@ class Registros_model extends CI_Model {
 	{
 		$sql = "SELECT * FROM ".self::vNoConformidades_table." WHERE id =".$id." LIMIT 1";
 		$query = $this->db->query($sql);
-		$result = $query->result();
+		$result = $query->row_array();
 		return $result;
 
 	}

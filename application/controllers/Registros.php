@@ -450,6 +450,11 @@ class Registros extends CI_Controller {
         			$array['noConformidades'] = $this->Registros_model->list_no_conformidades_estado($estado);
 						
 				    print_r(json_encode($array['noConformidades']));
+				}elseif($param == "imprimir")
+				{
+					$noConformidadId = $_GET['documentId'];
+					$array['noConformidad'] = $this->Registros_model->get_noConformidad($noConformidadId);
+					$this->load->view('registros/pdfnoConformidad',$array);
 				}
 
             }else
@@ -474,57 +479,61 @@ class Registros extends CI_Controller {
 	{
 		if ($this->session->has_userdata('usuario'))
         {
-        	$acceso_registros = $this->Secure_model->access(self::sector);
+        	var_dump($_POST);
+        	// $acceso_registros = $this->Secure_model->access(self::sector);
 
-            if ($acceso_registros <= 3)
-            {
-	 			if (empty($action))
-	 			{
+            // if ($acceso_registros <= 3)
+            // {
+	 		// 	if (empty($action))
+	 		// 	{
 	 				
-	 				$sector = $this->Registros_model->list_sectores();
-	 				$procesos = $this->Registros_model->list_procesos();
-	 				$data['empleados'] = $this->empleados_model->get_empleados_activos();
-					$data['sector'] = $sector;
-					$data['procesos'] = $procesos;
-					$noConformidadId = $this->input->post('select');
-					if (!empty($noConformidadId))
-					{
-						$data['noConformidad'] = $this->Registros_model->get_noConformidad($noConformidadId);
-			        	$this->load->view('templates/head_compras');
-			        	$this->load->view('templates/header_registros');
-			        	$this->load->view('templates/aside', $this->session->userdata());	
-				        $this->load->view('registros/editar_noConformidades',$data);
-				        $this->load->view('templates/footer');
+	 		// 		$sector = $this->Registros_model->list_sectores();
+	 		// 		$procesos = $this->Registros_model->list_procesos();
+	 		// 		$data['empleados'] = $this->empleados_model->get_empleados_activos();
+			// 		$data['sector'] = $sector;
+			// 		$data['procesos'] = $procesos;
+			// 		$noConformidadId = $this->input->post('select');
+			// 		if (!empty($noConformidadId))
+			// 		{
+			// 			$data['noConformidad'] = $this->Registros_model->get_noConformidad($noConformidadId);
+			//         	$this->load->view('templates/head_compras');
+			//         	$this->load->view('templates/header_registros');
+			//         	$this->load->view('templates/aside', $this->session->userdata());	
+			// 	        $this->load->view('registros/editar_noConformidades',$data);
+			// 	        $this->load->view('templates/footer');
 
-					}else
-					{
-						redirect('/registros/no_conformidades/', 'refresh');
-					}
+			// 		}else
+			// 		{
+			// 			redirect('/registros/no_conformidades/', 'refresh');
+			// 		}
 
-	 			}elseif ($action == "guardar")
-	 			{
-	 				$userId = $this->session->userdata('id');
-	        		$today = date("Y-m-d H:i:s");
-	 				$array_noConformidad = array('ultimaAct' => $today,
-	 										'titulo' => $this->input->post('titulo'),
-	 										'descripcion' => $this->input->post('descripcion'),
-	 										'accionin' => $this->input->post('accion_inmediata'),
-	 										'ingreso' => $userId,
-	 										'empleado1' => $this->input->post('empleado1'),
-	 										'sector' => $this->input->post('sector'),
-	 										'proceso' => $this->input->post('proceso'),
-	 										'tipo' => $this->input->post('tipo'),
-	 										'causas' => $this->input->post('causas'),
-	 										'accionCorrectiva' => $this->input->post('accion_correctiva'),
-	 										'eficacia' => $this->input->post('eficacia'),
-	 										'estado' => $this->input->post('estado'));
-	 				$noConformidadId = $this->input->post('id_noConformidad');
-	 				$this->Registros_model->update_noConformidad($array_noConformidad,$noConformidadId);
-	 				redirect('/registros/listado_noConformidades/', 'refresh');
-	 			}else{
-	 				redirect('/registros/listado_noConformidades/', 'refresh');
-	 			}
-	 		}
+	 		// 	}elseif ($action == "guardar")
+	 		// 	{
+	 		// 		$userId = $this->session->userdata('id');
+	        // 		$today = date("Y-m-d H:i:s");
+	 		// 		$array_noConformidad = array('ultimaAct' => $today,
+	 		// 								'titulo' => $this->input->post('titulo'),
+	 		// 								'descripcion' => $this->input->post('descripcion'),
+	 		// 								'accionin' => $this->input->post('accion_inmediata'),
+	 		// 								'ingreso' => $userId,
+	 		// 								'empleado1' => $this->input->post('empleado1'),
+	 		// 								'sector' => $this->input->post('sector'),
+	 		// 								'proceso' => $this->input->post('proceso'),
+	 		// 								'tipo' => $this->input->post('tipo'),
+	 		// 								'causas' => $this->input->post('causas'),
+	 		// 								'accionCorrectiva' => $this->input->post('accion_correctiva'),
+	 		// 								'eficacia' => $this->input->post('eficacia'),
+	 		// 								'estado' => $this->input->post('estado'));
+	 		// 		$noConformidadId = $this->input->post('id_noConformidad');
+	 		// 		$this->Registros_model->update_noConformidad($array_noConformidad,$noConformidadId);
+	 		// 		redirect('/registros/listado_noConformidades/', 'refresh');
+	 		// 	}elseif ($action == "print")
+	 		// 	{
+	 		// 		var_dump($_POST);
+	 		// 	}else{
+	 		// 		redirect('/registros/listado_noConformidades/', 'refresh');
+	 		// 	}
+	 		// }
         }else
         {
         	 redirect('/secure/login', 'refresh');
@@ -551,6 +560,66 @@ class Registros extends CI_Controller {
         	 redirect('/secure/login', 'refresh');
         }
 	}
+
+	public function pdf_noConformidad()
+    {
+    	var_dump($_POST);
+	    //Circular to print
+	    // $acceso_registros = $this->Secure_model->access(self::sector);
+		// $data['estado'] = $this->input->post('iestado');
+		// $data['action'] = $this->input->post('action');
+		// $data['idCircular'] = $this->input->post('select');
+		// if ($data['action'] == 'print')
+		// {
+		// 	if (($data['estado'] == "caducada") || ($data['estado'] == "revision") ){
+		// 		$mensaje = "Por favor seleccione una circular activa!";
+		// 		echo ("<script>
+		// 		alert('".$mensaje."')</script>");
+		// 		redirect('/registros/circulares_activas/', 'refresh');
+		// 	}else
+		// 	{
+		// 		if (!empty($data['idCircular']))
+		// 		{
+		// 			$data['circular_selected'] = $this->Registros_model->get_circular($data['idCircular'])[0];//Fila
+					
+		// 			$this->load->view('registros/pdfCirculares',$data);
+		// 		}else
+		// 		{
+		// 			//User didn´t select circular!	
+		// 			$mensaje = "Por favor seleccione una circular!";
+		// 			echo ("<script>
+		// 			alert('".$mensaje."')</script>");
+		// 			redirect('/registros/circulares_activas/', 'refresh');
+		// 		}
+		// 	}
+		// }elseif ($data['action'] == 'activate')
+		// {
+        //     if ($acceso_registros <= 2)
+        //     {
+		// 	$this->Registros_model->activar_circular($data['idCircular']);
+		// 	redirect('/registros/circulares_activas/', 'refresh');	
+		// 	}else{
+		// 		$mensaje = "No tiene acceso para activar circulares!";
+		// 			echo ("<script>
+		// 			alert('".$mensaje."')</script>");
+		// 			redirect('/registros/circulares_activas/', 'refresh');
+		// 	}
+		// }elseif ($data['action'] == 'deactivate')
+		// {
+		// 	if ($acceso_registros <= 3)
+        //     {
+		// 		$this->Registros_model->anular_circular($data['idCircular']);
+		// 		redirect('/registros/circulares_activas/', 'refresh');
+		// 	}else{
+		// 		$mensaje = "No tiene acceso para desactivar circulares!";
+		// 			echo ("<script>
+		// 			alert('".$mensaje."')</script>");
+		// 			redirect('/registros/circulares_activas/', 'refresh');
+		// 	}
+		// }
+		
+
+  	}
 
 
 

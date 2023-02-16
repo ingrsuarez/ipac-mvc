@@ -3,7 +3,8 @@
 		<div class="container_title">
 			<h3><i class="fas fa-tasks"></i> LISTADO NO CONFORMIDADES: </h3>
 		</div>
-		<form method="POST" id = "global" action="<?php echo site_url('registros/editar_noConformidad'); ?>">
+		<form method="POST" id = "print" action="<?php echo site_url('registros/pdf_noConformidad'); ?>"></form>
+		<form method="POST" id = "edit" action="<?php echo site_url('registros/editar_noConformidad'); ?>">
 			<div class="container_insert">	  
 				<div class="container__form">
 					<div class="col-md-4">
@@ -42,7 +43,8 @@
 					</div>
 					<div class="container__button">
 						
-						<button type="submit" class="btn btn-insert" name="action" value="print" form = "global">Editar</button>
+						<button type="submit" class="btn btn-insert" name="action" value="edit" form = "edit">Editar</button>
+						<button type="submit" class="btn btn-insert" name="action" value="print" form = "print">Imprimir</button>
 					</div>
 				</div>				
 			
@@ -65,10 +67,18 @@
 				  	<tbody>
 					</tbody>	
 				</table>
+
 				<script type="text/javascript">
+
+
+								function getIndex(row)
+								{
+									var idNoconformidad = $(row).closest('tr').find("input").val();
+									console.log($(row).closest('tr').find("input").val());
+									window.location.assign("imprimir?documentId="+idNoconformidad);
+								}
 					$(document).ready(function(){
 
-						
 
 						$("#tipo").change(function(){
 							
@@ -84,12 +94,16 @@
 								
 								var json = JSON.parse(result);
 								
+
 								
 								
 								json.forEach(function(value,label){
 									cont++;
-									$("#tpendientes>tbody").append("<tr class='pedidosT__row'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
-										"<td style='max-width: 100px;'>"+ json[label].fecha+"</td>"+
+									
+									$("#tpendientes>tbody").append("<tr class='pedidosT__row' onclick='getIndex(this)'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
+										"<td style='max-width: 100px;'>"+ json[label].fecha+
+										"<input type='hidden' name='idnoConformidad'"+
+										"value='"+json[label].id+"'></td>"+
 										"<td style='max-width: 100px;'>"+ json[label].ultimaAct+"</td>"+
 										"<td style='max-width: 180px;'>"+ json[label].titulo+"</td>"+
 										"<td style='max-width: 110px;'>"+ json[label].tipo+"</td>"+
@@ -121,13 +135,15 @@
 								
 								var json = JSON.parse(result);
 								
-								
+								var site = document.location;
 								
 								json.forEach(function(value,label){
 									cont++;
-									$("#tpendientes>tbody").append("<tr class='pedidosT__row'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
-										"<td style='max-width: 100px;'>"+ json[label].fecha+"</td>"+
-										"<td style='max-width: 100px;'>"+ json[label].ultimaAct+"</td>"+
+									$("#tpendientes>tbody").append("<tr class='pedidosT__row' onclick='getIndex(this)'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
+										"<td style='max-width: 100px;'>"+ json[label].fecha+
+										"<input type='hidden' form='print' name='idnoConformidad[]'"+
+										"value='"+json[label].id+"'></td>"+
+										"<td style='max-width: 100px;'>"+json[label].ultimaAct+"</td>"+
 										"<td style='max-width: 180px;'>"+ json[label].titulo+"</td>"+
 										"<td style='max-width: 110px;'>"+ json[label].tipo+"</td>"+
 										"<td style='max-width: 100px;'>"+ json[label].nombre+" "+json[label].apellido+"</td>"+
@@ -162,7 +178,9 @@
 								json.forEach(function(value,label){
 									cont++;
 									$("#tpendientes>tbody").append("<tr class='pedidosT__row'><th scope='row'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' id='select"+cont+"' name='select' value='"+json[label].id+"'></div></th>"+
-										"<td style='max-width: 100px;'>"+ json[label].fecha+"</td>"+
+										"<td style='max-width: 100px;'>"+ json[label].fecha+
+										"<input type='hidden' form='print' name='idnoConformidad[]'"+
+										"value='"+json[label].id+"'></td>"+
 										"<td style='max-width: 100px;'>"+ json[label].ultimaAct+"</td>"+
 										"<td style='max-width: 180px;'>"+ json[label].titulo+"</td>"+
 										"<td style='max-width: 110px;'>"+ json[label].tipo+"</td>"+
