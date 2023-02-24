@@ -13,7 +13,7 @@
 								<a href="#"><i class="fas fa-user-graduate"></i> Competencias</a>
 							</li>
 							<li class="inside__item__horiz">
-								<a href="#"><i class="fas fa-tasks" style="padding-right: 10px;"></i>Asignaciones</a>
+								<a href="<?php echo base_url(); ?>index.php/rrhh/mi_productividad/"><i class="fas fa-tasks" style="padding-right: 10px;"></i>Desempeño</a>
 							</li>
 						</ul>
 					</li>

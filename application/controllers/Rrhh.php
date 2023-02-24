@@ -276,6 +276,30 @@ class Rrhh extends CI_Controller {
         }
     }
 
+    public function mi_productividad()
+    {
+        if ($this->session->has_userdata('usuario'))
+        { 
+            $usuarioId = $this->session->userdata('id');
+            $year = date ( "Y" );
+            $noConformidades = $this->Empleados_model->get_noConformidades_year($year, $usuarioId);
+            $incidentes = $this->Empleados_model->get_incidentes_year($year, $usuarioId);
+            $array["datos"] = array($incidentes,$noConformidades,array(0,0));
+
+            // var_dump($array);
+            
+            $this->load->view('templates/head');
+            $this->load->view('templates/header');
+            $this->load->view('templates/aside', $this->session->userdata());
+            $this->load->view('templates/bar_graph', $array);
+            $this->load->view('templates/footer');
+
+        }else
+        {
+             redirect('/secure/login', 'refresh');
+        }
+    }
+
     public function modificar_clave($param="")
     {
         if ($this->session->has_userdata('usuario'))

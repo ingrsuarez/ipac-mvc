@@ -281,5 +281,46 @@ class Empleados_model extends CI_Model {
                 $result = $query->result_array();
                 return $result;
         }
+
+
+
+//----------------------------DESEMPEÑO---------------------------------------//
+
+        public function get_noConformidades_year($year, $usuarioId)
+        {
+
+                $sql = "SELECT  SUM(auditadoId = '".$usuarioId."')*100/count(*) as total FROM `vnoconformidades` WHERE YEAR(vnoconformidades.fecha) = ".$year;
+                $query = $this->db->query($sql);
+                $porcentaje = $query->row();
+                $sql = "SELECT  count(*) as total FROM `vnoconformidades` WHERE YEAR(vnoconformidades.fecha) = ".$year." AND auditadoId = '".$usuarioId."'";
+                $query = $this->db->query($sql);
+                $cantidad = $query->row();
+                $result = array($cantidad->total,round($porcentaje->total, 0));
+
+                if(!empty($result)) {
+                 return $result; 
+                 }else{
+                  return FALSE;
+                }
+        }       
+
+
+         public function get_incidentes_year($year, $usuarioId)
+        {
+
+                $sql = "SELECT SUM(empleado = '".$usuarioId."')*100/count(*) as total FROM `reportes` WHERE YEAR(reportes.fecha) = ".$year." AND reportes.tipo = 'INCIDENTE'";
+                $query = $this->db->query($sql);
+                $porcentaje = $query->row();
+                $sql = "SELECT count(*) as total FROM `reportes` WHERE YEAR(reportes.fecha) = ".$year." AND reportes.tipo = 'INCIDENTE' AND empleado = '".$usuarioId."'";
+                $query = $this->db->query($sql);
+                $cantidad = $query->row();
+                $result = array($cantidad->total,round($porcentaje->total, 0));
+
+                if(!empty($result)) {
+                 return $result; 
+                 }else{
+                  return FALSE;
+                }
+        } 
         
 }
