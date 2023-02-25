@@ -10,9 +10,11 @@ class Registros_model extends CI_Model {
 	const vnoConformidades_abiertas = "vncabiertas";
 	const sector_table = "sector";
 	const procesos_table = "procesos";
+	const politicas_table = "politicas";
 	const activos_table = "activos";
 	const orden_trabajo_table = "ordentrabajo";
 	const reportes_table = "reportes";
+	const meritos_table = "meritos";
 	const asignaciones_table = "asignaciones";
 	const vorden_trabajo_table = "votrabajo";
 	const vreportes_table = "vreportes";
@@ -79,6 +81,12 @@ class Registros_model extends CI_Model {
 		 		
 	}
 
+	public function insert_merito($array)
+	{
+	
+		$this->db->insert(self::meritos_table,$array);	
+	}
+
 	public function list_sectores($value='')
 	{
 		$sql = "SELECT * FROM ".self::sector_table." ORDER BY nombre ASC";
@@ -90,6 +98,14 @@ class Registros_model extends CI_Model {
 	public function list_procesos($value='')
 	{
 		$sql = "SELECT * FROM ".self::procesos_table." ORDER BY numero ASC";
+		$query = $this->db->query($sql);
+		$result = $query->result();
+		return $result;
+	}
+
+	public function list_politicas($value='')
+	{
+		$sql = "SELECT * FROM ".self::politicas_table." ORDER BY nombre ASC";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;

@@ -284,7 +284,8 @@ class Rrhh extends CI_Controller {
             $year = date ( "Y" );
             $noConformidades = $this->Empleados_model->get_noConformidades_year($year, $usuarioId);
             $incidentes = $this->Empleados_model->get_incidentes_year($year, $usuarioId);
-            $array["datos"] = array($incidentes,$noConformidades,array(0,0));
+            $meritos = $this->Empleados_model->get_meritos_year($year, $usuarioId);
+            $array["datos"] = array($incidentes,$noConformidades,$meritos);
 
             // var_dump($array);
             

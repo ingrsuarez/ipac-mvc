@@ -75,7 +75,7 @@
 							<a href="<?php echo base_url(); ?>index.php/registros/listado_reportes/">Listado de Reportes</a>
 						</li>
 						<li class="inside__item">
-							<a href="<?php echo base_url(); ?>index.php/registros/nueva_reunion/">Nueva Reunion</a>
+							<a href="<?php echo base_url(); ?>index.php/registros/nuevo_merito/">Reportar Mérito</a>
 						</li>
 						<li class="inside__item">
 							<hr class="dropdown__divider">

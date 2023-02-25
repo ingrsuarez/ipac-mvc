@@ -305,13 +305,31 @@ class Empleados_model extends CI_Model {
         }       
 
 
-         public function get_incidentes_year($year, $usuarioId)
+        public function get_incidentes_year($year, $usuarioId)
         {
 
                 $sql = "SELECT SUM(empleado = '".$usuarioId."')*100/count(*) as total FROM `reportes` WHERE YEAR(reportes.fecha) = ".$year." AND reportes.tipo = 'INCIDENTE'";
                 $query = $this->db->query($sql);
                 $porcentaje = $query->row();
                 $sql = "SELECT count(*) as total FROM `reportes` WHERE YEAR(reportes.fecha) = ".$year." AND reportes.tipo = 'INCIDENTE' AND empleado = '".$usuarioId."'";
+                $query = $this->db->query($sql);
+                $cantidad = $query->row();
+                $result = array($cantidad->total,round($porcentaje->total, 0));
+
+                if(!empty($result)) {
+                 return $result; 
+                 }else{
+                  return FALSE;
+                }
+        }
+
+        public function get_meritos_year($year, $usuarioId)
+        {      
+
+                $sql = "SELECT SUM(empleado = '".$usuarioId."')*100/count(*) as total FROM `meritos` WHERE YEAR(meritos.fecha) = ".$year;
+                $query = $this->db->query($sql);
+                $porcentaje = $query->row();
+                $sql = "SELECT count(*) as total FROM `meritos` WHERE YEAR(meritos.fecha) = ".$year." AND empleado = '".$usuarioId."'";
                 $query = $this->db->query($sql);
                 $cantidad = $query->row();
                 $result = array($cantidad->total,round($porcentaje->total, 0));

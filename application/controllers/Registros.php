@@ -761,6 +761,50 @@ class Registros extends CI_Controller {
 		
   	}
 
+  	public function nuevo_merito($action="")
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+ 			if (empty($action))
+ 			{
+ 				$sector = $this->Registros_model->list_sectores();
+ 				$procesos = $this->Registros_model->list_procesos();
+ 				$politicas = $this->Registros_model->list_politicas();
+ 				$data['empleados'] = $this->empleados_model->get_empleados_activos();
+				$data['sector'] = $sector;
+				$data['procesos'] = $procesos;
+				$data['politicas'] = $politicas;
+	        	$this->load->view('templates/head_compras');
+	        	$this->load->view('templates/header_registros');
+	        	$this->load->view('templates/aside', $this->session->userdata());	
+		        $this->load->view('registros/nuevo_merito',$data);
+		        $this->load->view('templates/footer');
+ 			}elseif ($action == "nuevo")
+ 			{
+ 				
+ 				$userId = $this->session->userdata('id');
+        		$today = date("Y-m-d H:i:s");
+ 				$array_merito = array('fecha' => $today,
+ 										'politica' => $this->input->post('politica'),
+ 										'logro' => $this->input->post('logro'),
+ 										'usuario' => $userId,
+ 										'empleado' => $this->input->post('empleado'),
+ 										'sector' => $this->input->post('sector'),
+ 										'estado' => 'revision');
+ 				
+ 				$this->Registros_model->insert_merito($array_merito);
+ 				unset($_POST);
+                redirect('/registros/circulares/', 'refresh');
+ 			}
+
+
+	    }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        }  
+
+    }
+
 //<--------------------------- ORDENES DE TRABAJO ------------------------>
 
 
@@ -859,47 +903,7 @@ class Registros extends CI_Controller {
         } 	
     }
 
-   	public function nueva_reunion($action="")
-    {
-    	if ($this->session->has_userdata('usuario'))
-        {
- 			if (empty($action))
- 			{
- 				$sector = $this->Registros_model->list_sectores();
- 				$procesos = $this->Registros_model->list_procesos();
-				$data['sector'] = $sector;
-				$data['procesos'] = $procesos;
-	        	$this->load->view('templates/head_compras');
-	        	$this->load->view('templates/header_registros');
-	        	$this->load->view('templates/aside', $this->session->userdata());	
-		        $this->load->view('registros/nueva_reunion',$data);
-		        $this->load->view('templates/footer');
- 			}elseif ($action == "nueva")
- 			{
- 				
- 				$userId = $this->session->userdata('id');
-        		$today = date("Y-m-d H:i:s");
- 				$array_circular = array('fecha' => $today,
- 										'titulo' => $this->input->post('titulo'),
- 										'descripcion' => $this->input->post('descripcion'),
- 										'creador' => $userId,
- 										'tipo' => $this->input->post('tipo'),
- 										'proceso' => $this->input->post('proceso'),
- 										'sector' => $this->input->post('sector'),
- 										'tareas' => $this->input->post('tareas'),
- 										'estado' => 'revision');
- 				$this->Registros_model->insert_circular($array_circular);
- 				unset($_POST);
-                redirect('/registros/circulares/', 'refresh');
- 			}
-
-
-	    }else
-        {
-        	 redirect('/secure/login', 'refresh');
-        }  
-
-    }
+   	
 // INSERT BOARD NOTE ----------------------->
     public function insert_task()
     {
