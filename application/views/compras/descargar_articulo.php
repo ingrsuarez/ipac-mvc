@@ -37,22 +37,25 @@
 				</table>
 			
 				<script type="text/javascript">
+
+
 					$(document).ready(function(){
 
-						var e = document.getElementById("nombre");
+						
 						var m = document.getElementById("brand");
-						e.addEventListener("input",function(){
-							var key = event.data;
-							// var articulo = e.value;	
+						
+
+						var e = document.getElementById("nombre");
+						e.addEventListener("input",function(event){
 							var nombre = e.value;
-							// alert("ADENTRO "+nombre);
+							console.log(nombre);
+							
 							$("#tpendientes>tbody").empty();
 							
-							// alert("Escribió: "+nombre);
-
+			
 							$.post("descargarArticulo/find",{nombre: nombre},function(result){	
 
-								// alert("Escribió: "+result);
+								
 								var cont = 0;
 								var json = JSON.parse(result);
 
@@ -70,10 +73,12 @@
 									
 								});
 							});
+							
 						});
+					
 						//BRAND SEARCH
 						m.addEventListener("input",function(){
-							var key = event.data;
+							// var key = event.data;
 								
 							var brand = m.value;
 							
