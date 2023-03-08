@@ -208,6 +208,7 @@ class Compras extends CI_Controller {
 			    		$lote = array_intersect_key($data['lote'],$pedido);
 			    		$vencimiento = array_intersect_key($data['vencimiento'],$pedido);
 			    		$this->Compras_model->recibir_OC($OCnumber,$recibido,$userId,$articulo,$pedido,$lote,$vencimiento,$proveedor,$remito,$fecha);
+			    		$this->Compras_model->updatePesoProveedor($proveedor);
 			    		redirect('/compras/recibirOC/', 'refresh');
 
 			    	}
