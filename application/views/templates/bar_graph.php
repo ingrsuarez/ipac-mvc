@@ -29,7 +29,7 @@
                     <div class="barra">
                         <div class="sub_barra2 b<?php echo $datos[2][1]?>">
                             <div class="tag_g"><?php echo $datos[2][0]?></div>
-                            <div class="tag_leyenda">Bono Productivo</div>
+                            <div class="tag_leyenda"><a href="<?php echo base_url(); ?>index.php/registros/listado_meritos/">Bono Productivo</a></div>
                         </div>
                     </div>
                     

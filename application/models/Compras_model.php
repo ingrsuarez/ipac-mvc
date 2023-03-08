@@ -113,6 +113,23 @@ class Compras_model extends CI_Model {
 
 	}
 
+	public function updatePesoProveedor($id)
+    {
+        
+        $sql = "SELECT * FROM ".self::proveedores_table." WHERE id = ".$id;
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        $peso = $result->peso;
+        if ($peso < 100)
+        {
+            $query = $this->db->query("UPDATE ".self::proveedores_table." SET proveedores.peso = proveedores.peso + 1 WHERE proveedores.id = ".$id);
+        }else
+        {
+            $query = $this->db->query("UPDATE ".self::proveedores_table." SET proveedores.peso = proveedores.peso - 1 WHERE proveedores.peso > 0 AND proveedores.id <> ".$id);
+        }
+
+    }
+
 	public function list_proveedores($value='')
 	{
 		$sql = "SELECT * FROM ".self::proveedores_table." ORDER BY peso DESC, nombre ASC";

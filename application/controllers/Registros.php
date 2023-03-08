@@ -853,19 +853,20 @@ class Registros extends CI_Controller {
 			{
 				if (empty($param))
 			    {
-			    	$data['empleados'] = $this->empleados_model->get_empleados_activos();
-			    	
+			    	$userId = $this->session->userdata('id');
+
+			    	$data['meritos'] = $this->Registros_model->listado_meritos_empleado($userId);
 			    	$this->load->view('templates/head_compras');
 		        	$this->load->view('templates/header_registros');
 			    	$this->load->view('templates/aside', $this->session->userdata());
-			    	$this->load->view('registros/listado_reportes_empleado',$data);
+			    	$this->load->view('registros/listado_meritos_empleado',$data);
 			    	$this->load->view('templates/footer');
 
 			    }elseif($param == "listado")
 				{
-					$userName = $this->session->userdata('nombre');
-					$tipo = $this->input->post('tipoReporte');
-					$array['reportes'] = $this->Registros_model->list_reportes_empleado($tipo,$userName);
+					$userId = $this->session->userdata('id');
+					$politica = $this->input->post('politicaMerito');
+					$array['reportes'] = $this->Registros_model->listado_meritos_empleado($userId,$politica);
 						
 				    print_r(json_encode($array['reportes']));
 

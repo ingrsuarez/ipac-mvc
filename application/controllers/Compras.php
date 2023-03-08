@@ -256,8 +256,6 @@ class Compras extends CI_Controller {
 			    {
 			    	$iProveedor = $this->input->post('iproveedor');	 
 					$array['items'] = $this->Compras_model->proveedor_remito($iProveedor);
-					// echo("<script>
-	    // 			alert('".$array['items']."')</script>");
 			    	print_r(json_encode($array['items']));
 
 
@@ -265,8 +263,6 @@ class Compras extends CI_Controller {
 			    {
 			    	$articulo = $this->input->post('nombreArticulo');	 
 					$array['items'] = $this->Compras_model->articulo_remito($articulo);
-					// echo("<script>
-	    // 			alert('".$array['items']."')</script>");
 			    	print_r(json_encode($array['items']));
 
 
@@ -349,6 +345,7 @@ class Compras extends CI_Controller {
 			    			$this->Compras_model->insert_OC($insertOC);
 			    			
 			    		}
+			    		$this->Compras_model->updatePesoProveedor($proveedor);
 			    		redirect('/compras/confeccionarOC', 'refresh');
 		    		}elseif ($data['button'] == 'Anular') {
 

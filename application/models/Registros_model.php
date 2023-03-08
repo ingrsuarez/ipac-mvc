@@ -238,6 +238,24 @@ class Registros_model extends CI_Model {
 
 	}
 
+	public function listado_meritos_empleado($empleadoId,$politica="")
+	{
+		if (!empty($politica))
+		{
+			$sql = "SELECT * FROM ".self::meritos_view." WHERE politica = '".$politica."' AND vmeritos.id_empleado = ".$empleadoId." ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}else
+		{
+			$sql = "SELECT * FROM ".self::meritos_view." WHERE vmeritos.id_empleado = ".$empleadoId." ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}
+
+	}
+
 	public function get_reportes($idArray)
 	{
 		if (!empty($idArray))
