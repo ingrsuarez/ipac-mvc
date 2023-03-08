@@ -15,6 +15,7 @@ class Registros_model extends CI_Model {
 	const orden_trabajo_table = "ordentrabajo";
 	const reportes_table = "reportes";
 	const meritos_table = "meritos";
+	const meritos_view = "vmeritos";
 	const asignaciones_table = "asignaciones";
 	const vorden_trabajo_table = "votrabajo";
 	const vreportes_table = "vreportes";
@@ -219,7 +220,23 @@ class Registros_model extends CI_Model {
 		return $result;
 	}
 
+	public function listado_meritos($politica="")
+	{
+		if (!empty($politica))
+		{
+			$sql = "SELECT * FROM ".self::meritos_view." WHERE politica = '".$politica."' ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}else
+		{
+			$sql = "SELECT * FROM ".self::meritos_view." ORDER BY fecha DESC";
+			$query = $this->db->query($sql);
+			$result = $query->result();
+			return $result;
+		}
 
+	}
 
 	public function get_reportes($idArray)
 	{

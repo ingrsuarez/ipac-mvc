@@ -68,17 +68,22 @@
 							<a href="<?php echo base_url(); ?>index.php/registros/nuevo_reporte/">Nuevo Reporte</a>
 						</li>
 						<li class="inside__item">
-							<hr class="dropdown__divider">
-						</li>
-
-						<li class="inside__item">
 							<a href="<?php echo base_url(); ?>index.php/registros/listado_reportes/">Listado de Reportes</a>
+						</li>
+						<li class="inside__item">
+							<hr class="dropdown__divider">
 						</li>
 						<li class="inside__item">
 							<a href="<?php echo base_url(); ?>index.php/registros/nuevo_merito/">Reportar Mérito</a>
 						</li>
 						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/mis_meritos/">Mis méritos</a>
+						</li>
+						<li class="inside__item">
 							<hr class="dropdown__divider">
+						</li>
+						<li class="inside__item">
+							<a href="<?php echo base_url(); ?>index.php/registros/listado_meritos/">Listado de Méritos</a>
 						</li>
 						<li class="inside__item">
 							<a href="#"></a>

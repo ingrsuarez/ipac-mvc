@@ -783,18 +783,30 @@ class Registros extends CI_Controller {
  			{
  				
  				$userId = $this->session->userdata('id');
+ 				$empleado = $this->input->post('empleado');
         		$today = date("Y-m-d H:i:s");
- 				$array_merito = array('fecha' => $today,
+        		if ($userId != $empleado)
+        		{
+        			$array_merito = array('fecha' => $today,
  										'politica' => $this->input->post('politica'),
  										'logro' => $this->input->post('logro'),
  										'usuario' => $userId,
- 										'empleado' => $this->input->post('empleado'),
+ 										'empleado' => $empleado,
  										'sector' => $this->input->post('sector'),
  										'estado' => 'revision');
  				
- 				$this->Registros_model->insert_merito($array_merito);
- 				unset($_POST);
-                redirect('/registros/circulares/', 'refresh');
+	 				$this->Registros_model->insert_merito($array_merito);
+	 				unset($_POST);
+	                redirect('/registros/circulares/', 'refresh');
+        		}else
+        		{
+        			$mensaje = "No puede generar un mérito para usted mismo!";
+					echo ("<script>
+					alert('".$mensaje."')</script>");
+					redirect('/registros/circulares/', 'refresh');
+        		}
+
+ 				
  			}
 
 
@@ -805,6 +817,66 @@ class Registros extends CI_Controller {
 
     }
 
+	public function listado_meritos($param='')
+    {
+    	if ($this->session->has_userdata('usuario'))
+        {
+        	$acceso_calidad = $this->Secure_model->access(self::sector);
+        	if ($acceso_calidad <= 2)
+            {
+	        	if (empty($param))
+			    {
+			    	$data['empleados'] = $this->empleados_model->get_empleados_activos();
+			    	$data['meritos'] = $this->Registros_model->listado_meritos();
+			    	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('registros/listado_meritos',$data);
+			    	$this->load->view('templates/footer');
+
+			    }elseif($param == "listado")
+				{
+					$politica = $this->input->post('politicaMerito');
+					$array['reportes'] = $this->Registros_model->listado_meritos($politica);
+						
+				    print_r(json_encode($array['reportes']));
+
+				}elseif($param == "listado_empleado")
+				{
+        			$nombre_empleado = $this->input->post('empleado');
+        			$array['reportes'] = $this->Registros_model->listado_empleado_reportes($nombre_empleado);
+						
+				    print_r(json_encode($array['reportes']));
+				}
+			}else
+			//Not RRHH access
+			{
+				if (empty($param))
+			    {
+			    	$data['empleados'] = $this->empleados_model->get_empleados_activos();
+			    	
+			    	$this->load->view('templates/head_compras');
+		        	$this->load->view('templates/header_registros');
+			    	$this->load->view('templates/aside', $this->session->userdata());
+			    	$this->load->view('registros/listado_reportes_empleado',$data);
+			    	$this->load->view('templates/footer');
+
+			    }elseif($param == "listado")
+				{
+					$userName = $this->session->userdata('nombre');
+					$tipo = $this->input->post('tipoReporte');
+					$array['reportes'] = $this->Registros_model->list_reportes_empleado($tipo,$userName);
+						
+				    print_r(json_encode($array['reportes']));
+
+				}
+			}
+
+        }else
+        {
+        	 redirect('/secure/login', 'refresh');
+        } 
+    }
 //<--------------------------- ORDENES DE TRABAJO ------------------------>
 
 
