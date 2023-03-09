@@ -49,12 +49,12 @@
 							var nombre = e.value;
 							// console.log(event);
 							
-							$("#tpendientes>tbody").empty();
+							
 							
 			
 							$.post("descargarArticulo/find",{nombre: nombre},function(result){	
 
-								
+								$("#tpendientes>tbody").empty();
 								var cont = 0;
 								var json = JSON.parse(result);
 
