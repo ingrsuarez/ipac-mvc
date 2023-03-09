@@ -47,7 +47,7 @@
 
 						var e = document.getElementById("nombre");
 						e.addEventListener("input",function(event){
-							
+							event.preventDefault();
 							var nombre = e.value;
 							console.log(nombre);
 							
