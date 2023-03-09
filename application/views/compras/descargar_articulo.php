@@ -47,6 +47,7 @@
 
 						var e = document.getElementById("nombre");
 						e.addEventListener("input",function(event){
+							
 							var nombre = e.value;
 							console.log(nombre);
 							
@@ -73,7 +74,7 @@
 									
 								});
 							});
-							
+						event.stopPropagation();	
 						});
 					
 						//BRAND SEARCH
