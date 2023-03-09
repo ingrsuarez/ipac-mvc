@@ -38,18 +38,16 @@
 			
 				<script type="text/javascript">
 
-
 					$(document).ready(function(){
 
-						
 						var m = document.getElementById("brand");
 						
 
 						var e = document.getElementById("nombre");
-						e.addEventListener("input",function(event){
-							event.preventDefault();
+						e.addEventListener("keyup",function(event){
+							
 							var nombre = e.value;
-							console.log(nombre);
+							// console.log(event);
 							
 							$("#tpendientes>tbody").empty();
 							
@@ -74,7 +72,7 @@
 									
 								});
 							});
-						event.stopPropagation();	
+							
 						});
 					
 						//BRAND SEARCH
