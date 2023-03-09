@@ -81,11 +81,11 @@
 								
 							var brand = m.value;
 							
-							$("#tpendientes>tbody").empty();
+							
 							
 							$.post("descargarArticulo/findBrand",{brand: brand},function(result){	
 
-								// alert("Escribió: "+result);
+								$("#tpendientes>tbody").empty();
 								var cont = 0;
 								var json = JSON.parse(result);
 
