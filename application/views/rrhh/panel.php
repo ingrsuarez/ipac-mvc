@@ -100,6 +100,7 @@
 				
 				<thead>
 					<tr class="pedidosT__encabezado">
+					  <th scope="col">#</th>	
 					  <th class="pedidosT__fecha" scope='col'>Fecha </th>
 					  <th class="pedidosT__usuario" scope='col'>Usuario</th>
 					  <th scope='col'>Fecha Inicial</th>
@@ -116,7 +117,8 @@
 				$i = 0;
 				
 				while ($i < $arrayLength) {?>
-					<tr class="pedidosT__row">						
+					<tr class="pedidosT__row" onclick="getIndex(this)">
+						<td> <?php echo $licencias[$i]->id;?></td>						
 						<td style="min-width: 110px"> <?php echo $licencias[$i]->fecha;?></td>
 						<td> <?php echo $licencias[$i]->nombre;?></td>
 						<td style="min-width: 110px"> <?php echo $licencias[$i]->fechaini;?></td>
@@ -144,3 +146,4 @@
 
  	
  </div>
+ <script type = 'text/javascript' src = "<?php echo base_url();?>js/imprimirLicencia.js"></script>

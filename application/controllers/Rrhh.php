@@ -242,7 +242,7 @@ class Rrhh extends CI_Controller {
                     $id_usuario = ""; //All users in revision    
                     $year = date("Y");
 
-                    $data['licencias'] = $this->Empleados_model->get_licencias($id_usuario,$year);
+                    $data['licencias'] = $this->Empleados_model->get_licencias_revision($id_usuario,$year);
                     $this->load->view('templates/head', $data);
                     $this->load->view('templates/header', $data);
                     $this->load->view('templates/aside', $this->session->userdata());
@@ -262,6 +262,15 @@ class Rrhh extends CI_Controller {
                     $licencia_id = $this->input->post('licencia');    
                     $this->Empleados_model->rechazar_licencia($licencia_id);
                     redirect('/rrhh/panel', 'refresh');
+                }elseif ($param == 'imprimir')
+                {
+                    // $userDNI = $this->session->userdata('dni');
+                    $id = $_GET['lid'];
+                    $licencia = $this->Empleados_model->get_licencia_by_id($id);
+                    // if ($licencia[0]['dni'] == $userDNI)
+                        // {
+                           $this->load->view('rrhh/pdfLicencia.php',$licencia[0]); 
+                        // }
                 }
             }else
             {

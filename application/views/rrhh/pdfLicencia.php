@@ -153,7 +153,7 @@ public $titulo;
 	$pdf->Cell($h[0],7,utf8_decode($fechaini),0,0,'L',false);
 	$pdf->Cell($h[0],7,'    ',0,0,'L',false);
 	$pdf->Cell($h[0],7,utf8_decode($fechafin),0,0,'L',false);
-	$pdf->Ln(40);
+	$pdf->Ln(20);
 
 	$pdf->SetFont('Arial','B',11);
 	$pdf->Cell($h[0],7,utf8_decode('OBSERVACIONES: '),0,0,'L',true);

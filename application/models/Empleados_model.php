@@ -237,6 +237,36 @@ class Empleados_model extends CI_Model {
 
         }
 
+        public function get_licencias_revision($id_usuario='', $year='',$month='')
+        {
+                if (empty($month))
+                {
+                        $month_filter = '';
+                }else
+                {
+                        $month_filter = ' AND MONTH(fechaini) = '.$month."'";
+                }
+                
+               if (!empty($id_usuario))
+               {
+                        $sql = "SELECT * FROM `licencias` WHERE `empleado` = '".$id_usuario."' AND `año` = '".$year."' ORDER BY  fechaini DESC";
+                        $query = $this->db->query($sql);
+                        $result = $query->result();
+                        return $result;
+
+               }        
+               else
+               {
+
+                        $sql = "SELECT licencias.id, fecha, empleados.nombre, fechaini, fechafin, tipo, dias, estado FROM `licencias` 
+                                INNER JOIN empleados ON licencias.empleado = empleados.id WHERE `año` = '".$year."' ".$month_filter." AND estado <> 'rechazado' ORDER BY  fechaini DESC";
+                        $query = $this->db->query($sql);
+                        $result = $query->result();
+                        return $result;
+               }
+
+        }
+
         public function aprobar_licencia($licencia_id='')
         {
                 
