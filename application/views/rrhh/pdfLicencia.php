@@ -12,7 +12,7 @@ public $nombre;
 public $puesto;
 public $dni;
 public $id;
-
+public $titulo;
 	
 // Cabecera de página
 	function Header()
@@ -37,7 +37,7 @@ public $id;
 		$this->SetDrawColor(0,139,139);
 		$this->SetLineWidth(10);
 		$this->Line(110, 18, 205, 18);
-		$this->Cell(140,16,utf8_decode('SOLICITUD DE LICENCIA'),0,0,'R');
+		$this->Cell(140,16,utf8_decode(strtoupper($this->titulo)),0,0,'R');
 		$this->Ln(30);
 		
 		$this->SetFont('Times','',10);
@@ -115,8 +115,14 @@ public $id;
 	$pdf-> dni = $dni;
 	$pdf-> fecha = $fecha;
 	$pdf-> id = $id;
-
-
+	if ($tipo == 'vacaciones')
+		{
+		$pdf->titulo = 'SOLICITUD DE LICENCIA';
+		}
+	else
+	{
+		$pdf->titulo = $tipo;
+	}
 	$pdf-> AddPage();
 
 
