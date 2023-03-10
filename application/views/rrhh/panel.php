@@ -20,7 +20,7 @@
 							<option value='inasistencia'>Inasistencia</option>
 							<option value='vacaciones'>Vacaciones</option>
 							<option value='especial'>Especial</option>
-							<option value='especial'>Llegada tarde</option>
+							<option value='llegada tarde'>Llegada tarde</option>
 							
 					  	</select>
 					</div>
