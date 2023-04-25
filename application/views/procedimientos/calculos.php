@@ -7,7 +7,7 @@
 				<!-- Nav tabs -->
 				<ul class="menu__item" role="tablist">
 					<li class="tab__item">
-					  <a class="tab-link active" data-toggle="tab" id="hemoglobina_link" href="#hemoglobina">Hemoglobina</a>
+					  <a class="tab-link active" data-toggle="tab" id="directa_link" href="#directa">Hemoglobina Directa</a>
 					</li>
 					<li class="tab__item">
 					  <a class="tab-link" data-toggle="tab" id="clearence_link" href="#clearence">Clearence</a>
@@ -21,12 +21,43 @@
 					<li class="tab__item">
 					  <a class="tab-link" data-toggle="tab" id="calcioionico_link" href="#calcioIonico">Calcio Iónico</a>
 					</li>
+					<li class="tab__item">
+					  <a class="tab-link" data-toggle="tab" id="hemoglobina_link" href="#hemoglobina">Hemoglobina</a>
+					</li>
 				</ul>
 			</div>
 
 			<!-- Tab panes -->
-			
-				<div id="hemoglobina" class="tab-content-active"><br>
+				<div id="directa" class="tab-content-active"><br>
+					<div class="calculos">	
+						
+						
+						<table class="pedidosT">
+
+							<!--IFCC-->	
+							<tr><td></td><td><h3>IFCC = (%HbA1C-2.15)/0.095</h3></td></tr>
+							
+							<tr>
+								<td class="td-label"><label for="dHba1c">Glicosilada:</label></td>
+								<td><input type="text" id="dHba1c" name="dHba1c" value="0"></td>
+								<td class="td-label"><label for="dIfcc">IFCC</label></td>
+								<td><input type="text" name="dIfcc " id="dIfcc" value="0" readonly></td>	
+							</tr>						
+						</table>
+						<input type="submit" id="CalcularD" value="CalcularD" class="btn btn-verify">
+					</div>
+					<script type="text/javascript">
+						$("#CalcularD").click(function(){
+							var ifcc=0;
+														
+							hb1ac = parseFloat($("#dHba1c").val());
+							ifcc = ((hb1ac-2.15)/0.095).toFixed(2);
+							
+							$("#dIfcc").val(ifcc);						
+						})
+					</script>	
+				</div>
+				<div id="hemoglobina" class="tab-content fade"><br>
 					<div class="calculos">	
 						
 						<h3>Glicosilada = ((HbA1c/Hb)*91.5)+2.15</h3><br>
