@@ -45,6 +45,9 @@
 							<li class="inside__item__horiz">
 								<a href="https://www.experta.com.ar/art/que-hacer-en-caso-de-accidente/"><i class="fas fa-ambulance" style="padding-right: 10px;" target="_blank"></i> ART</a>
 							</li>
+							<li class="inside__item__horiz">
+								<a href="https://www.argentina.gob.ar/interior/feriados-nacionales-2023" target="_blank"><i class="fa-solid fa-calendar-day" style="padding-right: 10px;" target="_blank"></i> FERIADOS</a>
+							</li>
 						</ul>
 					</li>
 
