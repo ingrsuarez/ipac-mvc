@@ -58,13 +58,14 @@ class Pages extends CI_Controller {
                 alert('".$mensaje."')</script>");
             redirect('/secure/login', 'refresh');
         }
-        $user = $this->input->post('username');
-        $userPassword = $this->input->post('password');
-        $newdata = array(
-        'userName'  => $user,
-        'password'  => md5($userPassword));
-        $newUser = $this->Secure_model->check_password($newdata);
-        ($newUser != false ? $this->session->set_userdata($newUser) : false);
+        
+        // $user = $this->input->post('username');
+        // $userPassword = $this->input->post('password');
+        // $newdata = array(
+        // 'userName'  => $user,
+        // 'password'  => md5($userPassword));
+        // $newUser = $this->Secure_model->check_password($newdata);
+        // ($newUser != false ? $this->session->set_userdata($newUser) : false);
 	}
 
 
